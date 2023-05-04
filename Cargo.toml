@@ -1,0 +1,10 @@
+[package]
+name = "kcs_os"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+uefi = "0.20.0"
+uefi-services = "0.17.0"
