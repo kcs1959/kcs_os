@@ -17,20 +17,45 @@ args = ["test"]
 dependencies = ["clean"]
 
 [tasks.img]
+linux_alias = "linux_img"
+mac_alias = "mac_img"
+
+[tasks.mac_img]
+#	qemu-img create [-f format] [-o options] filename [size][preallocation]
+#	mount [-o options] device dir
+#	loop -> mount as loop device
+script = '''
+#!/usr/bin/env bash
+
+qemu-img create -f raw disk.img 200M # qumu用の仮想imgを作成
+DISK_PATH=$(hdiutil attach -imagekey diskimage-class=CRawDiskImage -nomount disk.img) # 仮想imgをmntにマウント
+diskutil eraseVolume FAT32 'KCS OS' $DISK_PATH # 仮想imgをFAT32でフォーマット
+hdiutil detach $DISK_PATH
+mkdir -p mnt # mntディレクトリを作成
+hdiutil attach -mountpoint mnt disk.img # 仮想imgをmntにマウント
+mkdir -p mnt/EFI/BOOT # EFI/BOOTディレクトリを作成
+sudo cp target/x86_64-unknown-uefi/debug/kcs_os.efi mnt/EFI/BOOT/BOOTX64.EFI # kcs_os.efiをEFI/BOOT/BOOTX64.EFIにコピー
+hdiutil detach mnt
+'''
+dependencies = [
+    "build",
+]
+
+[tasks.linux_img]
 #	qemu-img create [-f format] [-o options] filename [size][preallocation]
 #	mkfs.fat [-n VOLUME-NAME] [-s SECTORS-PER-CLUSTER] [-f NUMBER-OF-FATS] [-R NUMBER-OF-RESERVED-SECTORS] [-F FAT-SIZE]
 #	ref.) `man mkfs.fat`
 #	mount [-o options] device dir
 #	loop -> mount as loop device
-script = [
-    "qemu-img create -f raw disk.img 200M", # qumu用の仮想imgを作成
-    "mkfs.fat -n 'KCS OS' -s 2 -f 2 -R 32 -F 32 disk.img", # 仮想imgをFAT32でフォーマット
-    "mkdir -p mnt", # mntディレクトリを作成
-    "sudo mount -o loop disk.img mnt", # 仮想imgをmntにマウント
-    "sudo mkdir -p mnt/EFI/BOOT", # EFI/BOOTディレクトリを作成
-    "sudo cp target/x86_64-unknown-uefi/debug/kcs_os.efi mnt/EFI/BOOT/BOOTX64.EFI", # kcs_os.efiをEFI/BOOT/BOOTX64.EFIにコピー
-    "sudo umount mnt" # mntをアンマウント
-]
+script = '''
+qemu-img create -f raw disk.img 200M # qumu用の仮想imgを作成
+mkfs.fat -n 'KCS OS' -s 2 -f 2 -R 32 -F 32 disk.img # 仮想imgをFAT32でフォーマット
+mkdir -p mnt # mntディレクトリを作成
+sudo mount -o loop disk.img mnt # 仮想imgをmntにマウント
+sudo mkdir -p mnt/EFI/BOOT # EFI/BOOTディレクトリを作成
+sudo cp target/x86_64-unknown-uefi/debug/kcs_os.efi mnt/EFI/BOOT/BOOTX64.EFI # kcs_os.efiをEFI/BOOT/BOOTX64.EFIにコピー
+sudo umount mnt # mntをアンマウント
+'''
 dependencies = [
     "build",
 ]

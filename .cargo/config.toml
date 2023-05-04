@@ -1,2 +1,7 @@
 [build]
 target = "x86_64-unknown-uefi"
+
+[unstable]
+# https://doc.rust-lang.org/cargo/reference/unstable.html#build-std
+# 標準ライブラリもcompileして使うようにする
+build-std = ["core", "compiler-builtins", "alloc"]
