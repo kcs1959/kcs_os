@@ -8,7 +8,6 @@ use uefi_services::println;
 fn main(_handle: Handle, mut system_table: SystemTable<Boot>) -> Status {
     uefi_services::init(&mut system_table).unwrap();
     println!("Hello world from uefi-rs!");
-    println!("Sanjo");
     println!("unkonow");
     println!("Aiueo");
     loop {}

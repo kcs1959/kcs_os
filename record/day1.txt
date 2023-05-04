@@ -21,3 +21,13 @@ config.tomlでビルドターゲットを設定する．
 擬似的なusbを入れる．書き込みのメディアイメージを作っている．
 
 cargo make をやるためにmakeをやる．
+
+次回までに→
+git cloneして，ビルドしてくる！
+
+1. rustをinstall
+2. `rustup target add x86_64-unknown-uefi`
+3. qemuをinstall
+4. `cargo install --force cargo-make`
+5. `cargo make img`
+6. `cargo make run`
