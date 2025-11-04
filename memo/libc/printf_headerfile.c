@@ -10,7 +10,7 @@
 #define va_end __builtin_va_end
 #define va_arg __builtin_va_arg
 // 普通は <stdarg.h> を #include することで va_list が使えるようになる
-// #define 名前 値 はコンパイル前の置換ルール
+// #define 名前 値 はコンパイル前の置換ルール ←エイリアス？
 #define PI 3.14159;
 #define SQUARE(x) ((x) * (x));
 // のように、引数を取るマクロもある

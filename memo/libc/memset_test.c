@@ -19,10 +19,18 @@ int main() {
 }
 
 /*
-┌───────────────────────┐
-│ 関数: boot()           │
-│ - sp = x2 (0x8022004c)│
-│ - ra = x1 (戻り先)    │
-│ - a0/a1/a2 = memset引数│
-└───────────────────────┘
+void *memset(void *buf, char c, size_t n)
+void *buf: 書き込み対象のメモリ領域
+char c: 埋めたい値（1バイト）
+size_t n: 書き込むバイト数
+
+
+使用例：
+char data[5];
+memeset(data, 'A', 5);
+
+int arr[4];
+memset(arr, 0, sizeof(arr));
+→配列全体をゼロ初期化
+
 */

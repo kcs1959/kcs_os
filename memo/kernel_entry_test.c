@@ -1,40 +1,3 @@
-#include "kernel.h"
-#include "common.h"
-
-typedef unsigned char uint8_t;
-typedef unsigned int uint32_t;
-typedef uint32_t size_t;
-
-extern char __bss[], __bss_end[], __stack_top[];
-
-struct sbiret sbi_call(long arg0, long arg1, long arg2, long arg3, long arg4,
-                       long arg5, long fid, long eid) {
-  register long a0 __asm__("a0") = arg0;
-  register long a1 __asm__("a1") = arg1;
-  register long a2 __asm__("a2") = arg2;
-  register long a3 __asm__("a3") = arg3;
-  register long a4 __asm__("a4") = arg4;
-  register long a5 __asm__("a5") = arg5;
-  register long a6 __asm__("a6") = fid;
-  register long a7 __asm__("a7") = eid;
-
-  __asm__ __volatile__("ecall"
-                       : "=r"(a0), "=r"(a1)
-                       : "r"(a0), "r"(a1), "r"(a2), "r"(a3), "r"(a4), "r"(a5),
-                         "r"(a6), "r"(a7)
-                       : "memory");
-  return (struct sbiret){.error = a0, .value = a1};
-}
-
-void putchar(char ch) { sbi_call(ch, 0, 0, 0, 0, 0, 0, 1); }
-
-__attribute__((section(".text.boot"))) __attribute__((naked)) void boot(void) {
-  __asm__ __volatile__("mv sp, %[stack_top]\n"
-                       "j kernel_main\n"
-                       :
-                       : [stack_top] "r"(__stack_top));
-}
-
 __attribute__((naked)) __attribute__((aligned(4))) void kernel_entry(void) {
   __asm__ __volatile__("csrw sscratch, sp\n"
                        "addi sp, sp, -4 * 31\n"
@@ -109,26 +72,60 @@ __attribute__((naked)) __attribute__((aligned(4))) void kernel_entry(void) {
                        "sret\n");
 }
 
-void handle_trap(struct trap_frame *f) {
-  uint32_t scause = READ_CSR(scause);
-  uint32_t stval = READ_CSR(stval);
-  uint32_t user_pc = READ_CSR(sepc);
+/*
+典型的な OS の場合：
 
-  PANIC("unexpected trap scause=%x, stval=%x, sepc=%x\n", scause, stval,
-        user_pc);
-}
+１、ブートローダ（例えば U-Boot, SBI, BIOS 相当のコード）
+メモリの初期化、CPU 初期化、スタック領域の準備
 
-void kernel_main(void) {
+２、カーネルエントリ (kernel_entry)
+CPUが例外や割り込みを受けたときに最初に飛んでくる場所
 
-  memset(__bss, 0, (size_t)__bss_end - (size_t)__bss);
-  WRITE_CSR(stvec, (uint32_t)kernel_entry);
+３、OS のC言語メイン関数（main や kernel_main）
 
-  printf("\n\nHello %s\n", "World!");
-  printf("1 + 2 = %d, %x\n", 1 + 2, 0x1234abcd);
+*/
 
-  __asm__ __volatile__("unimp");
+/*
+１、起動直後の sp は OS 用スタック領域の先頭（まだ何も保存されていない）。
+２、例外ハンドラは呼ばれた瞬間、どこに作業用スタックを置くか知らない。
+３、sscratchレジスタに起動直後のspを保存することで、ハンドラが安全にスタックを使える。
 
-  for (;;) {
-    __asm__ __volatile__("wfi");
-  }
-}
+↑の本質：
+kernel_entry は Supervisor モード（S）で動くことを想定しています。
+Supervisor モードの例外（トラップ）では、CPU は
+自動的にスタックフレームを作らず、
+Sモード用のスタックを自分で準備する必要があります。
+だから sscratchなどの「特権レベル専用レジスタ」が必要になります。
+
+起動時の安全なカーネルスタックの先頭アドレスを sscratch
+に退避しておき、例外ハンドラ内で参照できるようにしています。
+一方、kernel_main内では、↓
+
+kernel_entry で既に sp をカーネル用スタックの安全な領域にセット しているため、C
+言語の関数呼び出しは普通に動きます。
+C コンパイラは関数呼び出し時に sp を基準にスタックフレームを作る
+ので、明示的にどこにスタックを置くかを教える必要はありません。
+つまり、kernel_main 内では「現在の sp
+が有効なスタック領域を指している」という前提で、普通に push/pop
+やローカル変数確保が可能 です。
+*/
+
+/*
+csrw（Control and Status Register Write）：
+CPUの制御用/特権レジスタに値を書き込む命令
+
+csrw <書き込み先(制御用レジスタ)> <値を持つ汎用レジスタ>;
+*/
+
+/*
+sw ra, 4 * 0(sp)
+
+sw … Store Word（レジスタの値をメモリに書き込む）
+ra … return address レジスタ。関数から戻るときのアドレスが入っています。
+sp … スタックポインタ（Stack Pointer）
+4 * 0(sp) … スタック上のアドレスを意味しています（offset + base形式）
+*/
+
+/*
+sret: RISC-Vにおいて、特権モードからユーザーモードに戻る命令
+*/
