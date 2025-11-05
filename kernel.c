@@ -6,6 +6,7 @@ typedef unsigned int uint32_t;
 typedef uint32_t size_t;
 
 extern char __bss[], __bss_end[], __stack_top[];
+extern char __free_ram[], __free_ram_end[];
 
 struct sbiret sbi_call(long arg0, long arg1, long arg2, long arg3, long arg4,
                        long arg5, long fid, long eid) {
@@ -33,6 +34,19 @@ __attribute__((section(".text.boot"))) __attribute__((naked)) void boot(void) {
                        "j kernel_main\n"
                        :
                        : [stack_top] "r"(__stack_top));
+}
+
+paddr_t alloc_pages(uint32_t n) {
+  static paddr_t next_paddr = (paddr_t)__free_ram;
+  paddr_t paddr = next_paddr;
+  next_paddr += n * PAGE_SIZE;
+
+  if (next_paddr > (paddr_t)__free_ram_end) {
+    PANIC("out of memory!!!!!");
+  }
+
+  memset((void *)paddr, 0, n * PAGE_SIZE);
+  return paddr;
 }
 
 __attribute__((naked)) __attribute__((aligned(4))) void kernel_entry(void) {
@@ -126,7 +140,8 @@ void kernel_main(void) {
   printf("\n\nHello %s\n", "World!");
   printf("1 + 2 = %d, %x\n", 1 + 2, 0x1234abcd);
 
-  __asm__ __volatile__("unimp");
+  paddr_t paddr0 = alloc_pages(2);
+  printf("alloc_pages test: paddr0=%x\n", paddr0);
 
   for (;;) {
     __asm__ __volatile__("wfi");
