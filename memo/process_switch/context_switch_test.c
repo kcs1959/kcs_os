@@ -2,6 +2,20 @@
 実際は、たくさんの関数を呼び出す→切り替えが必要
 必要に応じて、複数実行したい関数を各々プロセスとし、
 コンテキストスイッチで、実行する関数を切り替えることができる
+
+create_processでプロセス用のスタック領域を確保
+（＝callee-savedレジスタの状態を入れるとこ）
+
+procA↔︎procBのプロセス切り替え
+CPU の sp は「今実行中のプロセス用スタックのトップ」を指すレジスタ
+これはプロセスごとに異なるスタック領域を持つため、
+切り替え時に保存・復元する必要がある
+processAを中断する時は、
+switch_context で sw sp, &proc_a->sp とすることで、
+CPU sp を proc_a 用のスタックトップとして保存できる（今の状態を退避）
+processAに戻るときは、
+lw sp, &proc_a->sp で 中断時のスタックトップ を CPU sp に復元
+lw ra, s0…s11 で前回退避したレジスタを復元する
 */
 
 #include <stdint.h>
@@ -111,6 +125,7 @@ __attribute__((naked)) void switch_context(uint32_t *prev_sp,
     先ほどのproc（空き）をその分の領域として、0で初期化
     raレジスタ用の領域は、対象プロセスの最初の命令アドレス(pc)としておく
 ４、pid, state, sp を設定し、それらをまとめたproc（構造体）を返す
+    例えばstateはPROC_RUNNABLEに設定
 */
 
 /*
