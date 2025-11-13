@@ -26,7 +26,7 @@ while文でfmtを1つずつずらしていき、%が現れたらその次の文�
 ・s, d, x ならフォーマット指定子の処理
 */
 
-#include <stdarg.h>
+#include <stdarg.h> // va_list
 #include <stdio.h>
 
 void log_message(const char *fmt, ...) {
