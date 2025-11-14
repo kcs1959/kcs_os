@@ -73,11 +73,19 @@ __attribute__((naked)) __attribute__((aligned(4))) void kernel_entry(void) {
 }
 
 /*
+RISC-Vのレジスタ＝汎用レジスタ＋CSR（Control and Status Register）
+例外処理＝sscratchレジスタに現在のspを退避
+*/
+
+/*
 カーネルエントリ直前のspをsscratchレジスタに退避させておき（csrw)、
-その時のレジスタの他の部分を全てメモリにコピーし（sw,コピー先はspからのoffsetで計算)
+その時の汎用レジスタを全てスタックに退避（sw,コピー先はspからのoffsetで計算)
+↑このスタック領域は、create_processでプロセスごとに確保されている（はず）
+
 sscratchレジスタにあるspもスタック領域にコピーし（csrr a0, sscratch;のように
 一時レジスタa0経由で）
 その後 call handle_trap で例外処理を呼び出すとレジスタは刷新され、
+
 例外処理が終わったら、lwで先ほどのスタック領域の値をレジスタに再度格納し、
 最後に、sretで割り込み前の処理を再開
 */
@@ -163,4 +171,23 @@ sret: RISC-Vにおいて、特権モードからユーザーモードに戻る�
 /*
 CPUハードウェア と ISA仕様書 が先に存在している
 → ここでレジスタの名前や命令の動作が定義済み
+*/
+
+/*
+csrw sscratch, sp（旧sp保存）は、
+普通の処理↔︎例外処理　の2者間での話
+
+実際は、複数のプロセスが切り替わりながら実行されるので
+単なるコピー（csrw）では足りない
+プロセス切り替えでsscratchが上書きされてしまうかも。
+
+CSRRW / CSRRWI（CSR Read / Write）: CSRと汎用レジスタのアトミック交換
+csrrw rd, csr, rs1 の動作は：
+rd に、CSR（ここでは sscratch）の 元の値 が入る
+CSR へ、rs1（ここでは sp）の 元の値 が書き込まれる
+
+今回は、
+csrrw sp, sscratch, sp
+spにsscratchの値、sscratchにspの値
+が入るので、spとsscratchのswapに等しい
 */
