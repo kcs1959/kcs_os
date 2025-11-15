@@ -127,7 +127,6 @@ C コンパイラは関数呼び出し時に sp を基準にスタックフレ�
 /*
 csrw（Control and Status Register Write）：
 CPUの制御用/特権レジスタに値を書き込む命令
-
 csrw <書き込み先(制御用レジスタ)> <値を持つ汎用レジスタ>;
 */
 
@@ -178,8 +177,8 @@ csrw sscratch, sp（旧sp保存）は、
 普通の処理↔︎例外処理　の2者間での話
 
 実際は、複数のプロセスが切り替わりながら実行されるので
-単なるコピー（csrw）では足りない
-プロセス切り替えでsscratchが上書きされてしまうかも。
+・単なるコピー（csrw）では足りない、swapが必要
+・例外ごとにカーネルスタックを確保
 
 CSRRW / CSRRWI（CSR Read / Write）: CSRと汎用レジスタのアトミック交換
 csrrw rd, csr, rs1 の動作は：

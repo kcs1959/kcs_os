@@ -5,6 +5,7 @@ typedef unsigned char uint8_t;
 typedef unsigned int uint32_t;
 typedef uint32_t size_t;
 
+extern char __kernel_base[];
 extern char __bss[], __bss_end[], __stack_top[];
 extern char __free_ram[], __free_ram_end[];
 
@@ -12,6 +13,42 @@ struct process procs[PROCS_MAX];
 struct process *current_proc;
 struct process *idle_proc;
 
+// Simple Memory Allocaltion
+paddr_t alloc_pages(uint32_t n) {
+  static paddr_t next_paddr = (paddr_t)__free_ram;
+  paddr_t paddr = next_paddr;
+  next_paddr += n * PAGE_SIZE;
+
+  if (next_paddr > (paddr_t)__free_ram_end) {
+    PANIC("out of memory!!!!!");
+  }
+
+  memset((void *)paddr, 0, n * PAGE_SIZE);
+  return paddr;
+}
+
+// Virtual Memory
+void map_page(uint32_t *table1, uint32_t vaddr, paddr_t paddr, uint32_t flags) {
+  if (!is_aligned(vaddr, PAGE_SIZE))
+    PANIC("unaligned vaddr %x", vaddr);
+
+  if (!is_aligned(paddr, PAGE_SIZE))
+    PANIC("unaligned paddr %x", paddr);
+
+  uint32_t vpn1 = (vaddr >> 22) & 0x3ff;
+  if ((table1[vpn1] & PAGE_V) == 0) {
+    // 1段目のページテーブル作成
+    uint32_t pt_paddr = alloc_pages(1);
+    table1[vpn1] = ((pt_paddr / PAGE_SIZE) << 10) | PAGE_V;
+  }
+
+  // 2段目のページテーブルにエントリを追加する
+  uint32_t vpn0 = (vaddr >> 12) & 0x3ff;
+  uint32_t *table0 = (uint32_t *)((table1[vpn1] >> 10) * PAGE_SIZE);
+  table0[vpn0] = ((paddr / PAGE_SIZE) << 10) | flags | PAGE_V;
+}
+
+// Processes
 struct process *create_process(uint32_t pc) {
   struct process *proc = NULL;
   int i;
@@ -40,10 +77,18 @@ struct process *create_process(uint32_t pc) {
   *--sp = 0;            // s0
   *--sp = (uint32_t)pc; // ra
 
+  uint32_t *page_table = (uint32_t *)alloc_pages(1);
+
+  // カーネルのページをマッピングする
+  for (paddr_t paddr = (paddr_t)__kernel_base; paddr < (paddr_t)__free_ram_end;
+       paddr += PAGE_SIZE)
+    map_page(page_table, paddr, paddr, PAGE_R | PAGE_W | PAGE_X);
+
   // 各フィールドを初期化
   proc->pid = i + 1;
   proc->state = PROC_RUNNABLE;
   proc->sp = (uint32_t)sp;
+  proc->page_table = page_table;
   return proc;
 }
 
@@ -105,9 +150,13 @@ void yield(void) {
 
   // プロセス切り替え時、sscratchレジスタに、実行中プロセスのカーネルスタックの初期値を与える
   __asm__ __volatile__(
+      "sfence.vma\n"
+      "csrw satp, %[satp]\n"
+      "sfence.vma\n"
       "csrw sscratch, %[sscratch]\n"
       :
-      : [sscratch] "r"((uint32_t)&next->stack[sizeof(next->stack)]));
+      : [satp] "r"(SATP_SV32 | ((uint32_t)next->page_table / PAGE_SIZE)),
+        [sscratch] "r"((uint32_t)&next->stack[sizeof(next->stack)]));
 
   // コンテキストスイッチ
   struct process *prev = current_proc;
@@ -115,6 +164,7 @@ void yield(void) {
   switch_context(&prev->sp, &next->sp);
 }
 
+// Output by ecall
 struct sbiret sbi_call(long arg0, long arg1, long arg2, long arg3, long arg4,
                        long arg5, long fid, long eid) {
   register long a0 __asm__("a0") = arg0;
@@ -134,21 +184,10 @@ struct sbiret sbi_call(long arg0, long arg1, long arg2, long arg3, long arg4,
   return (struct sbiret){.error = a0, .value = a1};
 }
 
+// Printf Output
 void putchar(char ch) { sbi_call(ch, 0, 0, 0, 0, 0, 0, 1); }
 
-paddr_t alloc_pages(uint32_t n) {
-  static paddr_t next_paddr = (paddr_t)__free_ram;
-  paddr_t paddr = next_paddr;
-  next_paddr += n * PAGE_SIZE;
-
-  if (next_paddr > (paddr_t)__free_ram_end) {
-    PANIC("out of memory!!!!!");
-  }
-
-  memset((void *)paddr, 0, n * PAGE_SIZE);
-  return paddr;
-}
-
+// Interrupt
 __attribute__((naked)) __attribute__((aligned(4))) void kernel_entry(void) {
   __asm__ __volatile__("csrrw sp, sscratch, sp\n"
                        "addi sp, sp, -4 * 31\n"
@@ -263,7 +302,6 @@ void proc_b_entry(void) {
 }
 
 // Start
-
 __attribute__((section(".text.boot"))) __attribute__((naked)) void boot(void) {
   __asm__ __volatile__("mv sp, %[stack_top]\n"
                        "j kernel_main\n"
