@@ -8,6 +8,7 @@ typedef uint32_t size_t;
 extern char __kernel_base[];
 extern char __bss[], __bss_end[], __stack_top[];
 extern char __free_ram[], __free_ram_end[];
+extern char _binary_shell_bin_start[], _binary_shell_bin_size[];
 
 struct process procs[PROCS_MAX];
 struct process *current_proc;
@@ -48,8 +49,12 @@ void map_page(uint32_t *table1, uint32_t vaddr, paddr_t paddr, uint32_t flags) {
   table0[vpn0] = ((paddr / PAGE_SIZE) << 10) | flags | PAGE_V;
 }
 
+void user_entry(void) {
+  PANIC("not yet implemented, but entered the user mode!");
+}
+
 // Processes
-struct process *create_process(uint32_t pc) {
+struct process *create_process(const void *image, size_t image_size) {
   struct process *proc = NULL;
   int i;
   for (i = 0; i < PROCS_MAX; i++) {
@@ -63,19 +68,19 @@ struct process *create_process(uint32_t pc) {
     PANIC("no free process slots");
 
   uint32_t *sp = (uint32_t *)&proc->stack[sizeof(proc->stack)];
-  *--sp = 0;            // s11
-  *--sp = 0;            // s10
-  *--sp = 0;            // s9
-  *--sp = 0;            // s8
-  *--sp = 0;            // s7
-  *--sp = 0;            // s6
-  *--sp = 0;            // s5
-  *--sp = 0;            // s4
-  *--sp = 0;            // s3
-  *--sp = 0;            // s2
-  *--sp = 0;            // s1
-  *--sp = 0;            // s0
-  *--sp = (uint32_t)pc; // ra
+  *--sp = 0;                    // s11
+  *--sp = 0;                    // s10
+  *--sp = 0;                    // s9
+  *--sp = 0;                    // s8
+  *--sp = 0;                    // s7
+  *--sp = 0;                    // s6
+  *--sp = 0;                    // s5
+  *--sp = 0;                    // s4
+  *--sp = 0;                    // s3
+  *--sp = 0;                    // s2
+  *--sp = 0;                    // s1
+  *--sp = 0;                    // s0
+  *--sp = (uint32_t)user_entry; // ra
 
   uint32_t *page_table = (uint32_t *)alloc_pages(1);
 
@@ -83,6 +88,35 @@ struct process *create_process(uint32_t pc) {
   for (paddr_t paddr = (paddr_t)__kernel_base; paddr < (paddr_t)__free_ram_end;
        paddr += PAGE_SIZE)
     map_page(page_table, paddr, paddr, PAGE_R | PAGE_W | PAGE_X);
+
+  for (uint32_t off = 0; off < image_size; off += PAGE_SIZE) {
+    paddr_t page = alloc_pages(1);
+
+    size_t remaining = image_size - off;
+    size_t copy_size = PAGE_SIZE <= remaining ? PAGE_SIZE : remaining;
+
+    memcpy((void *)page, image + off, copy_size);
+
+    map_page(page_table, USER_BASE + off, page,
+             PAGE_U | PAGE_R | PAGE_W | PAGE_X);
+  }
+
+  // ユーザーのページをマッピングする
+  for (uint32_t off = 0; off < image_size; off += PAGE_SIZE) {
+    paddr_t page = alloc_pages(1);
+
+    // コピーするデータがページサイズより小さい場合を考慮
+    // https://github.com/nuta/operating-system-in-1000-lines/pull/27
+    size_t remaining = image_size - off;
+    size_t copy_size = PAGE_SIZE <= remaining ? PAGE_SIZE : remaining;
+
+    // 確保したページにデータをコピー
+    memcpy((void *)page, image + off, copy_size);
+
+    // ページテーブルにマッピング
+    map_page(page_table, USER_BASE + off, page,
+             PAGE_U | PAGE_R | PAGE_W | PAGE_X);
+  }
 
   // 各フィールドを初期化
   proc->pid = i + 1;
@@ -312,9 +346,6 @@ __attribute__((section(".text.boot"))) __attribute__((naked)) void boot(void) {
 void kernel_main(void) {
   memset(__bss, 0, (size_t)__bss_end - (size_t)__bss);
   WRITE_CSR(stvec, (uint32_t)kernel_entry);
-  idle_proc = create_process((uint32_t)NULL);
-  idle_proc->pid = 0;
-  current_proc = idle_proc;
 
   printf("\n\nHello %s\n", "World!");
   printf("1 + 2 = %d, %x\n", 1 + 2, 0x1234abcd);
@@ -324,12 +355,13 @@ void kernel_main(void) {
   printf("alloc_pages test: paddr0=%x\n", paddr0);
   printf("alloc_pages test: paddr1=%x\n", paddr1);
 
-  proc_a = create_process((uint32_t)proc_a_entry);
-  proc_b = create_process((uint32_t)proc_b_entry);
+  idle_proc = create_process(NULL, 0);
+  idle_proc->pid = 0;
+  current_proc = idle_proc;
 
+  create_process(_binary_shell_bin_start, (size_t)_binary_shell_bin_size);
   yield();
-
-  PANIC("ここには届かない");
+  PANIC("switched to idle process");
 
   for (;;) {
     __asm__ __volatile__("wfi");

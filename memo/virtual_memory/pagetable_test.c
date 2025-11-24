@@ -21,10 +21,13 @@
 ２、2段目の表を取り出して、該当エントリに物理ページを登録
 
 
-・create_process()の戻り値のプロセス管理構造体procsの中に
+・仮想アドレス空間をちゃんと作った場合（リンカスクリプト２種類）
+create_process()の戻り値のプロセス管理構造体procsの中に
 page_table
-がある。この戻り値がsatpレジスタにロードされる。
+があるが、この戻り値がsatpレジスタにロードされる。
+
 →CPUが現在のページテーブルの位置を知るのはsatpレジスタ
+→satpレジスタにロードされるのは物理メモリ上のページテーブル領域のアドレス
 */
 
 #include "../../common.c"
@@ -110,6 +113,27 @@ uint32_t *table0 = (uint32_t *)((table1[vpn1] >> 10) * PAGE_SIZE);
 で行なっている。
 */
 
+// 具体例
+/*
+void proc_a_entry (void) { switch_context( paddr_a, paddr_b )};
+void proc_b_entry (void) { switch_context( paddr_b, paddr_a )};
+proc_a = create_process(*proc_a_entry);
+proc_b = create_process(*proc_b_entry);
+proc_a();
+としたとき、
+
+proc_a の VA = 0x40000000 → PA = 0x10000
+table1[0] → table0 の物理アドレス 0x31000
+table0[0] → PPN = 0x10 → PA = 0x10000
+
+proc_b の VA = 0x40000000 → PA = 0x20000
+table1[0] → table0 の物理アドレス 0x33000
+table0[0] → PPN = 0x20 → PA = 0x20000
+
+ここで、proc_a();が呼ばれると、
+MMUがVA→PAを見て、正しいproc_aのコード領域にジャンプする
+*/
+
 // 補足
 /*
 3句構造のfor文＝for(初期化；継続条件；更新)
@@ -128,4 +152,31 @@ map_page(page_table, paddr, paddr, PAGE_R | PAGE_W | PAGE_X);
 
 仮想空間に移行するなら、
 リンカスクリプトが2種類必要（仮想、物理）
+*/
+
+/*
+va→paの変換はもっと低レイヤー？
+
+create_process でやること
+・スタック領域の初期化
+・ページテーブル用領域を確保
+・map_pageで、実際にページテーブル内にプロセスのエントリ（コード領域のはじめのアドレス）を書き込む
+
+プロセス切り替え時yield内でsatpレジスタにproc->page_tableの値をセット
+__asm__ __volatile__(
+      "sfence.vma\n"
+      "csrw satp, %[satp]\n"
+      "sfence.vma\n"
+      "csrw sscratch, %[sscratch]\n"
+      :
+      : [satp] "r"(SATP_SV32 | ((uint32_t)next->page_table / PAGE_SIZE)),
+        [sscratch] "r"((uint32_t)&next->stack[sizeof(next->stack)]));
+
+プロセス切り替えの流れ（仮想↔︎物理にフォーカス）
+１、カーネルが新しいプロセスの proc->page_table の物理アドレスを satp に書き込む
+２、sfence.vma 命令で TLB をフラッシュ
+３、CPU が仮想アドレスで命令やデータをアクセスするとき：
+    MMU が satp に書かれたページテーブルの物理アドレスを辿る（仕様）
+    ページテーブルから対応する PPN を取得
+    仮想アドレス → 物理アドレス変換が完了
 */

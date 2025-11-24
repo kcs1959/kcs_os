@@ -18,8 +18,9 @@ lw sp, &proc_a->sp で 中断時のスタックトップ を CPU sp に復元
 lw ra, s0…s11 で前回退避したレジスタを復元する
 */
 
+#include "../../common.h"
+#include "../../kernel.h"
 #include <stdint.h>
-#include <stdio.h>
 
 typedef uint32_t vaddr_t;
 
@@ -231,3 +232,69 @@ void kernel_main(void) {
   proc_b = create_process((uint32_t)function_b);
   function_a();
 }
+
+/*
+ページテーブルを導入したので・・・
+→同じ仮想アドレスでも違う物理アドレスにアクセスできる
+
+・対象プロセスのスタック領域確保
+・procs配列を返す
+以外に、
+・対象プロセスのページマッピング
+が必要。
+
+※プロセスのスタック領域を確保するだけでなく、
+そのプロセスの物理アドレス（今回はその中身の値はテーブルのアドレスと一致）
+を格納したページテーブル用の領域も【物理】メモリ上に確保する必要がある
+
+※「プロセスのスタック領域」とは、プロセスが途中で中断されたとき、
+その時のcpuレジスタをメモリに退避させる用のスタック領域
+最初は0で初期化しておく。
+
+※仮想メモリ上には、・プロセスのコード領域・各プロセスのスタック領域がある。
+物理メモリ上には、
+・プロセスのコード領域/スタック領域
+・各プロセスのページテーブル
+・カーネル
+が存在する。
+
+*/
+void create_process_extracted(void) {
+  for (paddr_t paddr = (paddr_t)__kernel_base; paddr < (paddr_t)__free_ram_end;
+       paddr += PAGE_SIZE)
+    map_page(page_table, paddr, paddr, PAGE_R | PAGE_W | PAGE_X);
+
+  for (uint32_t off = 0; off < image_size; off += PAGE_SIZE) {
+    paddr_t page = alloc_pages(1);
+
+    size_t remaining = image_size - off;
+    size_t copy_size = PAGE_SIZE <= remaining ? PAGE_SIZE : remaining;
+
+    memcpy((void *)page, image + off, copy_size);
+
+    map_page(page_table, USER_BASE + off, page,
+             PAGE_U | PAGE_R | PAGE_W | PAGE_X);
+  }
+}
+
+/*
+プロセスを、ユーザーモードで動かしたいので・・・
+
+アプリケーションのバイナリイメージをユーザー空間にコピーして独立させる
+｜｜
+引数を、実行関数の開始アドレス＝プログラムカウンタにするのではなく、
+*image, image_size とする。
+
+・ユーザー空間は、user.ldで . = 0x1000000; と定義した。
+
+・*image: プロセスにロードするイメージ（コンパイル済みのバイナリ）の先頭アドレス
+image_size: そのバイナリのコードのサイズ
+cpuの戻りアドレス（raレジスタ）には、user_entryを入れる
+
+・同じバイナリ（イメージ）を複数プロセスにロードしたい時、
+バイナリをユーザー空間にコピーせずに、そのままpcを渡すと、
+複数プロセスが同じ物理ページを参照し、
+一方の書き換えで他方が変わってしまったりする
+↑
+プロセス分離の原則に反する
+*/
