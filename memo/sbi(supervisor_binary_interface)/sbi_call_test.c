@@ -1,8 +1,13 @@
 /*
-Userモード、Supervisorモードで操作する、とは
+Q. Userモード、Supervisorモードで操作する、とは
 具体的に何をすることなのか
-syscall()→ecall→handle_trap()→handle_syscall()→sret
-→sepcレジスタ、stvecレジスタの仕様
+
+ヒント：syscall()→ecall→handle_trap()→handle_syscall()→sret
+
+A. stvecレジスタにkernel_entryのアドレスが入っていて、
+適宜そのレジスタの値を読み出す
+そのとき、(ecallの場所)+4のアドレスをsepcレジスタに入れる
+こと。
 */
 
 struct sbiret {

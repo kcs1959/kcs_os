@@ -1,0 +1,26 @@
+・アプリ (U-mode)
+・OS カーネル (S-mode)
+・M-mode（通常はファームウェア: OpenSBI）
+
+カーネルがSBIにハードウェア操作の命令をするとき、
+それぞれの命令を番号で管理し、
+適宜syscallで番号を引数に取って呼び出す。
+
+その番号割り当て方式で、昔のもの(v0.1~v0.2)は
+SBI Legacy Extension.
+
+0 console_putchar
+1 console_getchar
+2 system reset
+
+sbi_call( /* legacy extension ID */ )
+という形で呼び出す。
+
+新しいSBI(v0.3~)では、
+| Extension ID | 名称             |
+| ------------ | -------------- |
+| 0x10         | `SBI_EXT_TIME` |
+| 0x48534D     | `SBI_EXT_HSM`  |
+| 0x53525354   | `SBI_EXT_SRST` |
+のように進化した。
+
