@@ -322,6 +322,11 @@ void handle_syscall(struct trap_frame *f) {
       yield();
     }
     break;
+  case SYS_EXIT:
+    printf("process %d exited\n", current_proc->pid);
+    current_proc->state = PROC_EXITED;
+    yield();
+    PANIC("unreachable");
   default:
     PANIC("unexpected syscall a3=%x\n", f->a3);
   }
@@ -396,7 +401,7 @@ void kernel_main(void) {
 
   create_process(_binary_shell_bin_start, (size_t)_binary_shell_bin_size);
   yield();
-  PANIC("switched to idle process");
+  PANIC("shell discontinued");
 
   for (;;) {
     __asm__ __volatile__("wfi");

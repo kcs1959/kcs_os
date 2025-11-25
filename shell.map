@@ -1,7 +1,7 @@
      VMA      LMA     Size Align Out     In      Symbol
        0        0  1000000     1 . = 0x1000000
- 1000000  1000000      258     2 .text
- 1000000  1000000        e     2         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/user-4e4125.o:(.text.start)
+ 1000000  1000000      31a     2 .text
+ 1000000  1000000        e     2         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/user-8275be.o:(.text.start)
  1000000  1000000        0     1                 .L0 
  1000000  1000000        0     1                 .L0 
  1000000  1000000        0     1                 $x
@@ -9,300 +9,356 @@
  1000000  1000000        e     1                 start
  100000e  100000e        0     1                 .L0 
  100000e  100000e        0     1                 .L0 
- 100000e  100000e        a     2         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/shell-0eb9c2.o:(.text)
+ 100000e  100000e       b2     2         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/shell-4c0d5e.o:(.text)
  100000e  100000e        0     1                 .L0 
  100000e  100000e        0     1                 .L0 
  100000e  100000e        0     1                 $x
  100000e  100000e        0     1                 .L0 
- 100000e  100000e        a     1                 main
- 1000016  1000016        0     1                 .L0 
- 1000018  1000018        0     1                 .L0 
- 1000018  1000018        0     1                 .L0 
- 1000018  1000018       1e     2         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/user-4e4125.o:(.text)
- 1000018  1000018        0     1                 .L0 
- 1000018  1000018        0     1                 .L0 
- 1000018  1000018        0     1                 $x
- 1000018  1000018        0     1                 .L0 
- 1000018  1000018        2     1                 exit
- 100001a  100001a        0     1                 .L0 
- 100001a  100001a        0     1                 .L0 
- 100001a  100001a        0     1                 .L0 
- 100001a  100001a        0     1                 .L0 
- 100001a  100001a       10     1                 syscall
+ 100000e  100000e       b2     1                 main
  1000028  1000028        0     1                 .L0 
- 100002a  100002a        0     1                 .L0 
- 100002a  100002a        0     1                 .L0 
- 100002a  100002a        0     1                 .L0 
- 100002a  100002a        c     1                 putchar
- 1000036  1000036      222     2         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-f8cb39.o:(.text)
- 1000036  1000036        0     1                 .L0 
- 1000036  1000036        0     1                 .L0 
- 1000036  1000036        0     1                 $x
- 1000036  1000036        0     1                 .L0 
- 1000036  1000036      1a8     1                 printf
- 1000052  1000052        0     1                 .L0 
+ 1000064  1000064        0     1                 .L0 
+ 1000064  1000064        0     1                 .L0 
+ 1000064  1000064        0     1                 .L0 
+ 1000068  1000068        0     1                 .L0 
+ 1000068  1000068        0     1                 .L0 
+ 1000068  1000068        0     1                 .L0 
+ 100006c  100006c        0     1                 .L0 
+ 100006c  100006c        0     1                 .L0 
+ 100006e  100006e        0     1                 .L0 
+ 1000070  1000070        0     1                 .L0 
+ 1000076  1000076        0     1                 .L0 
+ 1000076  1000076        0     1                 .L0 
  100007c  100007c        0     1                 .L0 
+ 100007c  100007c        0     1                 .L0 
+ 1000080  1000080        0     1                 .L0 
+ 1000084  1000084        0     1                 .L0 
+ 1000088  1000088        0     1                 .L0 
+ 1000088  1000088        0     1                 .L0 
+ 100008a  100008a        0     1                 .L0 
  100008c  100008c        0     1                 .L0 
- 100008c  100008c        0     1                 .L0 
- 1000090  1000090        0     1                 .L0 
  1000090  1000090        0     1                 .L0 
  1000092  1000092        0     1                 .L0 
+ 1000092  1000092        0     1                 .L0 
  1000096  1000096        0     1                 .L0 
+ 1000098  1000098        0     1                 .L0 
+ 100009c  100009c        0     1                 .L0 
+ 100009c  100009c        0     1                 .L0 
  100009e  100009e        0     1                 .L0 
  100009e  100009e        0     1                 .L0 
- 10000a0  10000a0        0     1                 .L0 
- 10000a0  10000a0        0     1                 .L0 
+ 100009e  100009e        0     1                 .L0 
  10000a2  10000a2        0     1                 .L0 
- 10000a4  10000a4        0     1                 .L0 
- 10000a4  10000a4        0     1                 .L0 
- 10000aa  10000aa        0     1                 .L0 
- 10000ba  10000ba        0     1                 .L0 
- 10000ba  10000ba        0     1                 .L0 
- 10000c6  10000c6        0     1                 .L0 
- 10000c6  10000c6        0     1                 .L0 
- 10000ca  10000ca        0     1                 .L0 
- 10000ca  10000ca        0     1                 .L0 
- 10000cc  10000cc        0     1                 .L0 
- 10000d2  10000d2        0     1                 .L0 
- 10000d2  10000d2        0     1                 .L0 
+ 10000a2  10000a2        0     1                 .L0 
+ 10000a6  10000a6        0     1                 .L0 
+ 10000a6  10000a6        0     1                 .L0 
+ 10000ac  10000ac        0     1                 .L0 
+ 10000ac  10000ac        0     1                 .L0 
+ 10000ae  10000ae        0     1                 .L0 
+ 10000ae  10000ae        0     1                 .L0 
+ 10000b4  10000b4        0     1                 .L0 
+ 10000b4  10000b4        0     1                 .L0 
+ 10000b6  10000b6        0     1                 .L0 
+ 10000bc  10000bc        0     1                 .L0 
+ 10000bc  10000bc        0     1                 .L0 
+ 10000be  10000be        0     1                 .L0 
+ 10000be  10000be        0     1                 .L0 
+ 10000c0  10000c0        0     1                 .L0 
+ 10000c0  10000c0        0     1                 .L0 
+ 10000c0  10000c0        0     1                 .L0 
+ 10000c0  10000c0       38     2         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/user-8275be.o:(.text)
+ 10000c0  10000c0        0     1                 .L0 
+ 10000c0  10000c0        0     1                 .L0 
+ 10000c0  10000c0        0     1                 $x
+ 10000c0  10000c0        0     1                 .L0 
+ 10000c0  10000c0       10     1                 syscall
+ 10000ce  10000ce        0     1                 .L0 
+ 10000d0  10000d0        0     1                 .L0 
+ 10000d0  10000d0        0     1                 .L0 
+ 10000d0  10000d0        0     1                 .L0 
+ 10000d0  10000d0        c     1                 putchar
  10000da  10000da        0     1                 .L0 
- 10000da  10000da        0     1                 .L0 
- 10000e4  10000e4        0     1                 .L0 
- 10000e4  10000e4        0     1                 .L0 
- 10000e8  10000e8        0     1                 .L0 
+ 10000dc  10000dc        0     1                 .L0 
+ 10000dc  10000dc        0     1                 .L0 
+ 10000dc  10000dc        0     1                 .L0 
+ 10000dc  10000dc        e     1                 getchar
  10000e8  10000e8        0     1                 .L0 
  10000ea  10000ea        0     1                 .L0 
- 10000ee  10000ee        0     1                 .L0 
- 10000f0  10000f0        0     1                 .L0 
- 10000f0  10000f0        0     1                 .L0 
- 10000f6  10000f6        0     1                 .L0 
+ 10000ea  10000ea        0     1                 .L0 
+ 10000ea  10000ea        0     1                 .L0 
+ 10000ea  10000ea        e     1                 exit
  10000f6  10000f6        0     1                 .L0 
  10000f8  10000f8        0     1                 .L0 
- 10000fc  10000fc        0     1                 .L0 
- 10000fe  10000fe        0     1                 .L0 
- 10000fe  10000fe        0     1                 .L0 
- 1000104  1000104        0     1                 .L0 
- 1000104  1000104        0     1                 .L0 
- 1000106  1000106        0     1                 .L0 
- 100010a  100010a        0     1                 .L0 
- 100010c  100010c        0     1                 .L0 
- 100010c  100010c        0     1                 .L0 
- 1000112  1000112        0     1                 .L0 
- 1000112  1000112        0     1                 .L0 
+ 10000f8  10000f8      222     2         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-ae22d9.o:(.text)
+ 10000f8  10000f8        0     1                 .L0 
+ 10000f8  10000f8        0     1                 .L0 
+ 10000f8  10000f8        0     1                 $x
+ 10000f8  10000f8        0     1                 .L0 
+ 10000f8  10000f8      1a8     1                 printf
  1000114  1000114        0     1                 .L0 
- 1000118  1000118        0     1                 .L0 
- 100011a  100011a        0     1                 .L0 
- 100011a  100011a        0     1                 .L0 
- 1000120  1000120        0     1                 .L0 
- 1000120  1000120        0     1                 .L0 
- 1000122  1000122        0     1                 .L0 
- 1000126  1000126        0     1                 .L0 
- 1000128  1000128        0     1                 .L0 
- 1000128  1000128        0     1                 .L0 
- 100012e  100012e        0     1                 .L0 
- 100012e  100012e        0     1                 .L0 
- 1000130  1000130        0     1                 .L0 
- 1000134  1000134        0     1                 .L0 
- 1000136  1000136        0     1                 .L0 
- 1000136  1000136        0     1                 .L0 
- 100013c  100013c        0     1                 .L0 
- 100013c  100013c        0     1                 .L0 
  100013e  100013e        0     1                 .L0 
- 1000142  1000142        0     1                 .L0 
- 1000144  1000144        0     1                 .L0 
- 1000144  1000144        0     1                 .L0 
- 1000146  1000146        0     1                 .L0 
- 1000146  1000146        0     1                 .L0 
- 1000148  1000148        0     1                 .L0 
- 100014c  100014c        0     1                 .L0 
- 100014c  100014c        0     1                 .L0 
  100014e  100014e        0     1                 .L0 
  100014e  100014e        0     1                 .L0 
- 1000150  1000150        0     1                 .L0 
  1000152  1000152        0     1                 .L0 
  1000152  1000152        0     1                 .L0 
- 1000152  1000152        0     1                 .L0 
- 100015c  100015c        0     1                 .L0 
+ 1000154  1000154        0     1                 .L0 
+ 1000158  1000158        0     1                 .L0 
  1000160  1000160        0     1                 .L0 
- 1000166  1000166        0     1                 .L0 
+ 1000160  1000160        0     1                 .L0 
+ 1000162  1000162        0     1                 .L0 
+ 1000162  1000162        0     1                 .L0 
+ 1000164  1000164        0     1                 .L0 
  1000166  1000166        0     1                 .L0 
  1000166  1000166        0     1                 .L0 
  100016c  100016c        0     1                 .L0 
- 100016c  100016c        0     1                 .L0 
- 1000170  1000170        0     1                 .L0 
- 1000172  1000172        0     1                 .L0 
- 1000176  1000176        0     1                 .L0 
- 1000176  1000176        0     1                 .L0 
- 1000176  1000176        0     1                 .L0 
  100017c  100017c        0     1                 .L0 
  100017c  100017c        0     1                 .L0 
- 1000180  1000180        0     1                 .L0 
- 1000182  1000182        0     1                 .L0 
- 1000186  1000186        0     1                 .L0 
- 1000186  1000186        0     1                 .L0 
- 1000186  1000186        0     1                 .L0 
+ 1000188  1000188        0     1                 .L0 
+ 1000188  1000188        0     1                 .L0 
+ 100018c  100018c        0     1                 .L0 
  100018c  100018c        0     1                 .L0 
  100018e  100018e        0     1                 .L0 
- 1000192  1000192        0     1                 .L0 
- 1000196  1000196        0     1                 .L0 
- 1000196  1000196        0     1                 .L0 
- 1000196  1000196        0     1                 .L0 
- 1000198  1000198        0     1                 .L0 
- 1000198  1000198        0     1                 .L0 
+ 1000194  1000194        0     1                 .L0 
+ 1000194  1000194        0     1                 .L0 
  100019c  100019c        0     1                 .L0 
- 10001a0  10001a0        0     1                 .L0 
+ 100019c  100019c        0     1                 .L0 
  10001a6  10001a6        0     1                 .L0 
  10001a6  10001a6        0     1                 .L0 
- 10001b4  10001b4        0     1                 .L0 
- 10001b4  10001b4        0     1                 .L0 
+ 10001aa  10001aa        0     1                 .L0 
+ 10001aa  10001aa        0     1                 .L0 
+ 10001ac  10001ac        0     1                 .L0 
+ 10001b0  10001b0        0     1                 .L0 
+ 10001b2  10001b2        0     1                 .L0 
+ 10001b2  10001b2        0     1                 .L0 
+ 10001b8  10001b8        0     1                 .L0 
+ 10001b8  10001b8        0     1                 .L0 
  10001ba  10001ba        0     1                 .L0 
- 10001ba  10001ba        0     1                 .L0 
- 10001ba  10001ba        0     1                 .L0 
+ 10001be  10001be        0     1                 .L0 
  10001c0  10001c0        0     1                 .L0 
  10001c0  10001c0        0     1                 .L0 
- 10001c0  10001c0        0     1                 .L0 
- 10001c4  10001c4        0     1                 .L0 
+ 10001c6  10001c6        0     1                 .L0 
+ 10001c6  10001c6        0     1                 .L0 
+ 10001c8  10001c8        0     1                 .L0 
+ 10001cc  10001cc        0     1                 .L0 
+ 10001ce  10001ce        0     1                 .L0 
+ 10001ce  10001ce        0     1                 .L0 
+ 10001d4  10001d4        0     1                 .L0 
+ 10001d4  10001d4        0     1                 .L0 
+ 10001d6  10001d6        0     1                 .L0 
  10001da  10001da        0     1                 .L0 
- 10001de  10001de        0     1                 .L0 
- 10001de  10001de        0     1                 .L0 
- 10001de  10001de        0     1                 .L0 
- 10001de  10001de        0     1                 .L0 
- 10001de  10001de        0     1                 .L0 
- 10001de  10001de       1c     1                 memcpy
+ 10001dc  10001dc        0     1                 .L0 
+ 10001dc  10001dc        0     1                 .L0 
  10001e2  10001e2        0     1                 .L0 
  10001e2  10001e2        0     1                 .L0 
  10001e4  10001e4        0     1                 .L0 
- 10001ee  10001ee        0     1                 .L0 
- 10001f4  10001f4        0     1                 .L0 
- 10001f4  10001f4        0     1                 .L0 
+ 10001e8  10001e8        0     1                 .L0 
+ 10001ea  10001ea        0     1                 .L0 
+ 10001ea  10001ea        0     1                 .L0 
+ 10001f0  10001f0        0     1                 .L0 
+ 10001f0  10001f0        0     1                 .L0 
+ 10001f2  10001f2        0     1                 .L0 
+ 10001f6  10001f6        0     1                 .L0 
  10001f8  10001f8        0     1                 .L0 
  10001f8  10001f8        0     1                 .L0 
- 10001fa  10001fa        0     1                 .L0 
- 10001fa  10001fa        0     1                 .L0 
- 10001fa  10001fa        0     1                 .L0 
- 10001fa  10001fa       16     1                 memset
  10001fe  10001fe        0     1                 .L0 
  10001fe  10001fe        0     1                 .L0 
  1000200  1000200        0     1                 .L0 
  1000204  1000204        0     1                 .L0 
- 100020a  100020a        0     1                 .L0 
+ 1000206  1000206        0     1                 .L0 
+ 1000206  1000206        0     1                 .L0 
+ 1000208  1000208        0     1                 .L0 
+ 1000208  1000208        0     1                 .L0 
  100020a  100020a        0     1                 .L0 
  100020e  100020e        0     1                 .L0 
  100020e  100020e        0     1                 .L0 
  1000210  1000210        0     1                 .L0 
  1000210  1000210        0     1                 .L0 
- 1000210  1000210        0     1                 .L0 
- 1000210  1000210       24     1                 strcpy
- 1000216  1000216        0     1                 .L0 
- 100021a  100021a        0     1                 .L0 
- 100021a  100021a        0     1                 .L0 
- 100021c  100021c        0     1                 .L0 
+ 1000212  1000212        0     1                 .L0 
+ 1000214  1000214        0     1                 .L0 
+ 1000214  1000214        0     1                 .L0 
+ 1000214  1000214        0     1                 .L0 
+ 100021e  100021e        0     1                 .L0 
+ 1000222  1000222        0     1                 .L0 
  1000228  1000228        0     1                 .L0 
- 100022a  100022a        0     1                 .L0 
- 100022c  100022c        0     1                 .L0 
+ 1000228  1000228        0     1                 .L0 
+ 1000228  1000228        0     1                 .L0 
  100022e  100022e        0     1                 .L0 
  100022e  100022e        0     1                 .L0 
  1000232  1000232        0     1                 .L0 
  1000234  1000234        0     1                 .L0 
- 1000234  1000234        0     1                 .L0 
- 1000234  1000234        0     1                 .L0 
- 1000234  1000234       24     1                 strcmp
  1000238  1000238        0     1                 .L0 
- 100023a  100023a        0     1                 .L0 
- 100023c  100023c        0     1                 .L0 
- 1000240  1000240        0     1                 .L0 
+ 1000238  1000238        0     1                 .L0 
+ 1000238  1000238        0     1                 .L0 
+ 100023e  100023e        0     1                 .L0 
+ 100023e  100023e        0     1                 .L0 
+ 1000242  1000242        0     1                 .L0 
  1000244  1000244        0     1                 .L0 
- 1000244  1000244        0     1                 .L0 
- 100024a  100024a        0     1                 .L0 
- 100024c  100024c        0     1                 .L0 
+ 1000248  1000248        0     1                 .L0 
+ 1000248  1000248        0     1                 .L0 
+ 1000248  1000248        0     1                 .L0 
  100024e  100024e        0     1                 .L0 
+ 1000250  1000250        0     1                 .L0 
+ 1000254  1000254        0     1                 .L0 
  1000258  1000258        0     1                 .L0 
- 1000258  1000258       29     4 .rodata
- 1000258  1000258       29     1         <internal>:(.rodata.str1.1)
- 1000284  1000284    1000c     4 .bss
- 1000284  1000284        c     1         . = ALIGN(16)
- 1000290  1000290    10000     1         . += 64 * 1024
- 1010290  1010290        0     1         __stack_top = .
- 1010290  1010290        0     1         
-       0        0      2cc     1 .debug_abbrev
-       0        0       9a     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/shell-0eb9c2.o:(.debug_abbrev)
+ 1000258  1000258        0     1                 .L0 
+ 1000258  1000258        0     1                 .L0 
+ 100025a  100025a        0     1                 .L0 
+ 100025a  100025a        0     1                 .L0 
+ 100025e  100025e        0     1                 .L0 
+ 1000262  1000262        0     1                 .L0 
+ 1000268  1000268        0     1                 .L0 
+ 1000268  1000268        0     1                 .L0 
+ 1000276  1000276        0     1                 .L0 
+ 1000276  1000276        0     1                 .L0 
+ 100027c  100027c        0     1                 .L0 
+ 100027c  100027c        0     1                 .L0 
+ 100027c  100027c        0     1                 .L0 
+ 1000282  1000282        0     1                 .L0 
+ 1000282  1000282        0     1                 .L0 
+ 1000282  1000282        0     1                 .L0 
+ 1000286  1000286        0     1                 .L0 
+ 100029c  100029c        0     1                 .L0 
+ 10002a0  10002a0        0     1                 .L0 
+ 10002a0  10002a0        0     1                 .L0 
+ 10002a0  10002a0        0     1                 .L0 
+ 10002a0  10002a0        0     1                 .L0 
+ 10002a0  10002a0        0     1                 .L0 
+ 10002a0  10002a0       1c     1                 memcpy
+ 10002a4  10002a4        0     1                 .L0 
+ 10002a4  10002a4        0     1                 .L0 
+ 10002a6  10002a6        0     1                 .L0 
+ 10002b0  10002b0        0     1                 .L0 
+ 10002b6  10002b6        0     1                 .L0 
+ 10002b6  10002b6        0     1                 .L0 
+ 10002ba  10002ba        0     1                 .L0 
+ 10002ba  10002ba        0     1                 .L0 
+ 10002bc  10002bc        0     1                 .L0 
+ 10002bc  10002bc        0     1                 .L0 
+ 10002bc  10002bc        0     1                 .L0 
+ 10002bc  10002bc       16     1                 memset
+ 10002c0  10002c0        0     1                 .L0 
+ 10002c0  10002c0        0     1                 .L0 
+ 10002c2  10002c2        0     1                 .L0 
+ 10002c6  10002c6        0     1                 .L0 
+ 10002cc  10002cc        0     1                 .L0 
+ 10002cc  10002cc        0     1                 .L0 
+ 10002d0  10002d0        0     1                 .L0 
+ 10002d0  10002d0        0     1                 .L0 
+ 10002d2  10002d2        0     1                 .L0 
+ 10002d2  10002d2        0     1                 .L0 
+ 10002d2  10002d2        0     1                 .L0 
+ 10002d2  10002d2       24     1                 strcpy
+ 10002d8  10002d8        0     1                 .L0 
+ 10002dc  10002dc        0     1                 .L0 
+ 10002dc  10002dc        0     1                 .L0 
+ 10002de  10002de        0     1                 .L0 
+ 10002ea  10002ea        0     1                 .L0 
+ 10002ec  10002ec        0     1                 .L0 
+ 10002ee  10002ee        0     1                 .L0 
+ 10002f0  10002f0        0     1                 .L0 
+ 10002f0  10002f0        0     1                 .L0 
+ 10002f4  10002f4        0     1                 .L0 
+ 10002f6  10002f6        0     1                 .L0 
+ 10002f6  10002f6        0     1                 .L0 
+ 10002f6  10002f6        0     1                 .L0 
+ 10002f6  10002f6       24     1                 strcmp
+ 10002fa  10002fa        0     1                 .L0 
+ 10002fc  10002fc        0     1                 .L0 
+ 10002fe  10002fe        0     1                 .L0 
+ 1000302  1000302        0     1                 .L0 
+ 1000306  1000306        0     1                 .L0 
+ 1000306  1000306        0     1                 .L0 
+ 100030c  100030c        0     1                 .L0 
+ 100030e  100030e        0     1                 .L0 
+ 1000310  1000310        0     1                 .L0 
+ 100031a  100031a        0     1                 .L0 
+ 100031c  100031c       66     4 .rodata
+ 100031c  100031c       66     1         <internal>:(.rodata.str1.1)
+ 1000384  1000384    1000c     4 .bss
+ 1000384  1000384        c     1         . = ALIGN(16)
+ 1000390  1000390    10000     1         . += 64 * 1024
+ 1010390  1010390        0     1         __stack_top = .
+ 1010390  1010390        0     1         
+       0        0      2f3     1 .debug_loclists
+       0        0       4c     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/shell-4c0d5e.o:(.debug_loclists)
        0        0        0     1                 $d
-      9a       9a      103     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/user-4e4125.o:(.debug_abbrev)
-      9a       9a        0     1                 $d
-     19d      19d      12f     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-f8cb39.o:(.debug_abbrev)
-     19d      19d        0     1                 $d
-       0        0      3cd     1 .debug_info
-       0        0       69     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/shell-0eb9c2.o:(.debug_info)
+       c        c        0     1                 .L0 
+      4c       4c       c6     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/user-8275be.o:(.debug_loclists)
+      4c       4c        0     1                 $d
+      58       58        0     1                 .L0 
+     112      112      1e1     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-ae22d9.o:(.debug_loclists)
+     112      112        0     1                 $d
+     11e      11e        0     1                 .L0 
+       0        0      354     1 .debug_abbrev
+       0        0      109     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/shell-4c0d5e.o:(.debug_abbrev)
        0        0        0     1                 $d
-      69       69      125     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/user-4e4125.o:(.debug_info)
-      69       69        0     1                 $d
-     18e      18e      23f     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-f8cb39.o:(.debug_info)
-     18e      18e        0     1                 $d
-       0        0      10c     1 .debug_str_offsets
-       0        0       24     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/shell-0eb9c2.o:(.debug_str_offsets)
+     109      109      11c     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/user-8275be.o:(.debug_abbrev)
+     109      109        0     1                 $d
+     225      225      12f     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-ae22d9.o:(.debug_abbrev)
+     225      225        0     1                 $d
+       0        0      595     1 .debug_info
+       0        0      1a4     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/shell-4c0d5e.o:(.debug_info)
+       0        0        0     1                 $d
+     1a4      1a4      1b2     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/user-8275be.o:(.debug_info)
+     1a4      1a4        0     1                 $d
+     356      356      23f     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-ae22d9.o:(.debug_info)
+     356      356        0     1                 $d
+       0        0      134     1 .debug_str_offsets
+       0        0       48     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/shell-4c0d5e.o:(.debug_str_offsets)
        0        0        0     1                 $d
        8        8        0     1                 .L0 
-      24       24       50     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/user-4e4125.o:(.debug_str_offsets)
-      24       24        0     1                 $d
-      2c       2c        0     1                 .L0 
-      74       74       98     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-f8cb39.o:(.debug_str_offsets)
-      74       74        0     1                 $d
-      7c       7c        0     1                 .L0 
-       0        0      16f     1 .debug_str
-       0        0      16f     1         <internal>:(.debug_str)
-       0        0       8c     1 .debug_addr
-       0        0       14     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/shell-0eb9c2.o:(.debug_addr)
+      48       48       54     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/user-8275be.o:(.debug_str_offsets)
+      48       48        0     1                 $d
+      50       50        0     1                 .L0 
+      9c       9c       98     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-ae22d9.o:(.debug_str_offsets)
+      9c       9c        0     1                 $d
+      a4       a4        0     1                 .L0 
+       0        0      186     1 .debug_str
+       0        0      186     1         <internal>:(.debug_str)
+       0        0       d8     1 .debug_addr
+       0        0       5c     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/shell-4c0d5e.o:(.debug_addr)
        0        0        0     1                 $d
        8        8        0     1                 .L0 
-      14       14       18     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/user-4e4125.o:(.debug_addr)
-      14       14        0     1                 $d
-      1c       1c        0     1                 .L0 
-      2c       2c       60     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-f8cb39.o:(.debug_addr)
-      2c       2c        0     1                 $d
-      34       34        0     1                 .L0 
+      5c       5c       1c     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/user-8275be.o:(.debug_addr)
+      5c       5c        0     1                 $d
+      64       64        0     1                 .L0 
+      78       78       60     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-ae22d9.o:(.debug_addr)
+      78       78        0     1                 $d
+      80       80        0     1                 .L0 
        0        0       3b     1 .comment
        0        0       3b     1         <internal>:(.comment)
        0        0       4e     1 .riscv.attributes
        0        0       4e     1         <internal>:(.riscv.attributes)
-       0        0      110     4 .debug_frame
-       0        0       24     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/shell-0eb9c2.o:(.debug_frame)
+       0        0      140     4 .debug_frame
+       0        0       44     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/shell-4c0d5e.o:(.debug_frame)
        0        0        0     1                 .L0 
        0        0        0     1                 $d
-      24       24       54     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/user-4e4125.o:(.debug_frame)
-      24       24        0     1                 .L0 
-      24       24        0     1                 $d
-      78       78       98     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-f8cb39.o:(.debug_frame)
-      78       78        0     1                 .L0 
-      78       78        0     1                 $d
-       0        0      3fc     1 .debug_line
-       0        0       6f     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/shell-0eb9c2.o:(.debug_line)
+      44       44       64     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/user-8275be.o:(.debug_frame)
+      44       44        0     1                 .L0 
+      44       44        0     1                 $d
+      a8       a8       98     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-ae22d9.o:(.debug_frame)
+      a8       a8        0     1                 .L0 
+      a8       a8        0     1                 $d
+       0        0      4c5     1 .debug_line
+       0        0      132     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/shell-4c0d5e.o:(.debug_line)
        0        0        0     1                 .Lline_table_start0
        0        0        0     1                 $d
-      6f       6f       8b     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/user-4e4125.o:(.debug_line)
-      6f       6f        0     1                 .Lline_table_start0
-      6f       6f        0     1                 $d
-      fa       fa      302     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-f8cb39.o:(.debug_line)
-      fa       fa        0     1                 .Lline_table_start0
-      fa       fa        0     1                 $d
-       0        0       48     1 .debug_line_str
-       0        0       48     1         <internal>:(.debug_line_str)
-       0        0      28b     1 .debug_loclists
-       0        0       aa     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/user-4e4125.o:(.debug_loclists)
+     132      132       91     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/user-8275be.o:(.debug_line)
+     132      132        0     1                 .Lline_table_start0
+     132      132        0     1                 $d
+     1c3      1c3      302     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-ae22d9.o:(.debug_line)
+     1c3      1c3        0     1                 .Lline_table_start0
+     1c3      1c3        0     1                 $d
+       0        0       4f     1 .debug_line_str
+       0        0       4f     1         <internal>:(.debug_line_str)
+       0        0       32     1 .debug_rnglists
+       0        0       17     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/user-8275be.o:(.debug_rnglists)
        0        0        0     1                 $d
        c        c        0     1                 .L0 
-      aa       aa      1e1     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-f8cb39.o:(.debug_loclists)
-      aa       aa        0     1                 $d
-      b6       b6        0     1                 .L0 
-       0        0       37     1 .debug_rnglists
-       0        0       1c     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/user-4e4125.o:(.debug_rnglists)
-       0        0        0     1                 $d
-       c        c        0     1                 .L0 
-      1c       1c       1b     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-f8cb39.o:(.debug_rnglists)
-      1c       1c        0     1                 $d
-      28       28        0     1                 .L0 
-       0        0      370     4 .symtab
-       0        0      370     4         <internal>:(.symtab)
+      17       17       1b     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-ae22d9.o:(.debug_rnglists)
+      17       17        0     1                 $d
+      23       23        0     1                 .L0 
+       0        0      390     4 .symtab
+       0        0      390     4         <internal>:(.symtab)
        0        0       d6     1 .shstrtab
        0        0       d6     1         <internal>:(.shstrtab)
-       0        0       e0     1 .strtab
-       0        0       e0     1         <internal>:(.strtab)
+       0        0       eb     1 .strtab
+       0        0       eb     1         <internal>:(.strtab)

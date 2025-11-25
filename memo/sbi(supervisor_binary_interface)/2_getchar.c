@@ -1,5 +1,21 @@
-#include "user.h"
+#include "../../common.h"
+#include "./sbi_call_test.c"
 
+long getchar(void) {
+  struct sbiret ret = sbi_call(0, 0, 0, 0, 0, 0, 0, 2);
+  return ret.error;
+}
+
+/*
+今回はデバッグコンソールなので、
+ret構造体のvalueではなくerror属性を返す
+*/
+
+/*
+getcharで入力を受け付け、入力がhelloだったらputcharで文章を表示、
+違ったら入力値をそのまま返す
+というhelloコマンドを実装する。
+*/
 void main(void) {
   while (1) {
   prompt:
@@ -22,8 +38,6 @@ void main(void) {
 
     if (strcmp(cmdline, "hello") == 0)
       printf("Hello world from shell!\n");
-    else if (strcmp(cmdline, "exit") == 0)
-      exit();
     else
       printf("unknown command: %s\n", cmdline);
   }

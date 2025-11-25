@@ -6,7 +6,7 @@
 // これはユーザーが直接sbiを叩いてて良くない
 void putchar(char ch) { sbi_call(ch, 0, 0, 0, 0, 0, 0, 1); }
 
-// まずsyscall
+// まずsyscall。これは標準sbi.h内で定義されている
 int syscall(int sysno, int arg0, int arg1, int arg2) {
   register int a0 __asm__("a0") = arg0;
   register int a1 __asm__("a1") = arg1;
