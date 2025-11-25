@@ -259,7 +259,7 @@ void kernel_main(void) {
 が存在する。
 
 */
-void create_process_extracted(void) {
+void *create_process_extracted(const void *image, size_t image_size) {
   for (paddr_t paddr = (paddr_t)__kernel_base; paddr < (paddr_t)__free_ram_end;
        paddr += PAGE_SIZE)
     map_page(page_table, paddr, paddr, PAGE_R | PAGE_W | PAGE_X);
@@ -270,8 +270,10 @@ void create_process_extracted(void) {
     size_t remaining = image_size - off;
     size_t copy_size = PAGE_SIZE <= remaining ? PAGE_SIZE : remaining;
 
+    // 確保したページにバイナリイメージをコピー
     memcpy((void *)page, image + off, copy_size);
 
+    // ページテーブルマッピング（物理メモリ上でページテーブル領域を確保）
     map_page(page_table, USER_BASE + off, page,
              PAGE_U | PAGE_R | PAGE_W | PAGE_X);
   }
@@ -295,6 +297,5 @@ cpuの戻りアドレス（raレジスタ）には、user_entryを入れる
 バイナリをユーザー空間にコピーせずに、そのままpcを渡すと、
 複数プロセスが同じ物理ページを参照し、
 一方の書き換えで他方が変わってしまったりする
-↑
-プロセス分離の原則に反する
+↑プロセス分離の原則に反する
 */

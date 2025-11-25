@@ -1,3 +1,10 @@
+/*
+Userモード、Supervisorモードで操作する、とは
+具体的に何をすることなのか
+syscall()→ecall→handle_trap()→handle_syscall()→sret
+→sepcレジスタ、stvecレジスタの仕様
+*/
+
 struct sbiret {
   long error;
   long value;
@@ -58,7 +65,6 @@ RISC-Vでは、SBI呼び出しのパラメータは レジスタ a0〜a7 に入�
 /*
 全体的に・・・
 printf内←putchar内←sbi_call
-
 */
 
 /*
@@ -86,5 +92,4 @@ flag を volatileにすることで、
 コンパイラは、毎回必ずメモリのデータ領域（∵グローバル変数）からflagを読み直す
 
 （↑割り込みハンドラは、通常のCPUレジスタにコピーされた変数の値は直接変えられない）
-
 */

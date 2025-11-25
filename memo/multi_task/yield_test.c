@@ -5,7 +5,7 @@
 context_switchで切り替え後のプロセスを指定するのがむずい
 →どのプロセスに切り替えるべきかも決めるのがスケジューラ yield();
 */
-#include "context_switch_test.c"
+#include "./context_switch_test.c"
 typedef unsigned char uint8_t;
 typedef unsigned int uint32_t;
 typedef uint32_t vaddr_t;
