@@ -31,3 +31,5 @@ int strcmp(const char *s1, const char *s2);
 void printf(const char *fmt, ...);
 int rand(void);
 void srand(unsigned int seed);
+
+void read_write_disk(void *buf, unsigned sector, int is_write);

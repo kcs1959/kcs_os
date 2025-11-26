@@ -152,3 +152,18 @@ struct virtio_blk_req {
   uint8_t data[512];
   uint8_t status;
 } __attribute__((packed));
+
+#define SECTOR_SIZE 512
+#define CLUSTER_SIZE 1
+#define FAT_ENTRY_NUM 4096
+
+uint16_t fat[FAT_ENTRY_NUM];
+struct dir_entry {
+  char name[8];
+  char ext[3];
+  uint8_t attr;
+  uint16_t start_cluster;
+  uint32_t size;
+};
+
+struct dir_entry root_dir[16];
