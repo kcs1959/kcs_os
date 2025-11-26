@@ -34,8 +34,6 @@ struct sbiret sbi_call(long arg0, long arg1, long arg2, long arg3, long arg4,
   return (struct sbiret){.error = a0, .value = a1};
 }
 
-void putchar(char ch) { sbi_call(ch, 0, 0, 0, 0, 0, 0, 1); }
-
 /*
 CPU に複数の特権レベルがあります：
 ・User モード：普通のアプリが動く
@@ -65,11 +63,6 @@ RISC-Vでは、SBI呼び出しのパラメータは レジスタ a0〜a7 に入�
 ・static　← static int x = 5; は関数外でも使える（DATAセクション）
 ・extern ← 他ファイルで宣言された変数の利用時
 ・typedef ← 既存のデータ型にエイリアスをつける（変数は作らない）
-*/
-
-/*
-全体的に・・・
-printf内←putchar内←sbi_call
 */
 
 /*

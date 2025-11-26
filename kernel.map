@@ -1,8 +1,8 @@
      VMA      LMA     Size Align Out     In      Symbol
        0        0 80200000     1 . = 0x80200000
 80200000        0        0     1 __kernel_base = .
-80200000 80200000      b68     4 .text
-80200000 80200000        e     2         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-afd7d3.o:(.text.boot)
+80200000 80200000      b9a     4 .text
+80200000 80200000        e     2         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-63d480.o:(.text.boot)
 80200000 80200000        0     1                 .L0 
 80200000 80200000        0     1                 .L0 
 80200000 80200000        0     1                 $x
@@ -10,7 +10,7 @@
 80200000 80200000        e     1                 boot
 8020000e 8020000e        0     1                 .L0 
 8020000e 8020000e        0     1                 .L0 
-80200010 80200010      936     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-afd7d3.o:(.text)
+80200010 80200010      936     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-63d480.o:(.text)
 80200010 80200010        0     1                 .L0 
 80200010 80200010        0     1                 .L0 
 80200010 80200010        0     1                 $x
@@ -581,7 +581,7 @@
 80200944 80200944        0     1                 .L0 
 80200946 80200946        0     1                 .L0 
 80200946 80200946        0     1                 .L0 
-80200946 80200946      222     2         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-bc73fa.o:(.text)
+80200946 80200946      254     2         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-c84caf.o:(.text)
 80200946 80200946        0     1                 .L0 
 80200946 80200946        0     1                 .L0 
 80200946 80200946        0     1                 $x
@@ -763,97 +763,118 @@
 80200b5a 80200b5a        0     1                 .L0 
 80200b5c 80200b5c        0     1                 .L0 
 80200b5e 80200b5e        0     1                 .L0 
+80200b66 80200b66        0     1                 .L0 
 80200b68 80200b68        0     1                 .L0 
-80200b68 80200b68      1f2     4 .rodata
-80200b68 80200b68      1f2     1         <internal>:(.rodata.str1.1)
-80200d5c 80200d5c    10394     4 .data
-80200d5c 80200d5c        4     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-afd7d3.o:(.data)
-80200d5c 80200d5c        4     1                 alloc_pages.next_paddr
-80200d5c 80200d5c        0     1                 $d
-80200d60 80200d60    10390     1         shell.bin.o:(.data)
-80200d60 80200d60        0     1                 _binary_shell_bin_start
-802110f0 802110f0        0     1                 _binary_shell_bin_end
-802110f0 802110f0    10090     4 .bss
-802110f0 802110f0        0     1         __bss = .
-802110f0 802110f0    10090     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-afd7d3.o:(.bss)
-802110f0 802110f0        0     1                 $d
-802110f0 802110f0    10080     1                 procs
-80221170 80221170        4     1                 proc_a
-80221174 80221174        4     1                 proc_b
-80221178 80221178        8     1                 .L_MergedGlobals
-80221178 80221178        4     1                 idle_proc
-8022117c 8022117c        4     1                 current_proc
-80221180 80221180        0     1         __bss_end = .
-80221180 80221180        0     1 . = ALIGN(4)
-80221180 80221180    20000     1 . += 128 * 1024
-80241180 80241180        0     1 __stack_top = .
-80241180 80241180      e80     1 . = ALIGN(4096)
+80200b68 80200b68        0     1                 .L0 
+80200b68 80200b68        0     1                 .L0 
+80200b68 80200b68        a     1                 srand
+80200b70 80200b70        0     1                 .L0 
+80200b72 80200b72        0     1                 .L0 
+80200b72 80200b72        0     1                 .L0 
+80200b72 80200b72        0     1                 .L0 
+80200b72 80200b72        0     1                 .L0 
+80200b72 80200b72        0     1                 .L0 
+80200b72 80200b72       28     1                 rand
+80200b82 80200b82        0     1                 .L0 
+80200b8c 80200b8c        0     1                 .L0 
+80200b8e 80200b8e        0     1                 .L0 
+80200b94 80200b94        0     1                 .L0 
+80200b98 80200b98        0     1                 .L0 
+80200b9a 80200b9a        0     1                 .L0 
+80200b9a 80200b9a        0     1                 .L0 
+80200b9c 80200b9c      1f2     4 .rodata
+80200b9c 80200b9c      1f2     1         <internal>:(.rodata.str1.1)
+80200d90 80200d90    10558     4 .data
+80200d90 80200d90        4     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-63d480.o:(.data)
+80200d90 80200d90        4     1                 alloc_pages.next_paddr
+80200d90 80200d90        0     1                 $d
+80200d94 80200d94        4     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-c84caf.o:(.data)
+80200d94 80200d94        4     1                 next
+80200d94 80200d94        0     1                 $d
+80200d98 80200d98    10550     1         shell.bin.o:(.data)
+80200d98 80200d98        0     1                 _binary_shell_bin_start
+802112e8 802112e8        0     1                 _binary_shell_bin_end
+802112e8 802112e8    10090     4 .bss
+802112e8 802112e8        0     1         __bss = .
+802112e8 802112e8    10090     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-63d480.o:(.bss)
+802112e8 802112e8        0     1                 $d
+802112e8 802112e8    10080     1                 procs
+80221368 80221368        4     1                 proc_a
+8022136c 8022136c        4     1                 proc_b
+80221370 80221370        8     1                 .L_MergedGlobals
+80221370 80221370        4     1                 idle_proc
+80221374 80221374        4     1                 current_proc
+80221378 80221378        0     1         __bss_end = .
+80221378 80221378        0     1 . = ALIGN(4)
+80221378 80221378    20000     1 . += 128 * 1024
+80241378 80241378        0     1 __stack_top = .
+80241378 80241378      c88     1 . = ALIGN(4096)
 80242000 80242000        0     1 __free_ram = .
 80242000 80242000  4000000     1 . += 64 * 1024 * 1024
 84242000 84242000        0     1 __free_ram_end = .
        0        0      8a2     1 .debug_loclists
-       0        0      6c1     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-afd7d3.o:(.debug_loclists)
+       0        0      6c1     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-63d480.o:(.debug_loclists)
        0        0        0     1                 $d
        c        c        0     1                 .L0 
-     6c1      6c1      1e1     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-bc73fa.o:(.debug_loclists)
+     6c1      6c1      1e1     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-c84caf.o:(.debug_loclists)
      6c1      6c1        0     1                 $d
      6cd      6cd        0     1                 .L0 
-       0        0      427     1 .debug_abbrev
-       0        0      2f8     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-afd7d3.o:(.debug_abbrev)
+       0        0      44f     1 .debug_abbrev
+       0        0      2f8     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-63d480.o:(.debug_abbrev)
        0        0        0     1                 $d
-     2f8      2f8      12f     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-bc73fa.o:(.debug_abbrev)
+     2f8      2f8      157     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-c84caf.o:(.debug_abbrev)
      2f8      2f8        0     1                 $d
-       0        0      ee6     1 .debug_info
-       0        0      ca7     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-afd7d3.o:(.debug_info)
+       0        0      f1a     1 .debug_info
+       0        0      ca7     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-63d480.o:(.debug_info)
        0        0        0     1                 $d
-     ca7      ca7      23f     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-bc73fa.o:(.debug_info)
+     ca7      ca7      273     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-c84caf.o:(.debug_info)
      ca7      ca7        0     1                 $d
        0        0       cc     1 .debug_rnglists
-       0        0       b1     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-afd7d3.o:(.debug_rnglists)
+       0        0       b1     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-63d480.o:(.debug_rnglists)
        0        0        0     1                 $d
        c        c        0     1                 .L0 
-      b1       b1       1b     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-bc73fa.o:(.debug_rnglists)
+      b1       b1       1b     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-c84caf.o:(.debug_rnglists)
       b1       b1        0     1                 $d
       bd       bd        0     1                 .L0 
-       0        0      274     1 .debug_str_offsets
-       0        0      1dc     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-afd7d3.o:(.debug_str_offsets)
+       0        0      288     1 .debug_str_offsets
+       0        0      1dc     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-63d480.o:(.debug_str_offsets)
        0        0        0     1                 $d
        8        8        0     1                 .L0 
-     1dc      1dc       98     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-bc73fa.o:(.debug_str_offsets)
+     1dc      1dc       ac     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-c84caf.o:(.debug_str_offsets)
      1dc      1dc        0     1                 $d
      1e4      1e4        0     1                 .L0 
-       0        0      390     1 .debug_str
-       0        0      390     1         <internal>:(.debug_str)
-       0        0      1e4     1 .debug_addr
-       0        0      184     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-afd7d3.o:(.debug_addr)
+       0        0      3a0     1 .debug_str
+       0        0      3a0     1         <internal>:(.debug_str)
+       0        0      1f0     1 .debug_addr
+       0        0      184     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-63d480.o:(.debug_addr)
        0        0        0     1                 $d
        8        8        0     1                 .L0 
-     184      184       60     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-bc73fa.o:(.debug_addr)
+     184      184       6c     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-c84caf.o:(.debug_addr)
      184      184        0     1                 $d
      18c      18c        0     1                 .L0 
        0        0       3b     1 .comment
        0        0       3b     1         <internal>:(.comment)
        0        0       4e     1 .riscv.attributes
        0        0       4e     1         <internal>:(.riscv.attributes)
-       0        0      264     4 .debug_frame
-       0        0      1cc     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-afd7d3.o:(.debug_frame)
+       0        0      284     4 .debug_frame
+       0        0      1cc     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-63d480.o:(.debug_frame)
        0        0        0     1                 .L0 
        0        0        0     1                 $d
-     1cc      1cc       98     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-bc73fa.o:(.debug_frame)
+     1cc      1cc       b8     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-c84caf.o:(.debug_frame)
      1cc      1cc        0     1                 .L0 
      1cc      1cc        0     1                 $d
-       0        0      b94     1 .debug_line
-       0        0      892     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-afd7d3.o:(.debug_line)
+       0        0      bdb     1 .debug_line
+       0        0      892     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-63d480.o:(.debug_line)
        0        0        0     1                 .Lline_table_start0
        0        0        0     1                 $d
-     892      892      302     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-bc73fa.o:(.debug_line)
+     892      892      349     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-c84caf.o:(.debug_line)
      892      892        0     1                 .Lline_table_start0
      892      892        0     1                 $d
        0        0       4b     1 .debug_line_str
        0        0       4b     1         <internal>:(.debug_line_str)
-       0        0      470     4 .symtab
-       0        0      470     4         <internal>:(.symtab)
+       0        0      4b0     4 .symtab
+       0        0      4b0     4         <internal>:(.symtab)
        0        0       dc     1 .shstrtab
        0        0       dc     1         <internal>:(.shstrtab)
-       0        0      214     1 .strtab
-       0        0      214     1         <internal>:(.strtab)
+       0        0      227     1 .strtab
+       0        0      227     1         <internal>:(.strtab)

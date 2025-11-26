@@ -96,3 +96,12 @@ int strcmp(const char *s1, const char *s2) {
   }
   return *(unsigned char *)s1 - *(unsigned char *)s2;
 }
+
+static unsigned long next = 1;
+
+void srand(unsigned int seed) { next = seed; } // シード値からrandを呼び出す場合
+
+int rand(void) {
+  next = next * 1103515245 + 12345;
+  return (unsigned int)(next >> 16) & 0x7fff;
+}

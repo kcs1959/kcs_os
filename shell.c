@@ -24,7 +24,18 @@ void main(void) {
       printf("Hello world from shell!\n");
     else if (strcmp(cmdline, "exit") == 0)
       exit();
-    else
+    else if (strcmp(cmdline, "ohgiri") == 0) {
+      int r = rand() % 3;
+      if (r == 0)
+        printf(
+            "パクツイする人、ネタツイーター(ネタツイを食い物にしているので)\n");
+      else if (r == 1)
+        printf("熱海での自分探しの旅の末、ついに自分が見つかりました "
+               "(あったme)\n");
+      else if (r == 2)
+        printf("このモデル、ついに2種類のカタカナを見分けられるようになりました"
+               "!(キかイ学習)\n");
+    } else
       printf("unknown command: %s\n", cmdline);
   }
 }
