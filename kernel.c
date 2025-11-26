@@ -537,6 +537,13 @@ int create_file(const char *name, uint32_t size) {
   write_cluster(cluster, (void *)p);
   return 0;
 }
+void list_root_dir() {
+  for (int i = 0; i < 16; i++) {
+    if (root_dir[i].name != NULL) {
+      printf("%s\t%d bytes\n", root_dir[i].name, root_dir[i].size);
+    }
+  }
+}
 
 // process_switch_test
 struct process *proc_a;
