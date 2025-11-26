@@ -299,3 +299,17 @@ cpuの戻りアドレス（raレジスタ）には、user_entryを入れる
 一方の書き換えで他方が変わってしまったりする
 ↑プロセス分離の原則に反する
 */
+
+/*
+ゲストマシンの物理リソースにアクセスしたいので・・・
+
+プロセス作成時に、
+map_page(page_table, VIRTIO_BLK_PADDR, VIRTIO_BLK_PADDR, PAGE_R | PAGE_W);
+を追加する。（#define VIRTIO_BLK_PADDR 0x10001000）
+
+qemu上のmmioレジスタ(VIRTIO_BLK_PADDR)に該当ページテーブルを格納すれば、
+ハイパバイザ側が自動でゲストマシンの物理メモリにアクセスする。
+
+コンピュータの三要素　CPU、メモリ、入出力
+をハイパバイザが仮想化していることがわかる。
+*/
