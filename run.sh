@@ -11,7 +11,7 @@ $OBJCOPY --set-section-flags .bss=alloc,contents -O binary shell.elf shell.bin
 $OBJCOPY -Ibinary -Oelf32-littleriscv shell.bin shell.bin.o
 
 $CC $CFLAGS -Wl,-Tkernel.ld -Wl,-Map=kernel.map -o kernel.elf \
-    kernel.c common.c shell.bin.o
+    kernel.c common.c drivers/virtio.c filesystem/fat16.c shell.bin.o
 
 qemu-system-riscv32 -machine virt -bios default -nographic -serial mon:stdio --no-reboot \
     -drive id=drive0,file=lorem.txt,format=raw,if=none \

@@ -1,4 +1,4 @@
-#include "user.h"
+#include "./user.h"
 
 void main(void) {
   while (1) {
@@ -24,6 +24,8 @@ void main(void) {
       printf("Hello world from shell!\n");
     else if (strcmp(cmdline, "exit") == 0)
       exit();
+    else if (strcmp(cmdline, "ls") == 0)
+      list_root_dir();
     else if (strcmp(cmdline, "ohgiri") == 0) {
       int r = rand() % 3;
       if (r == 0)

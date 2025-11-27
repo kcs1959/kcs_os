@@ -175,7 +175,9 @@ int create_file(const char *name, uint32_t size) {
   return 0;
 }
 /*
+のように、ファイル名を示すメモリ領域を動的確保する。256バイトは超えない。
 
+copy_name_dynamic の第一引数で、&をとっているのはどうして？
 */
 /*
 問題２

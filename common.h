@@ -23,6 +23,8 @@ typedef uint8_t bool;
 #define SYS_PUTCHAR 1
 #define SYS_GETCHAR 2
 #define SYS_EXIT 3
+#define SYS_CREATE_FILE 4
+#define SYS_LIST_FILE 5
 
 void *memset(void *buf, char c, size_t n);
 void *memcpy(void *dst, const void *src, size_t n);
@@ -31,5 +33,3 @@ int strcmp(const char *s1, const char *s2);
 void printf(const char *fmt, ...);
 int rand(void);
 void srand(unsigned int seed);
-
-void read_write_disk(void *buf, unsigned sector, int is_write);

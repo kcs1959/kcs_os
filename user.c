@@ -1,5 +1,7 @@
 #include "user.h"
+#include "./filesystem/fat16.h"
 #include "common.h"
+#include "kernel.h"
 
 extern char __stack_top[];
 
@@ -33,3 +35,9 @@ __attribute__((noreturn)) void exit(void) {
   for (;;)
     ; // 念のため
 }
+
+int create_file(const char *name, uint32_t size) {
+  syscall(SYS_CREATE_FILE, 0, 0, 0);
+}
+
+void list_root_dir() { syscall(SYS_LIST_FILE, 0, 0, 0); }
