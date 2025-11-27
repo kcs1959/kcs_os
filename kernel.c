@@ -255,8 +255,10 @@ int create_file(const char *name, uint32_t size) {
 }
 void list_root_dir() {
   for (int i = 0; i < 16; i++) {
-    if (root_dir[i].name != NULL) {
+    if (root_dir[i].name[0] != '\0') {
       printf("%s\t%d bytes\n", root_dir[i].name, root_dir[i].size);
+    } else {
+      return;
     }
   }
 }
@@ -371,6 +373,8 @@ void handle_syscall(struct trap_frame *f) {
     break;
   case SYS_LIST_FILE:
     list_root_dir();
+    yield();
+    break;
   default:
     PANIC("unexpected syscall a3=%x\n", f->a3);
   }
