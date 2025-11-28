@@ -33,3 +33,46 @@ void copy_name_dynamic(char **name_field, const char *src) {
   }
   *name_field = buf;
 }
+
+int create_file(const char *name, uint32_t size) {
+  int dir_index = -1;
+  for (int i = 0; i < 16; i++) {
+    if (root_dir[i].name[0] == 0) {
+      dir_index = i;
+      break;
+    }
+  }
+  if (dir_index == -1)
+    return -1;
+
+  int cluster = -1;
+  for (int i = 2; i < FAT_ENTRY_NUM; i++) {
+    if (fat[i] == 0) {
+      cluster = i;
+      break;
+    }
+  }
+  if (cluster == -1)
+    return -1;
+
+  root_dir[dir_index].ext[0] = '\0';
+  root_dir[dir_index].start_cluster = cluster;
+  root_dir[dir_index].size = size;
+
+  copy_name_dynamic(&root_dir[dir_index].name, name);
+
+  fat[cluster] = 0xFFFF;
+
+  paddr_t p = alloc_pages(CLUSTER_SIZE * SECTOR_SIZE);
+  write_cluster(cluster, (void *)p);
+  return 0;
+}
+void list_root_dir() {
+  for (int i = 0; i < 16; i++) {
+    if (root_dir[i].name[0] != '\0') {
+      printf("%s\t%d bytes\n", root_dir[i].name, root_dir[i].size);
+    } else {
+      return;
+    }
+  }
+}

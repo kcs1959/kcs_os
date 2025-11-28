@@ -20,3 +20,5 @@ extern struct dir_entry root_dir[16];
 void read_cluster(uint16_t cluster, void *buf);
 void write_cluster(uint16_t cluster, void *buf);
 void copy_name_dynamic(char **name_field, const char *src);
+int create_file(const char *name, uint32_t size);
+void list_root_dir();
