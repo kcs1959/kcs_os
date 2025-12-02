@@ -4,9 +4,14 @@
 
 // 要修正
 uint32_t cluster_to_sector(uint16_t cluster) {
-  uint32_t data_start =
-      1 + 2 * FAT_ENTRY_NUM * 2 / SECTOR_SIZE + sizeof(root_dir) / SECTOR_SIZE;
-  return data_start + (cluster - 2) * CLUSTER_SIZE;
+  // データ領域開始セクタ
+  uint32_t root_dir_sectors =
+      (BPB_RootEntCnt * 32 + BPB_BytsPerSec - 1) / BPB_BytsPerSec;
+  uint32_t data_start_sector =
+      BPB_RsvdSecCnt + BPB_NumFATs * BPB_FATSz16 + root_dir_sectors;
+
+  // クラスタ番号 → セクタ番号
+  return data_start_sector + (cluster - 2) * BPB_SecPerClus;
 }
 
 // read/write_clusterはおk。
