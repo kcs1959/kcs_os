@@ -418,7 +418,7 @@ void kernel_main(void) {
   strcpy(buf, "hello from kernel!\n");
   read_write_disk(buf, 0, true);
 
-  create_file("test", 5);
+  create_file("testtest", 5);
 
   create_process(_binary_shell_bin_start, (size_t)_binary_shell_bin_size);
   yield();
