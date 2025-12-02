@@ -14,6 +14,7 @@
 // FAT領域
 #define FAT1_START_SECTOR BPB_RsvdSecCnt
 #define FAT2_START_SECTOR (FAT1_START_SECTOR + BPB_FATSz16)
+#define FAT_ENTRY_NUM ((BPB_FATSz16 * BPB_BytsPerSec) / 2)
 
 // ルートディレクトリ
 #define ROOT_DIR_START_SECTOR (BPB_RsvdSecCnt + BPB_NumFATs * BPB_FATSz16)
@@ -27,7 +28,6 @@ extern uint16_t fat[FAT_ENTRY_NUM];
 struct dir_entry {
   char name[8];
   char ext[3];
-  uint8_t attr;
   uint16_t start_cluster;
   uint32_t size;
 };

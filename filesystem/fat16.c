@@ -3,6 +3,9 @@
 #include "../kernel.h"
 #include <stdint.h>
 
+uint16_t fat[FAT_ENTRY_NUM];
+struct dir_entry root_dir[16];
+
 // FATボリュームの各領域を初期化
 void init_fat16_disk() {
   uint8_t buf[SECTOR_SIZE];
@@ -24,7 +27,6 @@ void init_fat16_disk() {
   // データ領域は必要に応じて初期化
 }
 
-// 要修正
 uint32_t cluster_to_sector(uint16_t cluster) {
   // データ領域開始セクタ
   uint32_t root_dir_sectors =
@@ -61,48 +63,65 @@ void copy_name_dynamic(char **name_field, const char *src) {
   *name_field = buf;
 }
 
-// 要修正
 int create_file(const char *name, uint32_t size) {
+  // 1. 空きディレクトリエントリを探す
   int dir_index = -1;
-  for (int i = 0; i < 16; i++) {
-    if (root_dir[i].name[0] == 0) {
+  for (int i = 0; i < BPB_RootEntCnt; i++) {
+    if (root_dir[i].name[0] == 0) { // 空き
       dir_index = i;
       break;
     }
   }
   if (dir_index == -1)
-    return -1;
+    return -1; // 空きなし
 
+  // 2. 空きクラスタを探す
   int cluster = -1;
   for (int i = 2; i < FAT_ENTRY_NUM; i++) {
-    if (fat[i] == 0) {
+    if (fat[i] == 0) { // 未使用クラスタ
       cluster = i;
       break;
     }
   }
   if (cluster == -1)
-    return -1;
+    return -1; // 空きクラスタなし
 
-  root_dir[dir_index].ext[0] = '\0';
-  root_dir[dir_index].start_cluster = cluster;
-  root_dir[dir_index].size = size;
+  // 3. ルートディレクトリエントリに設定
+  struct dir_entry *de = &root_dir[dir_index];
+  // ファイル名コピー（簡易版）
+  int len = 0;
+  while (len < 11 && name[len]) {
+    de->name[len] = name[len];
+    len++;
+  }
+  for (; len < 11; len++)
+    de->name[len] = ' '; // パディング
+  de->start_cluster = cluster;
+  de->size = size;
 
-  // ファイル名
-  copy_name_dynamic(&root_dir[dir_index].name, name);
+  // 4. FAT 更新
+  fat[cluster] = 0xFFFF; // 終端マーク
 
-  fat[cluster] = 0xFFFF;
+  // 5. ファイル内容をゼロ初期化
+  uint8_t buf[BPB_BytsPerSec * BPB_SecPerClus];
+  for (int i = 0; i < sizeof(buf); i++)
+    buf[i] = 0;
+  write_cluster(cluster, buf);
 
-  // ファイルの中身
-  paddr_t p = alloc_pages(CLUSTER_SIZE * SECTOR_SIZE);
-  write_cluster(cluster, (void *)p);
   return 0;
 }
 void list_root_dir() {
-  for (int i = 0; i < 16; i++) {
-    if (root_dir[i].name[0] != '\0') {
-      printf("%s\t%d bytes\n", root_dir[i].name, root_dir[i].size);
-    } else {
-      return;
-    }
+  for (int i = 0; i < BPB_RootEntCnt; i++) {
+    struct dir_entry *de = &root_dir[i];
+    if (de->name[0] == 0)
+      continue; // 空きエントリスキップ
+
+    // ファイル名文字列を作る
+    char name[12];
+    for (int j = 0; j < 11; j++)
+      name[j] = de->name[j];
+    name[11] = '\0';
+
+    printf("%s\t%d bytes\n", name, de->size);
   }
 }
