@@ -1,6 +1,28 @@
 #include "./fat16.h"
 #include "../drivers/virtio.h"
 #include "../kernel.h"
+#include <stdint.h>
+
+// FATボリュームの各領域を初期化
+void init_fat16_disk() {
+  uint8_t buf[SECTOR_SIZE];
+  for (int i = 0; i < SECTOR_SIZE; i++)
+    buf[i] = 0;
+
+  // FATエントリを0埋め
+  for (unsigned s = FAT1_START_SECTOR;
+       s < FAT1_START_SECTOR + BPB_FATSz16 * BPB_NumFATs; s++) {
+    read_write_disk(buf, s, true);
+  }
+
+  // ルートディレクトリ領域を0埋め
+  for (unsigned s = ROOT_DIR_START_SECTOR;
+       s < ROOT_DIR_START_SECTOR + ROOT_DIR_SECTORS; s++) {
+    read_write_disk(buf, s, true);
+  }
+
+  // データ領域は必要に応じて初期化
+}
 
 // 要修正
 uint32_t cluster_to_sector(uint16_t cluster) {
