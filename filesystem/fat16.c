@@ -47,22 +47,6 @@ void write_cluster(uint16_t cluster, void *buf) {
   read_write_disk(buf, cluster_to_sector(cluster), true);
 }
 
-// わざわざファイル名をramに置かなくても良い
-void copy_name_dynamic(char **name_field, const char *src) {
-  int len = 0;
-  while (len < 256) {
-    if (src[len] == 0)
-      break;
-    len++;
-  }
-
-  char *buf = (char *)alloc_pages((len + 1 + PAGE_SIZE - 1) / PAGE_SIZE);
-  for (int i = 0; i <= len; i++) {
-    buf[i] = src[i];
-  }
-  *name_field = buf;
-}
-
 int create_file(const char *name, uint32_t size) {
   // 1. 空きディレクトリエントリを探す
   int dir_index = -1;
@@ -88,7 +72,7 @@ int create_file(const char *name, uint32_t size) {
 
   // 3. ルートディレクトリエントリに設定
   struct dir_entry *de = &root_dir[dir_index];
-  // ファイル名コピー（簡易版）
+  // ディレクトリエントリにファイル名コピー（簡易版）
   int len = 0;
   while (len < 11 && name[len]) {
     de->name[len] = name[len];

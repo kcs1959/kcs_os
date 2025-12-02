@@ -2,7 +2,7 @@
        0        0 80200000     1 . = 0x80200000
 80200000        0        0     1 __kernel_base = .
 80200000 80200000     11ce     4 .text
-80200000 80200000        e     2         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-424e78.o:(.text.boot)
+80200000 80200000        e     2         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-e06e53.o:(.text.boot)
 80200000 80200000        0     1                 .L0 
 80200000 80200000        0     1                 .L0 
 80200000 80200000        0     1                 $x
@@ -10,7 +10,7 @@
 80200000 80200000        e     1                 boot
 8020000e 8020000e        0     1                 .L0 
 8020000e 8020000e        0     1                 .L0 
-80200010 80200010      982     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-424e78.o:(.text)
+80200010 80200010      982     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-e06e53.o:(.text)
 80200010 80200010        0     1                 .L0 
 80200010 80200010        0     1                 .L0 
 80200010 80200010        0     1                 $x
@@ -590,7 +590,7 @@
 80200990 80200990        0     1                 .L0 
 80200992 80200992        0     1                 .L0 
 80200992 80200992        0     1                 .L0 
-80200992 80200992      254     2         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-ec6876.o:(.text)
+80200992 80200992      254     2         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-8cf5de.o:(.text)
 80200992 80200992        0     1                 .L0 
 80200992 80200992        0     1                 .L0 
 80200992 80200992        0     1                 $x
@@ -791,7 +791,7 @@
 80200be4 80200be4        0     1                 .L0 
 80200be6 80200be6        0     1                 .L0 
 80200be6 80200be6        0     1                 .L0 
-80200be6 80200be6      322     2         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/virtio-605dee.o:(.text)
+80200be6 80200be6      322     2         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/virtio-34ebcc.o:(.text)
 80200be6 80200be6        0     1                 .L0 
 80200be6 80200be6        0     1                 .L0 
 80200be6 80200be6        0     1                 $x
@@ -992,7 +992,7 @@
 80200f08 80200f08        0     1                 .L0 
 80200f08 80200f08        0     1                 .L0 
 80200f08 80200f08        0     1                 .L0 
-80200f08 80200f08      2c6     2         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/fat16-37fcd0.o:(.text)
+80200f08 80200f08      2c6     2         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/fat16-4adacc.o:(.text)
 80200f08 80200f08        0     1                 .L0 
 80200f08 80200f08        0     1                 .L0 
 80200f08 80200f08        0     1                 $x
@@ -1238,15 +1238,15 @@
 802011ce 802011ce        0     1                 .L0 
 802011ce 802011ce        0     1                 .L0 
 802011d0 802011d0      35f     4 .rodata
-802011d0 802011d0       14     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-424e78.o:(.rodata)
+802011d0 802011d0       14     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-e06e53.o:(.rodata)
 802011d0 802011d0        0     1                 .LJTI10_0
 802011d0 802011d0        0     1                 $d
 802011e4 802011e4      34b     1         <internal>:(.rodata.str1.1)
 80201530 80201530    10598     4 .data
-80201530 80201530        4     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-424e78.o:(.data)
+80201530 80201530        4     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-e06e53.o:(.data)
 80201530 80201530        4     1                 alloc_pages.next_paddr
 80201530 80201530        0     1                 $d
-80201534 80201534        4     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-ec6876.o:(.data)
+80201534 80201534        4     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-8cf5de.o:(.data)
 80201534 80201534        4     1                 next
 80201534 80201534        0     1                 $d
 80201538 80201538    10590     1         shell.bin.o:(.data)
@@ -1254,7 +1254,7 @@
 80211ac8 80211ac8        0     1                 _binary_shell_bin_end
 80211ac8 80211ac8    141e8     8 .bss
 80211ac8 80211ac8        0     1         __bss = .
-80211ac8 80211ac8    10090     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-424e78.o:(.bss)
+80211ac8 80211ac8    10090     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-e06e53.o:(.bss)
 80211ac8 80211ac8        0     1                 $d
 80211ac8 80211ac8    10080     1                 procs
 80221b48 80221b48        4     1                 proc_a
@@ -1262,14 +1262,14 @@
 80221b50 80221b50        8     1                 .L_MergedGlobals
 80221b50 80221b50        4     1                 idle_proc
 80221b54 80221b54        4     1                 current_proc
-80221b58 80221b58       18     8         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/virtio-605dee.o:(.bss)
+80221b58 80221b58       18     8         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/virtio-34ebcc.o:(.bss)
 80221b58 80221b58       18     1                 .L_MergedGlobals
 80221b58 80221b58        0     1                 $d
 80221b58 80221b58        4     1                 blk_request_vq
 80221b5c 80221b5c        4     1                 blk_req_paddr
 80221b60 80221b60        4     1                 blk_req
 80221b68 80221b68        8     1                 blk_capacity
-80221b70 80221b70     4140     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/fat16-37fcd0.o:(.bss)
+80221b70 80221b70     4140     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/fat16-4adacc.o:(.bss)
 80221b70 80221b70        0     1                 $d
 80221b70 80221b70      140     1                 root_dir
 80221cb0 80221cb0     4000     1                 fat
@@ -1282,75 +1282,75 @@
 80246000 80246000  4000000     1 . += 64 * 1024 * 1024
 84246000 84246000        0     1 __free_ram_end = .
        0        0      c24     1 .debug_loclists
-       0        0      69a     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-424e78.o:(.debug_loclists)
+       0        0      69a     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-e06e53.o:(.debug_loclists)
        0        0        0     1                 $d
        c        c        0     1                 .L0 
-     69a      69a      1e1     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-ec6876.o:(.debug_loclists)
+     69a      69a      1e1     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-8cf5de.o:(.debug_loclists)
      69a      69a        0     1                 $d
      6a6      6a6        0     1                 .L0 
-     87b      87b      12b     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/virtio-605dee.o:(.debug_loclists)
+     87b      87b      12b     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/virtio-34ebcc.o:(.debug_loclists)
      87b      87b        0     1                 $d
      887      887        0     1                 .L0 
-     9a6      9a6      27e     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/fat16-37fcd0.o:(.debug_loclists)
+     9a6      9a6      27e     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/fat16-4adacc.o:(.debug_loclists)
      9a6      9a6        0     1                 $d
      9b2      9b2        0     1                 .L0 
        0        0      874     1 .debug_abbrev
-       0        0      319     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-424e78.o:(.debug_abbrev)
+       0        0      319     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-e06e53.o:(.debug_abbrev)
        0        0        0     1                 $d
-     319      319      157     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-ec6876.o:(.debug_abbrev)
+     319      319      157     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-8cf5de.o:(.debug_abbrev)
      319      319        0     1                 $d
-     470      470      1ff     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/virtio-605dee.o:(.debug_abbrev)
+     470      470      1ff     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/virtio-34ebcc.o:(.debug_abbrev)
      470      470        0     1                 $d
-     66f      66f      205     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/fat16-37fcd0.o:(.debug_abbrev)
+     66f      66f      205     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/fat16-4adacc.o:(.debug_abbrev)
      66f      66f        0     1                 $d
        0        0     1b47     1 .debug_info
-       0        0      db4     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-424e78.o:(.debug_info)
+       0        0      db4     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-e06e53.o:(.debug_info)
        0        0        0     1                 $d
-     db4      db4      273     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-ec6876.o:(.debug_info)
+     db4      db4      273     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-8cf5de.o:(.debug_info)
      db4      db4        0     1                 $d
-    1027     1027      76b     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/virtio-605dee.o:(.debug_info)
+    1027     1027      76b     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/virtio-34ebcc.o:(.debug_info)
     1027     1027        0     1                 $d
-    1792     1792      3b5     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/fat16-37fcd0.o:(.debug_info)
+    1792     1792      3b5     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/fat16-4adacc.o:(.debug_info)
     1792     1792        0     1                 $d
        0        0       ef     1 .debug_rnglists
-       0        0       8f     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-424e78.o:(.debug_rnglists)
+       0        0       8f     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-e06e53.o:(.debug_rnglists)
        0        0        0     1                 $d
        c        c        0     1                 .L0 
-      8f       8f       1b     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-ec6876.o:(.debug_rnglists)
+      8f       8f       1b     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-8cf5de.o:(.debug_rnglists)
       8f       8f        0     1                 $d
       9b       9b        0     1                 .L0 
-      aa       aa       2a     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/virtio-605dee.o:(.debug_rnglists)
+      aa       aa       2a     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/virtio-34ebcc.o:(.debug_rnglists)
       aa       aa        0     1                 $d
       b6       b6        0     1                 .L0 
-      d4       d4       1b     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/fat16-37fcd0.o:(.debug_rnglists)
+      d4       d4       1b     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/fat16-4adacc.o:(.debug_rnglists)
       d4       d4        0     1                 $d
       e0       e0        0     1                 .L0 
        0        0      454     1 .debug_str_offsets
-       0        0      1f0     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-424e78.o:(.debug_str_offsets)
+       0        0      1f0     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-e06e53.o:(.debug_str_offsets)
        0        0        0     1                 $d
        8        8        0     1                 .L0 
-     1f0      1f0       ac     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-ec6876.o:(.debug_str_offsets)
+     1f0      1f0       ac     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-8cf5de.o:(.debug_str_offsets)
      1f0      1f0        0     1                 $d
      1f8      1f8        0     1                 .L0 
-     29c      29c      108     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/virtio-605dee.o:(.debug_str_offsets)
+     29c      29c      108     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/virtio-34ebcc.o:(.debug_str_offsets)
      29c      29c        0     1                 $d
      2a4      2a4        0     1                 .L0 
-     3a4      3a4       b0     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/fat16-37fcd0.o:(.debug_str_offsets)
+     3a4      3a4       b0     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/fat16-4adacc.o:(.debug_str_offsets)
      3a4      3a4        0     1                 $d
      3ac      3ac        0     1                 .L0 
        0        0      691     1 .debug_str
        0        0      691     1         <internal>:(.debug_str)
        0        0      35c     1 .debug_addr
-       0        0      1a8     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-424e78.o:(.debug_addr)
+       0        0      1a8     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-e06e53.o:(.debug_addr)
        0        0        0     1                 $d
        8        8        0     1                 .L0 
-     1a8      1a8       6c     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-ec6876.o:(.debug_addr)
+     1a8      1a8       6c     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-8cf5de.o:(.debug_addr)
      1a8      1a8        0     1                 $d
      1b0      1b0        0     1                 .L0 
-     214      214       d8     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/virtio-605dee.o:(.debug_addr)
+     214      214       d8     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/virtio-34ebcc.o:(.debug_addr)
      214      214        0     1                 $d
      21c      21c        0     1                 .L0 
-     2ec      2ec       70     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/fat16-37fcd0.o:(.debug_addr)
+     2ec      2ec       70     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/fat16-4adacc.o:(.debug_addr)
      2ec      2ec        0     1                 $d
      2f4      2f4        0     1                 .L0 
        0        0       3b     1 .comment
@@ -1358,29 +1358,29 @@
        0        0       4e     1 .riscv.attributes
        0        0       4e     1         <internal>:(.riscv.attributes)
        0        0      470     4 .debug_frame
-       0        0      1d4     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-424e78.o:(.debug_frame)
+       0        0      1d4     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-e06e53.o:(.debug_frame)
        0        0        0     1                 .L0 
        0        0        0     1                 $d
-     1d4      1d4       b8     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-ec6876.o:(.debug_frame)
+     1d4      1d4       b8     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-8cf5de.o:(.debug_frame)
      1d4      1d4        0     1                 .L0 
      1d4      1d4        0     1                 $d
-     28c      28c      10c     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/virtio-605dee.o:(.debug_frame)
+     28c      28c      10c     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/virtio-34ebcc.o:(.debug_frame)
      28c      28c        0     1                 .L0 
      28c      28c        0     1                 $d
-     398      398       d8     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/fat16-37fcd0.o:(.debug_frame)
+     398      398       d8     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/fat16-4adacc.o:(.debug_frame)
      398      398        0     1                 .L0 
      398      398        0     1                 $d
        0        0     13f5     1 .debug_line
-       0        0      8d7     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-424e78.o:(.debug_line)
+       0        0      8d7     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-e06e53.o:(.debug_line)
        0        0        0     1                 .Lline_table_start0
        0        0        0     1                 $d
-     8d7      8d7      349     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-ec6876.o:(.debug_line)
+     8d7      8d7      349     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-8cf5de.o:(.debug_line)
      8d7      8d7        0     1                 .Lline_table_start0
      8d7      8d7        0     1                 $d
-     c20      c20      3d2     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/virtio-605dee.o:(.debug_line)
+     c20      c20      3d2     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/virtio-34ebcc.o:(.debug_line)
      c20      c20        0     1                 .Lline_table_start0
      c20      c20        0     1                 $d
-     ff2      ff2      403     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/fat16-37fcd0.o:(.debug_line)
+     ff2      ff2      403     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/fat16-4adacc.o:(.debug_line)
      ff2      ff2        0     1                 .Lline_table_start0
      ff2      ff2        0     1                 $d
        0        0      155     1 .debug_line_str
