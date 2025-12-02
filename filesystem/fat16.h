@@ -2,20 +2,26 @@
 
 #include "../kernel.h"
 
-#define SECTOR_SIZE 512
-#define CLUSTER_SIZE 8
-#define FAT_ENTRY_NUM 4096
+// ブートセクタ
+#define BPB_BytsPerSec 512
+#define BPB_SecPerClus 1
+#define BPB_RsvdSecCnt 1
+#define BPB_NumFATs 2
+#define BPB_RootEntCnt 512
+#define BPB_FATSz16 32
+#define BPB_TotSec16 32768
 
-extern uint16_t fat[FAT_ENTRY_NUM];
-struct dir_entry {
-  char name[8];
-  char ext[3];
-  uint8_t attr;
-  uint16_t start_cluster;
-  uint32_t size;
-};
+// FAT領域
+#define FAT1_START_SECTOR BPB_RsvdSecCnt
+#define FAT2_START_SECTOR (FAT1_START_SECTOR + BPB_FATSz16)
 
-extern struct dir_entry root_dir[16];
+// ルートディレクトリ
+#define ROOT_DIR_START_SECTOR (BPB_RsvdSecCnt + BPB_NumFATs * BPB_FATSz16)
+#define ROOT_DIR_SECTORS                                                       \
+  ((BPB_RootEntCnt * 32 + BPB_BytsPerSec - 1) / BPB_BytsPerSec)
+
+// データ領域
+#define DATA_START_SECTOR (ROOT_DIR_START_SECTOR + ROOT_DIR_SECTORS)
 
 void read_cluster(uint16_t cluster, void *buf);
 void write_cluster(uint16_t cluster, void *buf);

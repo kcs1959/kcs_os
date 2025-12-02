@@ -2,15 +2,14 @@
 #include "../drivers/virtio.h"
 #include "../kernel.h"
 
-uint16_t fat[FAT_ENTRY_NUM];
-struct dir_entry root_dir[16];
-
+// 要修正
 uint32_t cluster_to_sector(uint16_t cluster) {
   uint32_t data_start =
       1 + 2 * FAT_ENTRY_NUM * 2 / SECTOR_SIZE + sizeof(root_dir) / SECTOR_SIZE;
   return data_start + (cluster - 2) * CLUSTER_SIZE;
 }
 
+// read/write_clusterはおk。
 void read_cluster(uint16_t cluster, void *buf) {
   read_write_disk(buf, cluster_to_sector(cluster), false);
 }
@@ -19,6 +18,7 @@ void write_cluster(uint16_t cluster, void *buf) {
   read_write_disk(buf, cluster_to_sector(cluster), true);
 }
 
+// わざわざファイル名をramに置かなくても良い
 void copy_name_dynamic(char **name_field, const char *src) {
   int len = 0;
   while (len < 256) {
@@ -34,6 +34,7 @@ void copy_name_dynamic(char **name_field, const char *src) {
   *name_field = buf;
 }
 
+// 要修正
 int create_file(const char *name, uint32_t size) {
   int dir_index = -1;
   for (int i = 0; i < 16; i++) {
