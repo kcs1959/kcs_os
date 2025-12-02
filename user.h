@@ -1,5 +1,5 @@
 #pragma once
-#include "common.h"
+#include "lib/common.h"
 
 __attribute__((noreturn)) void exit(void);
 void putchar(char ch);

@@ -1,4 +1,5 @@
-#include "common.h"
+#include "./common.h"
+#include "../kernel.h"
 
 void putchar(char ch);
 

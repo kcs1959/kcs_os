@@ -1,7 +1,7 @@
 #include "kernel.h"
-#include "common.h"
 #include "drivers/virtio.h"
 #include "filesystem/fat16.h"
+#include "lib/common.h"
 
 typedef unsigned char uint8_t;
 typedef unsigned int uint32_t;
@@ -214,7 +214,7 @@ struct sbiret sbi_call(long arg0, long arg1, long arg2, long arg3, long arg4,
   return (struct sbiret){.error = a0, .value = a1};
 }
 
-// SBI
+// デバッグ用
 void putchar(char ch) { sbi_call(ch, 0, 0, 0, 0, 0, 0, 1); }
 long getchar(void) {
   struct sbiret ret = sbi_call(0, 0, 0, 0, 0, 0, 0, 2);

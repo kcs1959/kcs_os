@@ -1,7 +1,7 @@
 #include "user.h"
-#include "./filesystem/fat16.h"
-#include "common.h"
+#include "filesystem/fat16.h"
 #include "kernel.h"
+#include "lib/common.h"
 
 extern char __stack_top[];
 

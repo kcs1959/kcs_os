@@ -1,5 +1,5 @@
 #pragma once
-#include "common.h"
+#include "lib/common.h"
 
 struct sbiret {
   long error;
@@ -73,8 +73,6 @@ struct process {
   uint8_t stack[8192];
 };
 
-paddr_t alloc_pages(uint32_t n);
-
 #define SATP_SV32 (1u << 31)
 #define PAGE_V (1 << 0) // 有効化ビット
 #define PAGE_R (1 << 1) // 読み込み可能
@@ -86,5 +84,7 @@ paddr_t alloc_pages(uint32_t n);
 
 #define SSTATUS_SPIE (1 << 5)
 #define SCAUSE_ECALL 8
+
+paddr_t alloc_pages(uint32_t n);
 
 // disk
