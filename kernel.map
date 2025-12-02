@@ -1,8 +1,8 @@
      VMA      LMA     Size Align Out     In      Symbol
        0        0 80200000     1 . = 0x80200000
 80200000        0        0     1 __kernel_base = .
-80200000 80200000     127a     4 .text
-80200000 80200000        e     2         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-f2b79e.o:(.text.boot)
+80200000 80200000     1280     4 .text
+80200000 80200000        e     2         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-117bd9.o:(.text.boot)
 80200000 80200000        0     1                 .L0 
 80200000 80200000        0     1                 .L0 
 80200000 80200000        0     1                 $x
@@ -10,7 +10,7 @@
 80200000 80200000        e     1                 boot
 8020000e 8020000e        0     1                 .L0 
 8020000e 8020000e        0     1                 .L0 
-80200010 80200010      970     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-f2b79e.o:(.text)
+80200010 80200010      970     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-117bd9.o:(.text)
 80200010 80200010        0     1                 .L0 
 80200010 80200010        0     1                 .L0 
 80200010 80200010        0     1                 $x
@@ -587,7 +587,7 @@
 8020097e 8020097e        0     1                 .L0 
 80200980 80200980        0     1                 .L0 
 80200980 80200980        0     1                 .L0 
-80200980 80200980      254     2         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-d43c36.o:(.text)
+80200980 80200980      254     2         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-8b38be.o:(.text)
 80200980 80200980        0     1                 .L0 
 80200980 80200980        0     1                 .L0 
 80200980 80200980        0     1                 $x
@@ -788,7 +788,7 @@
 80200bd2 80200bd2        0     1                 .L0 
 80200bd4 80200bd4        0     1                 .L0 
 80200bd4 80200bd4        0     1                 .L0 
-80200bd4 80200bd4      322     2         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/virtio-73c1ce.o:(.text)
+80200bd4 80200bd4      322     2         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/virtio-a8fb5f.o:(.text)
 80200bd4 80200bd4        0     1                 .L0 
 80200bd4 80200bd4        0     1                 .L0 
 80200bd4 80200bd4        0     1                 $x
@@ -989,68 +989,68 @@
 80200ef6 80200ef6        0     1                 .L0 
 80200ef6 80200ef6        0     1                 .L0 
 80200ef6 80200ef6        0     1                 .L0 
-80200ef6 80200ef6      384     2         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/fat16-462504.o:(.text)
+80200ef6 80200ef6      38a     2         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/fat16-791878.o:(.text)
 80200ef6 80200ef6        0     1                 .L0 
 80200ef6 80200ef6        0     1                 .L0 
 80200ef6 80200ef6        0     1                 $x
 80200ef6 80200ef6        0     1                 .L0 
-80200ef6 80200ef6        4     1                 cluster_to_sector
-80200ef8 80200ef8        0     1                 .L0 
+80200ef6 80200ef6        6     1                 cluster_to_sector
 80200efa 80200efa        0     1                 .L0 
-80200efa 80200efa        0     1                 .L0 
-80200efa 80200efa        0     1                 .L0 
-80200efa 80200efa        c     1                 read_cluster
-80200f00 80200f00        0     1                 .L0 
+80200efc 80200efc        0     1                 .L0 
+80200efc 80200efc        0     1                 .L0 
+80200efc 80200efc        0     1                 .L0 
+80200efc 80200efc        e     1                 read_cluster
+80200efe 80200efe        0     1                 .L0 
 80200f04 80200f04        0     1                 .L0 
-80200f06 80200f06        0     1                 .L0 
-80200f06 80200f06        0     1                 .L0 
-80200f06 80200f06        0     1                 .L0 
-80200f06 80200f06        0     1                 .L0 
-80200f06 80200f06        0     1                 .L0 
-80200f06 80200f06        0     1                 .L0 
-80200f06 80200f06        c     1                 write_cluster
+80200f08 80200f08        0     1                 .L0 
 80200f0a 80200f0a        0     1                 .L0 
-80200f0e 80200f0e        0     1                 .L0 
+80200f0a 80200f0a        0     1                 .L0 
+80200f0a 80200f0a        0     1                 .L0 
+80200f0a 80200f0a        0     1                 .L0 
+80200f0a 80200f0a        0     1                 .L0 
+80200f0a 80200f0a        0     1                 .L0 
+80200f0a 80200f0a        e     1                 write_cluster
+80200f0c 80200f0c        0     1                 .L0 
+80200f0c 80200f0c        0     1                 .L0 
 80200f10 80200f10        0     1                 .L0 
-80200f12 80200f12        0     1                 .L0 
-80200f12 80200f12        0     1                 .L0 
-80200f12 80200f12        0     1                 .L0 
-80200f12 80200f12        0     1                 .L0 
-80200f12 80200f12        0     1                 .L0 
-80200f12 80200f12        0     1                 .L0 
-80200f12 80200f12       5a     1                 copy_name_dynamic
-80200f1c 80200f1c        0     1                 .L0 
-80200f1e 80200f1e        0     1                 .L0 
-80200f20 80200f20        0     1                 .L0 
+80200f14 80200f14        0     1                 .L0 
+80200f16 80200f16        0     1                 .L0 
+80200f18 80200f18        0     1                 .L0 
+80200f18 80200f18        0     1                 .L0 
+80200f18 80200f18        0     1                 .L0 
+80200f18 80200f18        0     1                 .L0 
+80200f18 80200f18        0     1                 .L0 
+80200f18 80200f18        0     1                 .L0 
+80200f18 80200f18       5a     1                 copy_name_dynamic
+80200f22 80200f22        0     1                 .L0 
+80200f24 80200f24        0     1                 .L0 
 80200f26 80200f26        0     1                 .L0 
-80200f2e 80200f2e        0     1                 .L0 
-80200f30 80200f30        0     1                 .L0 
-80200f32 80200f32        0     1                 .L0 
+80200f2c 80200f2c        0     1                 .L0 
+80200f34 80200f34        0     1                 .L0 
+80200f36 80200f36        0     1                 .L0 
 80200f38 80200f38        0     1                 .L0 
-80200f3a 80200f3a        0     1                 .L0 
-80200f3c 80200f3c        0     1                 .L0 
 80200f3e 80200f3e        0     1                 .L0 
 80200f40 80200f40        0     1                 .L0 
+80200f42 80200f42        0     1                 .L0 
 80200f44 80200f44        0     1                 .L0 
-80200f44 80200f44        0     1                 .L0 
-80200f4c 80200f4c        0     1                 .L0 
-80200f58 80200f58        0     1                 .L0 
-80200f5c 80200f5c        0     1                 .L0 
-80200f60 80200f60        0     1                 .L0 
-80200f68 80200f68        0     1                 .L0 
-80200f68 80200f68        0     1                 .L0 
-80200f6c 80200f6c        0     1                 .L0 
-80200f6c 80200f6c        0     1                 .L0 
-80200f6c 80200f6c        0     1                 .L0 
-80200f6c 80200f6c        0     1                 .L0 
-80200f6c 80200f6c        0     1                 .L0 
-80200f6c 80200f6c      15a     1                 create_file
-80200f7a 80200f7a        0     1                 .L0 
-80200f7c 80200f7c        0     1                 .L0 
-80200f7c 80200f7c        0     1                 .L0 
-80200f8c 80200f8c        0     1                 .L0 
-80200f8e 80200f8e        0     1                 .L0 
-80200f8e 80200f8e        0     1                 .L0 
+80200f46 80200f46        0     1                 .L0 
+80200f4a 80200f4a        0     1                 .L0 
+80200f4a 80200f4a        0     1                 .L0 
+80200f52 80200f52        0     1                 .L0 
+80200f5e 80200f5e        0     1                 .L0 
+80200f62 80200f62        0     1                 .L0 
+80200f66 80200f66        0     1                 .L0 
+80200f6e 80200f6e        0     1                 .L0 
+80200f6e 80200f6e        0     1                 .L0 
+80200f72 80200f72        0     1                 .L0 
+80200f72 80200f72        0     1                 .L0 
+80200f72 80200f72        0     1                 .L0 
+80200f72 80200f72        0     1                 .L0 
+80200f72 80200f72        0     1                 .L0 
+80200f72 80200f72      158     1                 create_file
+80200f80 80200f80        0     1                 .L0 
+80200f82 80200f82        0     1                 .L0 
+80200f82 80200f82        0     1                 .L0 
 80200f92 80200f92        0     1                 .L0 
 80200f94 80200f94        0     1                 .L0 
 80200f94 80200f94        0     1                 .L0 
@@ -1095,288 +1095,293 @@
 80200fe2 80200fe2        0     1                 .L0 
 80200fe6 80200fe6        0     1                 .L0 
 80200fe8 80200fe8        0     1                 .L0 
+80200fe8 80200fe8        0     1                 .L0 
 80200fec 80200fec        0     1                 .L0 
 80200fee 80200fee        0     1                 .L0 
-80200ff0 80200ff0        0     1                 .L0 
-80200ff0 80200ff0        0     1                 .L0 
 80200ff2 80200ff2        0     1                 .L0 
 80200ff4 80200ff4        0     1                 .L0 
-80200ff4 80200ff4        0     1                 .L0 
+80200ff6 80200ff6        0     1                 .L0 
 80200ff6 80200ff6        0     1                 .L0 
 80200ff8 80200ff8        0     1                 .L0 
-80200ff8 80200ff8        0     1                 .L0 
+80200ffa 80200ffa        0     1                 .L0 
 80200ffa 80200ffa        0     1                 .L0 
 80200ffc 80200ffc        0     1                 .L0 
-80200ffc 80200ffc        0     1                 .L0 
+80200ffe 80200ffe        0     1                 .L0 
 80200ffe 80200ffe        0     1                 .L0 
 80201000 80201000        0     1                 .L0 
-80201000 80201000        0     1                 .L0 
+80201002 80201002        0     1                 .L0 
 80201002 80201002        0     1                 .L0 
 80201004 80201004        0     1                 .L0 
-80201004 80201004        0     1                 .L0 
+80201006 80201006        0     1                 .L0 
 80201006 80201006        0     1                 .L0 
 80201008 80201008        0     1                 .L0 
-80201008 80201008        0     1                 .L0 
+8020100a 8020100a        0     1                 .L0 
 8020100a 8020100a        0     1                 .L0 
 8020100c 8020100c        0     1                 .L0 
-8020100c 8020100c        0     1                 .L0 
+8020100e 8020100e        0     1                 .L0 
 8020100e 8020100e        0     1                 .L0 
 80201010 80201010        0     1                 .L0 
-80201010 80201010        0     1                 .L0 
+80201012 80201012        0     1                 .L0 
 80201012 80201012        0     1                 .L0 
 80201014 80201014        0     1                 .L0 
-80201014 80201014        0     1                 .L0 
+80201016 80201016        0     1                 .L0 
 80201016 80201016        0     1                 .L0 
 80201018 80201018        0     1                 .L0 
-80201018 80201018        0     1                 .L0 
+8020101a 8020101a        0     1                 .L0 
 8020101a 8020101a        0     1                 .L0 
 8020101c 8020101c        0     1                 .L0 
-8020101c 8020101c        0     1                 .L0 
+8020101e 8020101e        0     1                 .L0 
 8020101e 8020101e        0     1                 .L0 
 80201020 80201020        0     1                 .L0 
-80201020 80201020        0     1                 .L0 
-80201032 80201032        0     1                 .L0 
-80201032 80201032        0     1                 .L0 
-80201038 80201038        0     1                 .L0 
-80201038 80201038        0     1                 .L0 
-8020103a 8020103a        0     1                 .L0 
-80201040 80201040        0     1                 .L0 
+80201022 80201022        0     1                 .L0 
+80201022 80201022        0     1                 .L0 
+80201024 80201024        0     1                 .L0 
+80201026 80201026        0     1                 .L0 
+80201026 80201026        0     1                 .L0 
+80201034 80201034        0     1                 .L0 
+80201034 80201034        0     1                 .L0 
 80201040 80201040        0     1                 .L0 
 80201042 80201042        0     1                 .L0 
-80201044 80201044        0     1                 .L0 
-80201066 80201066        0     1                 .L0 
-8020106e 8020106e        0     1                 .L0 
+80201046 80201046        0     1                 .L0 
+80201046 80201046        0     1                 .L0 
+80201048 80201048        0     1                 .L0 
+8020104a 8020104a        0     1                 .L0 
+8020104a 8020104a        0     1                 .L0 
+80201068 80201068        0     1                 .L0 
 80201070 80201070        0     1                 .L0 
 80201072 80201072        0     1                 .L0 
-80201078 80201078        0     1                 .L0 
+80201074 80201074        0     1                 .L0 
 8020107a 8020107a        0     1                 .L0 
 8020107c 8020107c        0     1                 .L0 
 8020107e 8020107e        0     1                 .L0 
 80201080 80201080        0     1                 .L0 
-80201084 80201084        0     1                 .L0 
-80201084 80201084        0     1                 .L0 
-8020108c 8020108c        0     1                 .L0 
-80201098 80201098        0     1                 .L0 
-8020109c 8020109c        0     1                 .L0 
-802010a2 802010a2        0     1                 .L0 
-802010a2 802010a2        0     1                 .L0 
-802010a6 802010a6        0     1                 .L0 
+80201082 80201082        0     1                 .L0 
+80201086 80201086        0     1                 .L0 
+80201086 80201086        0     1                 .L0 
+8020108e 8020108e        0     1                 .L0 
+8020109a 8020109a        0     1                 .L0 
+8020109e 8020109e        0     1                 .L0 
+802010a4 802010a4        0     1                 .L0 
+802010a4 802010a4        0     1                 .L0 
+802010a8 802010a8        0     1                 .L0 
 802010ae 802010ae        0     1                 .L0 
 802010ae 802010ae        0     1                 .L0 
+802010b2 802010b2        0     1                 .L0 
 802010b4 802010b4        0     1                 .L0 
-802010b4 802010b4        0     1                 .L0 
-802010b6 802010b6        0     1                 .L0 
-802010b6 802010b6        0     1                 .L0 
-802010b6 802010b6        0     1                 .L0 
-802010c2 802010c2        0     1                 .L0 
+802010b8 802010b8        0     1                 .L0 
+802010b8 802010b8        0     1                 .L0 
+802010ba 802010ba        0     1                 .L0 
+802010ba 802010ba        0     1                 .L0 
+802010ba 802010ba        0     1                 .L0 
 802010c6 802010c6        0     1                 .L0 
-802010c6 802010c6        0     1                 .L0 
-802010c6 802010c6        0     1                 .L0 
-802010c6 802010c6        0     1                 .L0 
-802010c6 802010c6        0     1                 .L0 
-802010c6 802010c6      1b4     1                 list_root_dir
-802010cc 802010cc        0     1                 .L0 
-802010cc 802010cc        0     1                 .L0 
-802010cc 802010cc        0     1                 .L0 
-802010d4 802010d4        0     1                 .L0 
+802010ca 802010ca        0     1                 .L0 
+802010ca 802010ca        0     1                 .L0 
+802010ca 802010ca        0     1                 .L0 
+802010ca 802010ca        0     1                 .L0 
+802010ca 802010ca        0     1                 .L0 
+802010ca 802010ca      1b6     1                 list_root_dir
+802010d0 802010d0        0     1                 .L0 
+802010d0 802010d0        0     1                 .L0 
+802010d0 802010d0        0     1                 .L0 
 802010d8 802010d8        0     1                 .L0 
-802010e2 802010e2        0     1                 .L0 
-802010ee 802010ee        0     1                 .L0 
-802010ee 802010ee        0     1                 .L0 
+802010dc 802010dc        0     1                 .L0 
+802010e6 802010e6        0     1                 .L0 
+802010f2 802010f2        0     1                 .L0 
 802010f2 802010f2        0     1                 .L0 
 802010f6 802010f6        0     1                 .L0 
-802010f8 802010f8        0     1                 .L0 
-80201106 80201106        0     1                 .L0 
-80201106 80201106        0     1                 .L0 
+802010fa 802010fa        0     1                 .L0 
+802010fc 802010fc        0     1                 .L0 
+8020110a 8020110a        0     1                 .L0 
 8020110a 8020110a        0     1                 .L0 
 8020110e 8020110e        0     1                 .L0 
-80201110 80201110        0     1                 .L0 
-8020111e 8020111e        0     1                 .L0 
-8020111e 8020111e        0     1                 .L0 
+80201112 80201112        0     1                 .L0 
+80201114 80201114        0     1                 .L0 
+80201122 80201122        0     1                 .L0 
 80201122 80201122        0     1                 .L0 
 80201126 80201126        0     1                 .L0 
-80201128 80201128        0     1                 .L0 
-80201136 80201136        0     1                 .L0 
-80201136 80201136        0     1                 .L0 
+8020112a 8020112a        0     1                 .L0 
+8020112c 8020112c        0     1                 .L0 
+8020113a 8020113a        0     1                 .L0 
 8020113a 8020113a        0     1                 .L0 
 8020113e 8020113e        0     1                 .L0 
-80201140 80201140        0     1                 .L0 
-8020114e 8020114e        0     1                 .L0 
-8020114e 8020114e        0     1                 .L0 
+80201142 80201142        0     1                 .L0 
+80201144 80201144        0     1                 .L0 
+80201152 80201152        0     1                 .L0 
 80201152 80201152        0     1                 .L0 
 80201156 80201156        0     1                 .L0 
-80201158 80201158        0     1                 .L0 
-80201166 80201166        0     1                 .L0 
-80201166 80201166        0     1                 .L0 
+8020115a 8020115a        0     1                 .L0 
+8020115c 8020115c        0     1                 .L0 
+8020116a 8020116a        0     1                 .L0 
 8020116a 8020116a        0     1                 .L0 
 8020116e 8020116e        0     1                 .L0 
 80201172 80201172        0     1                 .L0 
-80201180 80201180        0     1                 .L0 
-80201180 80201180        0     1                 .L0 
-80201184 80201184        0     1                 .L0 
-80201188 80201188        0     1                 .L0 
-8020118c 8020118c        0     1                 .L0 
-8020119c 8020119c        0     1                 .L0 
-8020119c 8020119c        0     1                 .L0 
-802011a0 802011a0        0     1                 .L0 
+80201176 80201176        0     1                 .L0 
+80201186 80201186        0     1                 .L0 
+80201186 80201186        0     1                 .L0 
+8020118a 8020118a        0     1                 .L0 
+8020118e 8020118e        0     1                 .L0 
+80201192 80201192        0     1                 .L0 
+802011a2 802011a2        0     1                 .L0 
 802011a2 802011a2        0     1                 .L0 
 802011a6 802011a6        0     1                 .L0 
-802011b6 802011b6        0     1                 .L0 
-802011b6 802011b6        0     1                 .L0 
-802011ba 802011ba        0     1                 .L0 
+802011a8 802011a8        0     1                 .L0 
+802011ac 802011ac        0     1                 .L0 
+802011bc 802011bc        0     1                 .L0 
 802011bc 802011bc        0     1                 .L0 
 802011c0 802011c0        0     1                 .L0 
-802011d0 802011d0        0     1                 .L0 
-802011d0 802011d0        0     1                 .L0 
-802011d4 802011d4        0     1                 .L0 
+802011c2 802011c2        0     1                 .L0 
+802011c6 802011c6        0     1                 .L0 
+802011d6 802011d6        0     1                 .L0 
 802011d6 802011d6        0     1                 .L0 
 802011da 802011da        0     1                 .L0 
-802011ea 802011ea        0     1                 .L0 
-802011ea 802011ea        0     1                 .L0 
-802011ee 802011ee        0     1                 .L0 
+802011dc 802011dc        0     1                 .L0 
+802011e0 802011e0        0     1                 .L0 
+802011f0 802011f0        0     1                 .L0 
 802011f0 802011f0        0     1                 .L0 
 802011f4 802011f4        0     1                 .L0 
-80201204 80201204        0     1                 .L0 
-80201204 80201204        0     1                 .L0 
-80201208 80201208        0     1                 .L0 
+802011f6 802011f6        0     1                 .L0 
+802011fa 802011fa        0     1                 .L0 
+8020120a 8020120a        0     1                 .L0 
 8020120a 8020120a        0     1                 .L0 
 8020120e 8020120e        0     1                 .L0 
-8020121e 8020121e        0     1                 .L0 
-8020121e 8020121e        0     1                 .L0 
-80201222 80201222        0     1                 .L0 
+80201210 80201210        0     1                 .L0 
+80201214 80201214        0     1                 .L0 
+80201224 80201224        0     1                 .L0 
 80201224 80201224        0     1                 .L0 
 80201228 80201228        0     1                 .L0 
-80201238 80201238        0     1                 .L0 
-80201238 80201238        0     1                 .L0 
-8020123c 8020123c        0     1                 .L0 
+8020122a 8020122a        0     1                 .L0 
+8020122e 8020122e        0     1                 .L0 
+8020123e 8020123e        0     1                 .L0 
 8020123e 8020123e        0     1                 .L0 
 80201242 80201242        0     1                 .L0 
-80201252 80201252        0     1                 .L0 
-80201252 80201252        0     1                 .L0 
-80201256 80201256        0     1                 .L0 
+80201244 80201244        0     1                 .L0 
+80201248 80201248        0     1                 .L0 
+80201258 80201258        0     1                 .L0 
 80201258 80201258        0     1                 .L0 
 8020125c 8020125c        0     1                 .L0 
-80201268 80201268        0     1                 .L0 
-8020126c 8020126c        0     1                 .L0 
+8020125e 8020125e        0     1                 .L0 
+80201262 80201262        0     1                 .L0 
 8020126e 8020126e        0     1                 .L0 
-8020126e 8020126e        0     1                 .L0 
 80201272 80201272        0     1                 .L0 
-80201272 80201272        0     1                 .L0 
-80201272 80201272        0     1                 .L0 
-80201272 80201272        0     1                 .L0 
-8020127a 8020127a        0     1                 .L0 
-8020127a 8020127a        0     1                 .L0 
-8020127c 8020127c      35a     4 .rodata
-8020127c 8020127c       14     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-f2b79e.o:(.rodata)
-8020127c 8020127c        0     1                 .LJTI10_0
-8020127c 8020127c        0     1                 $d
-80201290 80201290      346     1         <internal>:(.rodata.str1.1)
-802015d8 802015d8    10598     4 .data
-802015d8 802015d8        4     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-f2b79e.o:(.data)
-802015d8 802015d8        4     1                 alloc_pages.next_paddr
-802015d8 802015d8        0     1                 $d
-802015dc 802015dc        4     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-d43c36.o:(.data)
-802015dc 802015dc        4     1                 next
+80201274 80201274        0     1                 .L0 
+80201274 80201274        0     1                 .L0 
+80201278 80201278        0     1                 .L0 
+80201278 80201278        0     1                 .L0 
+80201278 80201278        0     1                 .L0 
+80201278 80201278        0     1                 .L0 
+80201280 80201280        0     1                 .L0 
+80201280 80201280        0     1                 .L0 
+80201280 80201280      35a     4 .rodata
+80201280 80201280       14     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-117bd9.o:(.rodata)
+80201280 80201280        0     1                 .LJTI10_0
+80201280 80201280        0     1                 $d
+80201294 80201294      346     1         <internal>:(.rodata.str1.1)
+802015dc 802015dc    10598     4 .data
+802015dc 802015dc        4     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-117bd9.o:(.data)
+802015dc 802015dc        4     1                 alloc_pages.next_paddr
 802015dc 802015dc        0     1                 $d
-802015e0 802015e0    10590     1         shell.bin.o:(.data)
-802015e0 802015e0        0     1                 _binary_shell_bin_start
-80211b70 80211b70        0     1                 _binary_shell_bin_end
-80211b70 80211b70    121e8     8 .bss
-80211b70 80211b70        0     1         __bss = .
-80211b70 80211b70    10090     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-f2b79e.o:(.bss)
-80211b70 80211b70        0     1                 $d
-80211b70 80211b70    10080     1                 procs
-80221bf0 80221bf0        4     1                 proc_a
-80221bf4 80221bf4        4     1                 proc_b
-80221bf8 80221bf8        8     1                 .L_MergedGlobals
-80221bf8 80221bf8        4     1                 idle_proc
-80221bfc 80221bfc        4     1                 current_proc
-80221c00 80221c00       18     8         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/virtio-73c1ce.o:(.bss)
-80221c00 80221c00       18     1                 .L_MergedGlobals
-80221c00 80221c00        0     1                 $d
-80221c00 80221c00        4     1                 blk_request_vq
-80221c04 80221c04        4     1                 blk_req_paddr
-80221c08 80221c08        4     1                 blk_req
-80221c10 80221c10        8     1                 blk_capacity
-80221c18 80221c18     2140     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/fat16-462504.o:(.bss)
-80221c18 80221c18        0     1                 $d
-80221c18 80221c18      140     1                 root_dir
-80221d58 80221d58     2000     1                 fat
-80223d58 80223d58        0     1         __bss_end = .
-80223d58 80223d58        0     1 . = ALIGN(4)
-80223d58 80223d58    20000     1 . += 128 * 1024
-80243d58 80243d58        0     1 __stack_top = .
-80243d58 80243d58      2a8     1 . = ALIGN(4096)
+802015e0 802015e0        4     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-8b38be.o:(.data)
+802015e0 802015e0        4     1                 next
+802015e0 802015e0        0     1                 $d
+802015e4 802015e4    10590     1         shell.bin.o:(.data)
+802015e4 802015e4        0     1                 _binary_shell_bin_start
+80211b74 80211b74        0     1                 _binary_shell_bin_end
+80211b78 80211b78    121e8     8 .bss
+80211b78 80211b78        0     1         __bss = .
+80211b78 80211b78    10090     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-117bd9.o:(.bss)
+80211b78 80211b78        0     1                 $d
+80211b78 80211b78    10080     1                 procs
+80221bf8 80221bf8        4     1                 proc_a
+80221bfc 80221bfc        4     1                 proc_b
+80221c00 80221c00        8     1                 .L_MergedGlobals
+80221c00 80221c00        4     1                 idle_proc
+80221c04 80221c04        4     1                 current_proc
+80221c08 80221c08       18     8         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/virtio-a8fb5f.o:(.bss)
+80221c08 80221c08       18     1                 .L_MergedGlobals
+80221c08 80221c08        0     1                 $d
+80221c08 80221c08        4     1                 blk_request_vq
+80221c0c 80221c0c        4     1                 blk_req_paddr
+80221c10 80221c10        4     1                 blk_req
+80221c18 80221c18        8     1                 blk_capacity
+80221c20 80221c20     2140     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/fat16-791878.o:(.bss)
+80221c20 80221c20        0     1                 $d
+80221c20 80221c20      140     1                 root_dir
+80221d60 80221d60     2000     1                 fat
+80223d60 80223d60        0     1         __bss_end = .
+80223d60 80223d60        0     1 . = ALIGN(4)
+80223d60 80223d60    20000     1 . += 128 * 1024
+80243d60 80243d60        0     1 __stack_top = .
+80243d60 80243d60      2a0     1 . = ALIGN(4096)
 80244000 80244000        0     1 __free_ram = .
 80244000 80244000  4000000     1 . += 64 * 1024 * 1024
 84244000 84244000        0     1 __free_ram_end = .
-       0        0      c54     1 .debug_loclists
-       0        0      69a     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-f2b79e.o:(.debug_loclists)
+       0        0      c69     1 .debug_loclists
+       0        0      69a     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-117bd9.o:(.debug_loclists)
        0        0        0     1                 $d
        c        c        0     1                 .L0 
-     69a      69a      1e1     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-d43c36.o:(.debug_loclists)
+     69a      69a      1e1     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-8b38be.o:(.debug_loclists)
      69a      69a        0     1                 $d
      6a6      6a6        0     1                 .L0 
-     87b      87b      12b     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/virtio-73c1ce.o:(.debug_loclists)
+     87b      87b      12b     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/virtio-a8fb5f.o:(.debug_loclists)
      87b      87b        0     1                 $d
      887      887        0     1                 .L0 
-     9a6      9a6      2ae     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/fat16-462504.o:(.debug_loclists)
+     9a6      9a6      2c3     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/fat16-791878.o:(.debug_loclists)
      9a6      9a6        0     1                 $d
      9b2      9b2        0     1                 .L0 
        0        0      868     1 .debug_abbrev
-       0        0      319     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-f2b79e.o:(.debug_abbrev)
+       0        0      319     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-117bd9.o:(.debug_abbrev)
        0        0        0     1                 $d
-     319      319      157     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-d43c36.o:(.debug_abbrev)
+     319      319      157     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-8b38be.o:(.debug_abbrev)
      319      319        0     1                 $d
-     470      470      1ff     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/virtio-73c1ce.o:(.debug_abbrev)
+     470      470      1ff     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/virtio-a8fb5f.o:(.debug_abbrev)
      470      470        0     1                 $d
-     66f      66f      1f9     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/fat16-462504.o:(.debug_abbrev)
+     66f      66f      1f9     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/fat16-791878.o:(.debug_abbrev)
      66f      66f        0     1                 $d
-       0        0     1b10     1 .debug_info
-       0        0      d84     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-f2b79e.o:(.debug_info)
+       0        0     1b36     1 .debug_info
+       0        0      d84     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-117bd9.o:(.debug_info)
        0        0        0     1                 $d
-     d84      d84      273     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-d43c36.o:(.debug_info)
+     d84      d84      273     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-8b38be.o:(.debug_info)
      d84      d84        0     1                 $d
-     ff7      ff7      76b     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/virtio-73c1ce.o:(.debug_info)
+     ff7      ff7      76b     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/virtio-a8fb5f.o:(.debug_info)
      ff7      ff7        0     1                 $d
-    1762     1762      3ae     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/fat16-462504.o:(.debug_info)
+    1762     1762      3d4     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/fat16-791878.o:(.debug_info)
     1762     1762        0     1                 $d
        0        0       d4     1 .debug_rnglists
-       0        0       8f     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-f2b79e.o:(.debug_rnglists)
+       0        0       8f     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-117bd9.o:(.debug_rnglists)
        0        0        0     1                 $d
        c        c        0     1                 .L0 
-      8f       8f       1b     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-d43c36.o:(.debug_rnglists)
+      8f       8f       1b     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-8b38be.o:(.debug_rnglists)
       8f       8f        0     1                 $d
       9b       9b        0     1                 .L0 
-      aa       aa       2a     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/virtio-73c1ce.o:(.debug_rnglists)
+      aa       aa       2a     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/virtio-a8fb5f.o:(.debug_rnglists)
       aa       aa        0     1                 $d
       b6       b6        0     1                 .L0 
        0        0      44c     1 .debug_str_offsets
-       0        0      1ec     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-f2b79e.o:(.debug_str_offsets)
+       0        0      1ec     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-117bd9.o:(.debug_str_offsets)
        0        0        0     1                 $d
        8        8        0     1                 .L0 
-     1ec      1ec       ac     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-d43c36.o:(.debug_str_offsets)
+     1ec      1ec       ac     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-8b38be.o:(.debug_str_offsets)
      1ec      1ec        0     1                 $d
      1f4      1f4        0     1                 .L0 
-     298      298      108     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/virtio-73c1ce.o:(.debug_str_offsets)
+     298      298      108     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/virtio-a8fb5f.o:(.debug_str_offsets)
      298      298        0     1                 $d
      2a0      2a0        0     1                 .L0 
-     3a0      3a0       ac     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/fat16-462504.o:(.debug_str_offsets)
+     3a0      3a0       ac     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/fat16-791878.o:(.debug_str_offsets)
      3a0      3a0        0     1                 $d
      3a8      3a8        0     1                 .L0 
        0        0      68b     1 .debug_str
        0        0      68b     1         <internal>:(.debug_str)
        0        0      378     1 .debug_addr
-       0        0      1a0     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-f2b79e.o:(.debug_addr)
+       0        0      1a0     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-117bd9.o:(.debug_addr)
        0        0        0     1                 $d
        8        8        0     1                 .L0 
-     1a0      1a0       6c     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-d43c36.o:(.debug_addr)
+     1a0      1a0       6c     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-8b38be.o:(.debug_addr)
      1a0      1a0        0     1                 $d
      1a8      1a8        0     1                 .L0 
-     20c      20c       d8     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/virtio-73c1ce.o:(.debug_addr)
+     20c      20c       d8     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/virtio-a8fb5f.o:(.debug_addr)
      20c      20c        0     1                 $d
      214      214        0     1                 .L0 
-     2e4      2e4       94     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/fat16-462504.o:(.debug_addr)
+     2e4      2e4       94     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/fat16-791878.o:(.debug_addr)
      2e4      2e4        0     1                 $d
      2ec      2ec        0     1                 .L0 
        0        0       3b     1 .comment
@@ -1384,29 +1389,29 @@
        0        0       4e     1 .riscv.attributes
        0        0       4e     1         <internal>:(.riscv.attributes)
        0        0      45c     4 .debug_frame
-       0        0      1d4     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-f2b79e.o:(.debug_frame)
+       0        0      1d4     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-117bd9.o:(.debug_frame)
        0        0        0     1                 .L0 
        0        0        0     1                 $d
-     1d4      1d4       b8     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-d43c36.o:(.debug_frame)
+     1d4      1d4       b8     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-8b38be.o:(.debug_frame)
      1d4      1d4        0     1                 .L0 
      1d4      1d4        0     1                 $d
-     28c      28c      10c     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/virtio-73c1ce.o:(.debug_frame)
+     28c      28c      10c     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/virtio-a8fb5f.o:(.debug_frame)
      28c      28c        0     1                 .L0 
      28c      28c        0     1                 $d
-     398      398       c4     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/fat16-462504.o:(.debug_frame)
+     398      398       c4     4         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/fat16-791878.o:(.debug_frame)
      398      398        0     1                 .L0 
      398      398        0     1                 $d
-       0        0     1504     1 .debug_line
-       0        0      8ae     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-f2b79e.o:(.debug_line)
+       0        0     152c     1 .debug_line
+       0        0      8ae     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/kernel-117bd9.o:(.debug_line)
        0        0        0     1                 .Lline_table_start0
        0        0        0     1                 $d
-     8ae      8ae      349     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-d43c36.o:(.debug_line)
+     8ae      8ae      349     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/common-8b38be.o:(.debug_line)
      8ae      8ae        0     1                 .Lline_table_start0
      8ae      8ae        0     1                 $d
-     bf7      bf7      3ce     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/virtio-73c1ce.o:(.debug_line)
+     bf7      bf7      3ce     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/virtio-a8fb5f.o:(.debug_line)
      bf7      bf7        0     1                 .Lline_table_start0
      bf7      bf7        0     1                 $d
-     fc5      fc5      53f     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/fat16-462504.o:(.debug_line)
+     fc5      fc5      567     1         /var/folders/hw/r5t5ryts3r7fw374z_3h5bmw0000gp/T/fat16-791878.o:(.debug_line)
      fc5      fc5        0     1                 .Lline_table_start0
      fc5      fc5        0     1                 $d
        0        0       d4     1 .debug_line_str

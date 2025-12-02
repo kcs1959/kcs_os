@@ -3,7 +3,7 @@
 #include "../kernel.h"
 
 #define SECTOR_SIZE 512
-#define CLUSTER_SIZE 1
+#define CLUSTER_SIZE 8
 #define FAT_ENTRY_NUM 4096
 
 extern uint16_t fat[FAT_ENTRY_NUM];

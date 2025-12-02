@@ -59,10 +59,12 @@ int create_file(const char *name, uint32_t size) {
   root_dir[dir_index].start_cluster = cluster;
   root_dir[dir_index].size = size;
 
+  // ファイル名
   copy_name_dynamic(&root_dir[dir_index].name, name);
 
   fat[cluster] = 0xFFFF;
 
+  // ファイルの中身
   paddr_t p = alloc_pages(CLUSTER_SIZE * SECTOR_SIZE);
   write_cluster(cluster, (void *)p);
   return 0;
