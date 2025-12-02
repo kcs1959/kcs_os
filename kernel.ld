@@ -31,4 +31,9 @@ SECTIONS {
     __free_ram = .;
     . += 64 * 1024 * 1024; /* 64MB */
     __free_ram_end = .;
+
+    . = ALIGN(4096);
+    __fat_volume_start = .;
+    . += 16 * 1024 * 1024;
+    __fat_volume_end = .;
 }
