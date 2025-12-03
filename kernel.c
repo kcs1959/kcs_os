@@ -420,6 +420,7 @@ void kernel_main(void) {
   printf("first sector: %s\n", buf);
 
   create_file("test.txt", "content", 5);
+  concatenate();
 
   create_process(_binary_shell_bin_start, (size_t)_binary_shell_bin_size);
   yield();

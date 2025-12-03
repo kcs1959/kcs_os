@@ -26,7 +26,7 @@ void init_fat16_disk() {
 
 // RAM上のFATとルートディレクトリ
 uint16_t fat[FAT_ENTRY_NUM];
-struct dir_entry root_dir[16]; // ここでは16個だけ利用する簡易版
+struct dir_entry root_dir[BPB_RootEntCnt];
 
 // クラスタ → セクタ変換
 static inline uint32_t cluster_to_sector(uint16_t cluster) {
@@ -77,15 +77,11 @@ int create_file(const char *name, const uint8_t *data, uint32_t size) {
 
   // root_dir 空きエントリ探索
   int entry_index = -1;
-  for (int i = 0; i < 16; i++) {
+  for (int i = 0; i < BPB_RootEntCnt; i++) {
     if (root_dir[i].name[0] == 0x00 || root_dir[i].name[0] == 0xE5) {
       entry_index = i;
       break;
     }
-  }
-  if (entry_index < 0) {
-    printf("[FAT16] ERROR: root directory full.\n");
-    return -1;
   }
 
   // 最初のクラスタ確保
@@ -213,7 +209,7 @@ void list_root_dir() {
 
   printf("=== Root Directory ===\n");
 
-  for (int i = 0; i < 16; i++) {
+  for (int i = 0; i < BPB_RootEntCnt; i++) {
     // 未使用エントリ → ここから先は全部空
     if (root_dir[i].name[0] == 0x00) {
       break;

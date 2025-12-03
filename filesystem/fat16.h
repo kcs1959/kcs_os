@@ -43,7 +43,7 @@ struct dir_entry {
 };
 #pragma pack(pop)
 
-extern struct dir_entry root_dir[16];
+extern struct dir_entry root_dir[BPB_RootEntCnt];
 
 void init_fat16_disk();
 void read_cluster(uint16_t cluster, void *buf);
