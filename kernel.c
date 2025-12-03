@@ -407,7 +407,7 @@ void kernel_main(void) {
   idle_proc->pid = 0;
   current_proc = idle_proc;
 
-  printf("\n\nHello %s\n", "World! directly from cpu");
+  printf("\n\nWelcome to... %s!!!\n", "HonenashiOS ^p^");
   printf("1 + 2 = %d, %x\n", 1 + 2, 0x1234abcd);
 
   paddr_t paddr0 = alloc_pages(2);
@@ -419,7 +419,7 @@ void kernel_main(void) {
   read_write_disk(buf, 0, false);
   printf("first sector: %s\n", buf);
 
-  create_file("test.txt", "content", 5);
+  create_file("test.txt", "hello", 5);
   concatenate();
 
   create_process(_binary_shell_bin_start, (size_t)_binary_shell_bin_size);

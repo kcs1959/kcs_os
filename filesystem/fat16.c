@@ -63,17 +63,28 @@ static void write_root_dir_to_disk() {
   }
 }
 
-int create_file(const char *name, const uint8_t *data, uint32_t size) {
-  printf("[FAT16] create_file_with_data: %s (%u bytes)\n", name, size);
-
-  // FAT / root_dir 読み込み
+static void read_fat_from_disk() {
   for (int i = 0; i < BPB_FATSz16; i++) {
     read_write_disk(&fat[i * (BPB_BytsPerSec / 2)], FAT1_START_SECTOR + i, 0);
   }
-  for (int i = 0; i < ROOT_DIR_SECTORS; i++) {
-    read_write_disk(&root_dir[i * (BPB_BytsPerSec / 32)],
-                    ROOT_DIR_START_SECTOR + i, 0);
+}
+
+static void write_fat_to_disk() {
+  // FAT1 書き戻し
+  for (int i = 0; i < BPB_FATSz16; i++) {
+    read_write_disk(&fat[i * (BPB_BytsPerSec / 2)], FAT1_START_SECTOR + i, 1);
   }
+
+  // FAT2 書き戻し（ミラー）
+  for (int i = 0; i < BPB_FATSz16; i++) {
+    read_write_disk(&fat[i * (BPB_BytsPerSec / 2)], FAT2_START_SECTOR + i, 1);
+  }
+}
+
+int create_file(const char *name, const uint8_t *data, uint32_t size) {
+  // FAT / root_dir 読み込み
+  read_fat_from_disk();
+  read_root_dir_from_disk();
 
   // root_dir 空きエントリ探索
   int entry_index = -1;
@@ -161,16 +172,8 @@ int create_file(const char *name, const uint8_t *data, uint32_t size) {
   }
 
   // FAT書き戻し
-  for (int i = 0; i < BPB_FATSz16; i++) {
-    read_write_disk(&fat[i * (BPB_BytsPerSec / 2)], FAT1_START_SECTOR + i, 1);
-    read_write_disk(&fat[i * (BPB_BytsPerSec / 2)], FAT2_START_SECTOR + i, 1);
-  }
-
-  // root_dir書き戻し
-  for (int i = 0; i < ROOT_DIR_SECTORS; i++) {
-    read_write_disk(&root_dir[i * (BPB_BytsPerSec / 32)],
-                    ROOT_DIR_START_SECTOR + i, 1);
-  }
+  write_fat_to_disk();
+  write_root_dir_to_disk();
 
   printf("[FAT16] File created: %s at entry %d, cluster %d\n", name,
          entry_index, free_cluster);
@@ -249,7 +252,8 @@ void list_root_dir() {
 }
 
 void concatenate() {
-  // 1. 最新の root_dir を読み込む
+  // 1. 最新の FAT と root_dir を読み込む（FAT を必ず先に）
+  read_fat_from_disk();
   read_root_dir_from_disk();
 
   // 2. 最初の有効エントリを探す
