@@ -28,12 +28,11 @@ void init_fat16_disk() {
 uint16_t fat[FAT_ENTRY_NUM];
 struct dir_entry root_dir[BPB_RootEntCnt];
 
-// クラスタ → セクタ変換
+// データ領域の読み書き
 static inline uint32_t cluster_to_sector(uint16_t cluster) {
   return DATA_START_SECTOR + (cluster - 2) * BPB_SecPerClus;
 }
 
-// 1クラスタ読み書き
 void read_cluster(uint16_t cluster, void *buf) {
   for (int i = 0; i < BPB_SecPerClus; i++) {
     read_write_disk((uint8_t *)buf + i * BPB_BytsPerSec,
@@ -63,6 +62,7 @@ static void write_root_dir_to_disk() {
   }
 }
 
+// FAT領域の読み書き
 static void read_fat_from_disk() {
   for (int i = 0; i < BPB_FATSz16; i++) {
     read_write_disk(&fat[i * (BPB_BytsPerSec / 2)], FAT1_START_SECTOR + i, 0);
@@ -182,6 +182,8 @@ int create_file(const char *name, const uint8_t *data, uint32_t size) {
 
 // ファイル読み込み
 int read_file(uint16_t start_cluster, uint8_t *buf, uint32_t size) {
+  read_fat_from_disk();
+
   if (start_cluster < 2 || start_cluster >= FAT_ENTRY_NUM)
     return -1;
 
@@ -291,7 +293,7 @@ void concatenate() {
   // 5. ファイル内容をそのまま表示
   printf("===== cat: file content =====\n");
   for (uint32_t i = 0; i < size; i++) {
-    printf("%c", buf[i]);
+    printf("%d", buf[i]);
   }
   printf("\n===== end =====\n");
 }
