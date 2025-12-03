@@ -333,6 +333,10 @@ void handle_syscall(struct trap_frame *f) {
     list_root_dir();
     yield();
     break;
+  case SYS_CONCATENATE:
+    concatenate();
+    yield();
+    break;
   default:
     PANIC("unexpected syscall a3=%x\n", f->a3);
   }
@@ -415,8 +419,7 @@ void kernel_main(void) {
   read_write_disk(buf, 0, false);
   printf("first sector: %s\n", buf);
 
-  create_file("testtest", 5);
-  create_file("test2", 4);
+  create_file("test.txt", "content", 5);
 
   create_process(_binary_shell_bin_start, (size_t)_binary_shell_bin_size);
   yield();

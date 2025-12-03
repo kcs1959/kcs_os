@@ -26,6 +26,8 @@ void main(void) {
       exit();
     else if (strcmp(cmdline, "ls") == 0)
       list_root_dir();
+    else if (strcmp(cmdline, "cat") == 0)
+      concatenate();
     else if (strcmp(cmdline, "ohgiri") == 0) {
       int r = rand() % 3;
       if (r == 0)

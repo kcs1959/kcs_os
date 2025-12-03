@@ -36,8 +36,10 @@ __attribute__((noreturn)) void exit(void) {
     ; // 念のため
 }
 
-int create_file(const char *name, uint32_t size) {
+int create_file(const char *name, const uint8_t *data, uint32_t size) {
   syscall(SYS_CREATE_FILE, 0, 0, 0);
 }
 
 void list_root_dir() { syscall(SYS_LIST_FILE, 0, 0, 0); }
+
+void concatenate() { syscall(SYS_CONCATENATE, 0, 0, 0); }

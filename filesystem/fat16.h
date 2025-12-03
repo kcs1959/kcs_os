@@ -49,5 +49,6 @@ void init_fat16_disk();
 void read_cluster(uint16_t cluster, void *buf);
 void write_cluster(uint16_t cluster, void *buf);
 void copy_name_dynamic(char **name_field, const char *src);
-int create_file(const char *name, uint32_t size);
+int create_file(const char *name, const uint8_t *data, uint32_t size);
 void list_root_dir();
+void concatenate();
