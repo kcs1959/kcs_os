@@ -60,27 +60,6 @@ static void write_root_dir_to_disk() {
                     ROOT_DIR_START_SECTOR + i, 1);
   }
 }
-/*
-uint32_t cluster_to_sector(uint16_t cluster) {
-  // データ領域開始セクタ
-  uint32_t root_dir_sectors =
-      (BPB_RootEntCnt * 32 + BPB_BytsPerSec - 1) / BPB_BytsPerSec;
-  uint32_t data_start_sector =
-      BPB_RsvdSecCnt + BPB_NumFATs * BPB_FATSz16 + root_dir_sectors;
-
-  // クラスタ番号 → セクタ番号
-  return data_start_sector + (cluster - 2) * BPB_SecPerClus;
-}
-
-// read/write_clusterはおk。
-void read_cluster(uint16_t cluster, void *buf) {
-  read_write_disk(buf, cluster_to_sector(cluster), false);
-}
-
-void write_cluster(uint16_t cluster, void *buf) {
-  read_write_disk(buf, cluster_to_sector(cluster), true);
-}
-*/
 
 int create_file(const char *name, uint32_t size) {
   printf("[FAT16] create_file: %s (%u bytes)\n", name, size);

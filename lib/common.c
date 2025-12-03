@@ -98,6 +98,15 @@ int strcmp(const char *s1, const char *s2) {
   return *(unsigned char *)s1 - *(unsigned char *)s2;
 }
 
+int strncmp(const char *s1, const char *s2, uint32_t n) {
+  for (uint32_t i = 0; i < n; i++) {
+    if (s1[i] != s2[i] || s1[i] == '\0' || s2[i] == '\0') {
+      return (unsigned char)s1[i] - (unsigned char)s2[i];
+    }
+  }
+  return 0;
+}
+
 static unsigned long next = 1;
 
 void srand(unsigned int seed) { next = seed; } // シード値からrandを呼び出す場合

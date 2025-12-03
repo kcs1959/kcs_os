@@ -414,9 +414,9 @@ void kernel_main(void) {
   char buf[SECTOR_SIZE];
   read_write_disk(buf, 0, false);
   printf("first sector: %s\n", buf);
-  printf("sizeof(dir_entry) = %d\n", (int)sizeof(struct dir_entry));
 
   create_file("testtest", 5);
+  create_file("test2", 4);
 
   create_process(_binary_shell_bin_start, (size_t)_binary_shell_bin_size);
   yield();
