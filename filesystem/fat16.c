@@ -293,7 +293,7 @@ void concatenate() {
   // 5. ファイル内容をそのまま表示
   printf("===== cat: file content =====\n");
   for (uint32_t i = 0; i < size; i++) {
-    printf("%d", buf[i]);
+    putchar(buf[i]);
   }
   printf("\n===== end =====\n");
 }

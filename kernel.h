@@ -86,5 +86,4 @@ struct process {
 #define SCAUSE_ECALL 8
 
 paddr_t alloc_pages(uint32_t n);
-
-// disk
+void putchar(char ch);
