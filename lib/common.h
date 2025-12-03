@@ -26,7 +26,6 @@ typedef uint8_t bool;
 #define SYS_CREATE_FILE 4
 #define SYS_LIST_FILE 5
 
-paddr_t alloc_pages(uint32_t n);
 void *memset(void *buf, char c, size_t n);
 void *memcpy(void *dst, const void *src, size_t n);
 char *strcpy(char *dst, const char *src);

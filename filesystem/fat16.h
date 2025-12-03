@@ -25,12 +25,23 @@
 #define DATA_START_SECTOR (ROOT_DIR_START_SECTOR + ROOT_DIR_SECTORS)
 
 extern uint16_t fat[FAT_ENTRY_NUM];
+#pragma pack(push, 1)
 struct dir_entry {
   char name[8];
   char ext[3];
+  uint8_t attr;
+  uint8_t reserved;
+  uint8_t creation_time_tenths;
+  uint16_t creation_time;
+  uint16_t creation_date;
+  uint16_t last_access_date;
+  uint16_t high_cluster;
+  uint16_t last_write_time;
+  uint16_t last_write_date;
   uint16_t start_cluster;
   uint32_t size;
 };
+#pragma pack(pop)
 
 extern struct dir_entry root_dir[16];
 

@@ -192,7 +192,9 @@ void list_root_dir() {
     name[p] = '\0';
 
     // 3. 表示
-    printf("%-12s  size=%u  cluster=%u\n", name, root_dir[i].size,
-           root_dir[i].start_cluster);
+    printf("%s  size=", name);
+    printf("%d", (int)root_dir[i].size);
+    printf("  cluster=");
+    printf("%d\n", (int)root_dir[i].start_cluster);
   }
 }
