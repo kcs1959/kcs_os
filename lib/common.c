@@ -1,9 +1,8 @@
 #include "./common.h"
-#include "../kernel.h"
 
 void putchar(char ch);
 
-void printf(const char *fmt, ...) {
+int printf(const char *fmt, ...) {
   va_list vargs;
   va_start(vargs, fmt);
 
@@ -61,6 +60,7 @@ void printf(const char *fmt, ...) {
 
 end:
   va_end(vargs);
+  return 0;
 }
 
 void *memcpy(void *dst, const void *src, size_t n) {
@@ -72,7 +72,7 @@ void *memcpy(void *dst, const void *src, size_t n) {
   return dst;
 }
 
-void *memset(void *buf, char c, size_t n) {
+void *memset(void *buf, int c, size_t n) {
   uint8_t *p = (uint8_t *)buf;
   while (n--)
     *p++ = c;
@@ -111,7 +111,7 @@ static unsigned long next = 1;
 
 void srand(unsigned int seed) { next = seed; } // シード値からrandを呼び出す場合
 
-int rand(void) {
+int rand() {
   next = next * 1103515245 + 12345;
   return (unsigned int)(next >> 16) & 0x7fff;
 }

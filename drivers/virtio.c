@@ -41,7 +41,7 @@ struct virtio_virtq *virtq_init(unsigned index) {
   return vq;
 }
 
-void virtio_blk_init(void) {
+void virtio_blk_init() {
   if (virtio_reg_read32(VIRTIO_REG_MAGIC) != 0x74726976)
     PANIC("virtio: invalid magic value");
   if (virtio_reg_read32(VIRTIO_REG_VERSION) != 1)
@@ -65,7 +65,7 @@ void virtio_blk_init(void) {
 
   // ディスクの容量を取得
   blk_capacity = virtio_reg_read64(VIRTIO_REG_DEVICE_CONFIG + 0) * SECTOR_SIZE;
-  printf("virtio-blk: capacity is %d bytes\n", blk_capacity);
+  printf("virtio-blk: capacity is %llu bytes\n", blk_capacity);
 
   // デバイスへの処理要求を格納する領域を確保
   blk_req_paddr =

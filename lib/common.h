@@ -27,11 +27,11 @@ typedef uint8_t bool;
 #define SYS_LIST_FILE 5
 #define SYS_CONCATENATE 6
 
-void *memset(void *buf, char c, size_t n);
+void *memset(void *buf, int c, size_t n);
 void *memcpy(void *dst, const void *src, size_t n);
 char *strcpy(char *dst, const char *src);
 int strcmp(const char *s1, const char *s2);
 int strncmp(const char *s1, const char *s2, uint32_t n);
-void printf(const char *fmt, ...);
-int rand(void);
+int printf(const char *fmt, ...);
+int rand();
 void srand(unsigned int seed);

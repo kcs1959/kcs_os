@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../kernel.h"
+#include "../lib/common.h"
 
 // ブートセクタ
 #define BPB_BytsPerSec 512

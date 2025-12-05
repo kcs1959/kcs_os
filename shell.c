@@ -1,6 +1,6 @@
 #include "user.h"
 
-void main(void) {
+int main() {
   while (1) {
   prompt:
     printf("> ");
@@ -22,7 +22,7 @@ void main(void) {
     if (strcmp(cmdline, "hello") == 0)
       printf("Hello world from shell!\n");
     else if (strcmp(cmdline, "exit") == 0)
-      exit();
+      exit(0);
     else if (strcmp(cmdline, "ls") == 0)
       list_root_dir();
     else if (strcmp(cmdline, "cat") == 0)

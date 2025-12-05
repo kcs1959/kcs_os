@@ -1,12 +1,10 @@
 #include "user.h"
 #include "filesystem/fat16.h"
-#include "kernel.h"
 #include "lib/common.h"
 
 extern char __stack_top[];
 
-__attribute__((section(".text.start"))) __attribute__((naked)) void
-start(void) {
+__attribute__((section(".text.start"))) __attribute__((naked)) void start() {
   __asm__ __volatile__("mv sp, %[stack_top]\n"
                        "call main\n"
                        "call exit\n" ::[stack_top] "r"(__stack_top));
@@ -28,16 +26,16 @@ int syscall(int sysno, int arg0, int arg1, int arg2) {
 
 void putchar(char ch) { syscall(SYS_PUTCHAR, ch, 0, 0); }
 
-int getchar(void) { syscall(SYS_GETCHAR, 0, 0, 0); }
-
-__attribute__((noreturn)) void exit(void) {
-  syscall(SYS_EXIT, 0, 0, 0);
-  for (;;)
-    ; // 念のため
+int getchar() {
+  syscall(SYS_GETCHAR, 0, 0, 0);
+  printf("[getchar] syscall failed\n");
+  return -1; // エラー時は -1 を返す
 }
 
-int create_file(const char *name, const uint8_t *data, uint32_t size) {
-  syscall(SYS_CREATE_FILE, 0, 0, 0);
+__attribute__((noreturn)) void exit(int status) {
+  syscall(SYS_EXIT, status, 0, 0);
+  for (;;)
+    ; // 念のため
 }
 
 void list_root_dir() { syscall(SYS_LIST_FILE, 0, 0, 0); }
