@@ -1,7 +1,6 @@
 #include "./fat16.h"
 #include "../drivers/virtio.h"
 #include "../kernel.h"
-#include <stdint.h>
 
 // FATボリュームの各領域を初期化
 void init_fat16_disk() {
@@ -93,6 +92,10 @@ int create_file(const char *name, const uint8_t *data, uint32_t size) {
       entry_index = i;
       break;
     }
+  }
+  if (entry_index < 0) {
+    printf("[FAT16] ERROR: Root directory is full. Cannot create new file.\n");
+    return -1;
   }
 
   // 最初のクラスタ確保
