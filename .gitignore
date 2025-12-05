@@ -1,4 +1,8 @@
+.vscode/*
+.DS_Store
 *.o
 *.elf
 *.bin
 *.map
+*.img
+*.Identifier
