@@ -3,4 +3,5 @@
 -mabi=ilp32
 -std=c11
 -Iinclude
+-ffreestanding
 -Wall
