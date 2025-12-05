@@ -1,4 +1,5 @@
-#pragma once
+#ifndef VIRTIO_H
+#define VIRTIO_H
 
 #include "../lib/common.h"
 
@@ -73,3 +74,5 @@ void virtio_blk_init();
 void virtq_kick(struct virtio_virtq *vq, int desc_index);
 bool virtq_is_busy(struct virtio_virtq *vq);
 void read_write_disk(void *buf, unsigned sector, int is_write);
+
+#endif

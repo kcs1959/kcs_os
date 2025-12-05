@@ -1,4 +1,5 @@
-#pragma once
+#ifndef FAT16_H
+#define FAT16_H
 
 #include "../lib/common.h"
 
@@ -53,3 +54,5 @@ int create_file(const char *name, const uint8_t *data, uint32_t size);
 int read_file(uint16_t start_cluster, uint8_t *buf, uint32_t size);
 void list_root_dir();
 void concatenate();
+
+#endif

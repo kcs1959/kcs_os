@@ -1,6 +1,5 @@
 #include "./fat16.h"
 #include "../drivers/virtio.h"
-#include "../kernel.h"
 
 // FATボリュームの各領域を初期化
 void init_fat16_disk() {

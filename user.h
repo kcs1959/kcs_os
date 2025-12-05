@@ -1,4 +1,5 @@
-#pragma once
+#ifndef USER_H
+#define USER_H
 
 #include "lib/common.h"
 
@@ -8,3 +9,5 @@ int getchar();
 int create_file(const char *name, const uint8_t *data, uint32_t size);
 void list_root_dir();
 void concatenate();
+
+#endif
