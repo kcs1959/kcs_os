@@ -183,34 +183,6 @@ int create_file(const char *name, const uint8_t *data, uint32_t size) {
   return 0;
 }
 
-// ファイル読み込み
-int read_file(uint16_t start_cluster, uint8_t *buf, uint32_t size) {
-  read_fat_from_disk();
-
-  if (start_cluster < 2 || start_cluster >= FAT_ENTRY_NUM)
-    return -1;
-
-  uint32_t remaining = size;
-  uint16_t cluster = start_cluster;
-  uint8_t cluster_buf[BPB_BytsPerSec * BPB_SecPerClus];
-
-  while (cluster != 0xFFFF && remaining > 0) {
-    read_cluster(cluster, cluster_buf);
-
-    uint32_t to_copy = remaining;
-    if (to_copy > BPB_BytsPerSec * BPB_SecPerClus)
-      to_copy = BPB_BytsPerSec * BPB_SecPerClus;
-
-    memcpy(buf, cluster_buf, to_copy);
-    buf += to_copy;
-    remaining -= to_copy;
-
-    cluster = fat[cluster];
-  }
-
-  return 0;
-}
-
 void list_root_dir() {
   // 1. ディスクから最新の root_dir を読み込む
   read_root_dir_from_disk();
@@ -254,6 +226,34 @@ void list_root_dir() {
     printf("  cluster=");
     printf("%d\n", (int)root_dir[i].start_cluster);
   }
+}
+
+// ファイル読み込み
+int read_file(uint16_t start_cluster, uint8_t *buf, uint32_t size) {
+  read_fat_from_disk();
+
+  if (start_cluster < 2 || start_cluster >= FAT_ENTRY_NUM)
+    return -1;
+
+  uint32_t remaining = size;
+  uint16_t cluster = start_cluster;
+  uint8_t cluster_buf[BPB_BytsPerSec * BPB_SecPerClus];
+
+  while (cluster != 0xFFFF && remaining > 0) {
+    read_cluster(cluster, cluster_buf);
+
+    uint32_t to_copy = remaining;
+    if (to_copy > BPB_BytsPerSec * BPB_SecPerClus)
+      to_copy = BPB_BytsPerSec * BPB_SecPerClus;
+
+    memcpy(buf, cluster_buf, to_copy);
+    buf += to_copy;
+    remaining -= to_copy;
+
+    cluster = fat[cluster];
+  }
+
+  return 0;
 }
 
 void concatenate() {
