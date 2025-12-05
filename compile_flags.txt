@@ -1,8 +1,4 @@
 --target=riscv32-unknown-elf
 -march=rv32imac
--mabi=ilp32
--std=c11
--Iinclude
--ffreestanding
 -nobuiltininc
--Wall
+
