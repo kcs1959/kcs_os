@@ -1,4 +1,0 @@
---target=riscv32-unknown-elf
--march=rv32imac
--nobuiltininc
-
