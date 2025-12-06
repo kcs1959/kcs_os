@@ -26,11 +26,7 @@ int syscall(int sysno, int arg0, int arg1, int arg2) {
 
 void putchar(char ch) { syscall(SYS_PUTCHAR, ch, 0, 0); }
 
-int getchar() {
-  syscall(SYS_GETCHAR, 0, 0, 0);
-  printf("[getchar] syscall failed\n");
-  return -1; // エラー時は -1 を返す
-}
+int getchar() { return syscall(SYS_GETCHAR, 0, 0, 0); }
 
 __attribute__((noreturn)) void exit(int status) {
   syscall(SYS_EXIT, status, 0, 0);
