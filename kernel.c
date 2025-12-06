@@ -329,12 +329,12 @@ void handle_syscall(struct trap_frame *f) {
       */
     }
     break;
-  case SYS_LIST_FILE:
-    list_root_dir();
+  case SYS_LIST_ROOT_DIR:
+    fat16_list_root_dir();
     yield();
     break;
-  case SYS_CONCATENATE:
-    concatenate();
+  case SYS_CAT_FIRST_FILE:
+    fat16_concatenate_first_file();
     yield();
     break;
   default:

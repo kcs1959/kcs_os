@@ -1,5 +1,4 @@
 #include "user.h"
-#include "filesystem/fat16.h"
 #include "lib/common.h"
 
 extern char __stack_top[];
@@ -34,6 +33,6 @@ __attribute__((noreturn)) void exit(int status) {
     ; // 念のため
 }
 
-void list_root_dir() { syscall(SYS_LIST_FILE, 0, 0, 0); }
+void sys_list_root_dir() { syscall(SYS_LIST_ROOT_DIR, 0, 0, 0); }
 
-void concatenate() { syscall(SYS_CONCATENATE, 0, 0, 0); }
+void sys_concat_first_file() { syscall(SYS_CAT_FIRST_FILE, 0, 0, 0); }

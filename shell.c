@@ -24,9 +24,9 @@ int main() {
     else if (strcmp(cmdline, "exit") == 0)
       exit(0);
     else if (strcmp(cmdline, "ls") == 0)
-      list_root_dir();
+      sys_list_root_dir();
     else if (strcmp(cmdline, "cat") == 0)
-      concatenate();
+      sys_concat_first_file();
     else if (strcmp(cmdline, "ohgiri") == 0) {
       int r = rand() % 3;
       if (r == 0)

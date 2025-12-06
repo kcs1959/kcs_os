@@ -182,7 +182,7 @@ int create_file(const char *name, const uint8_t *data, uint32_t size) {
   return 0;
 }
 
-void list_root_dir() {
+void fat16_list_root_dir() {
   // 1. ディスクから最新の root_dir を読み込む
   read_root_dir_from_disk();
 
@@ -255,7 +255,7 @@ int read_file(uint16_t start_cluster, uint8_t *buf, uint32_t size) {
   return 0;
 }
 
-void concatenate() {
+void fat16_concatenate_first_file() {
   // 1. 最新の FAT と root_dir を読み込む（FAT を必ず先に）
   read_fat_from_disk();
   read_root_dir_from_disk();
