@@ -1,12 +1,5 @@
-.vscode/*
-.DS_Store
 *.o
 *.elf
 *.bin
 *.map
 *.img
-*.Identifier
-*.idx
-compile_commands.json
-compile_flags.txt
-.clangd
