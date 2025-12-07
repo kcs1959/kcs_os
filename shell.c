@@ -3,10 +3,23 @@
 int main(void) {
   while (1) {
   prompt:
-    printf("> ");
+    printf("\x1b[33m> \x1b[39m");
     char cmdline[128];
-    for (int i = 0;; i++) {
+    int i = 0;
+    while (true) {
       char ch = getchar();
+      if ((ch == '\x7f') && (cmdline[0] != '\0')) {
+        putchar('\b');
+        putchar(' ');
+        putchar('\b');
+        i--;
+        cmdline[i] = '\0';
+        continue;
+      }
+      if (ch == '\x03') {
+        printf("\x1b[30;47m^C\x1b[39;49m\n");
+        goto prompt;
+      }
       putchar(ch);
       if (i == sizeof(cmdline) - 1) {
         printf("command line too long\n");
@@ -18,9 +31,10 @@ int main(void) {
       } else {
         cmdline[i] = ch;
       }
+      i++;
     }
     if (strcmp(cmdline, "hello") == 0)
-      printf("Hello world from shell!\n");
+      printf("\x1b[36mHello world from shell!\n\x1b[39m");
     else if (strcmp(cmdline, "exit") == 0)
       exit(0);
     else if (strcmp(cmdline, "ls") == 0)
@@ -39,6 +53,6 @@ int main(void) {
         printf("このモデル、ついに2種類のカタカナを見分けられるようになりました"
                "!(キかイ学習)\n");
     } else
-      printf("unknown command: %s\n", cmdline);
+      printf("\x1b[31mUnknown command: %s\n\x1b[39m", cmdline);
   }
 }
