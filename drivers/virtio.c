@@ -88,7 +88,7 @@ bool virtq_is_busy(struct virtio_virtq *vq) {
 
 void read_write_disk(void *buf, unsigned sector, int is_write) {
   if (sector >= blk_capacity / SECTOR_SIZE) {
-    printf("virtio: tried to read/write sector=%d, but capacity is %d\n",
+    printf("virtio: tried to read/write sector=%d, but capacity is %lld\n",
            sector, blk_capacity / SECTOR_SIZE);
     return;
   }
