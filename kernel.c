@@ -329,12 +329,12 @@ void handle_syscall(struct trap_frame *f) {
       */
     }
     break;
-  case SYS_LIST_FILE:
-    list_root_dir();
+  case SYS_LIST_ROOT_DIR:
+    fat16_list_root_dir();
     yield();
     break;
-  case SYS_CONCATENATE:
-    concatenate();
+  case SYS_CAT_FIRST_FILE:
+    fat16_concatenate_first_file();
     yield();
     break;
   default:
@@ -407,20 +407,14 @@ void kernel_main(void) {
   idle_proc->pid = 0;
   current_proc = idle_proc;
 
-  printf("\n\nWelcome to... %s!!!\n", "HonenashiOS ^p^");
-  printf("1 + 2 = %d, %x\n", 1 + 2, 0x1234abcd);
-
-  paddr_t paddr0 = alloc_pages(2);
-  paddr_t paddr1 = alloc_pages(1);
-  printf("alloc_pages test: paddr0=%x\n", paddr0);
-  printf("alloc_pages test: paddr1=%x\n", paddr1);
+  printf("\n\nWelcome to KCS OS!\n");
 
   char buf[SECTOR_SIZE];
   read_write_disk(buf, 0, false);
   printf("first sector: %s\n", buf);
 
-  create_file("test.txt", "hello", 5);
-  create_file("test2.txt", "hello2", 6);
+  create_file("test.txt", (uint8_t *)"hello", 5);
+  create_file("test2.txt", (uint8_t *)"hello2", 6);
 
   create_process(_binary_shell_bin_start, (size_t)_binary_shell_bin_size);
   yield();

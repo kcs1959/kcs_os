@@ -1,9 +1,8 @@
 #include "./fat16.h"
 #include "../drivers/virtio.h"
-#include "../kernel.h"
 
 // FATボリュームの各領域を初期化
-void init_fat16_disk() {
+void init_fat16_disk(void) {
   uint8_t buf[SECTOR_SIZE];
   for (int i = 0; i < SECTOR_SIZE; i++)
     buf[i] = 0;
@@ -47,14 +46,14 @@ void write_cluster(uint16_t cluster, void *buf) {
 }
 
 // ルートディレクトリの読み書き
-static void read_root_dir_from_disk() {
+static void read_root_dir_from_disk(void) {
   for (int i = 0; i < ROOT_DIR_SECTORS; i++) {
     read_write_disk(&root_dir[i * (BPB_BytsPerSec / 32)],
                     ROOT_DIR_START_SECTOR + i, 0);
   }
 }
 
-static void write_root_dir_to_disk() {
+static void write_root_dir_to_disk(void) {
   for (int i = 0; i < ROOT_DIR_SECTORS; i++) {
     read_write_disk(&root_dir[i * (BPB_BytsPerSec / 32)],
                     ROOT_DIR_START_SECTOR + i, 1);
@@ -62,13 +61,13 @@ static void write_root_dir_to_disk() {
 }
 
 // FAT領域の読み書き
-static void read_fat_from_disk() {
+static void read_fat_from_disk(void) {
   for (int i = 0; i < BPB_FATSz16; i++) {
     read_write_disk(&fat[i * (BPB_BytsPerSec / 2)], FAT1_START_SECTOR + i, 0);
   }
 }
 
-static void write_fat_to_disk() {
+static void write_fat_to_disk(void) {
   // FAT1 書き戻し
   for (int i = 0; i < BPB_FATSz16; i++) {
     read_write_disk(&fat[i * (BPB_BytsPerSec / 2)], FAT1_START_SECTOR + i, 1);
@@ -183,7 +182,7 @@ int create_file(const char *name, const uint8_t *data, uint32_t size) {
   return 0;
 }
 
-void list_root_dir() {
+void fat16_list_root_dir(void) {
   // 1. ディスクから最新の root_dir を読み込む
   read_root_dir_from_disk();
 
@@ -256,7 +255,7 @@ int read_file(uint16_t start_cluster, uint8_t *buf, uint32_t size) {
   return 0;
 }
 
-void concatenate() {
+void fat16_concatenate_first_file(void) {
   // 1. 最新の FAT と root_dir を読み込む（FAT を必ず先に）
   read_fat_from_disk();
   read_root_dir_from_disk();

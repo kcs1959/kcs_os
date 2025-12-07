@@ -1,6 +1,6 @@
 #include "user.h"
 
-int main() {
+int main(void) {
   while (1) {
   prompt:
     printf("\x1b[33m> \x1b[39m");
@@ -36,11 +36,11 @@ int main() {
     if (strcmp(cmdline, "hello") == 0)
       printf("\x1b[36mHello world from shell!\n\x1b[39m");
     else if (strcmp(cmdline, "exit") == 0)
-      exit();
+      exit(0);
     else if (strcmp(cmdline, "ls") == 0)
-      list_root_dir();
+      sys_list_root_dir();
     else if (strcmp(cmdline, "cat") == 0)
-      concatenate();
+      sys_concat_first_file();
     else if (strcmp(cmdline, "ohgiri") == 0) {
       int r = rand() % 3;
       if (r == 0)
