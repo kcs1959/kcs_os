@@ -5,8 +5,8 @@ else
   LLVM_PREFIX := /usr/bin
 endif
 
-CC      ?= $(LLVM_PREFIX)/clang
-OBJCOPY ?= $(LLVM_PREFIX)/llvm-objcopy
+CC      := $(LLVM_PREFIX)/clang
+OBJCOPY := $(LLVM_PREFIX)/llvm-objcopy
 CFLAGS := -std=c11 -O2 -g3 -Wall -Wextra --target=riscv32-unknown-elf \
           -fuse-ld=lld -fno-stack-protector -ffreestanding -nostdlib
 
