@@ -1,6 +1,6 @@
 #include "user.h"
 
-int main() {
+int main(void) {
   while (1) {
   prompt:
     printf("> ");

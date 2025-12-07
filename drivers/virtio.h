@@ -70,7 +70,7 @@ struct virtio_blk_req {
   uint8_t status;
 } __attribute__((packed));
 
-void virtio_blk_init();
+void virtio_blk_init(void);
 void virtq_kick(struct virtio_virtq *vq, int desc_index);
 bool virtq_is_busy(struct virtio_virtq *vq);
 void read_write_disk(void *buf, unsigned sector, int is_write);

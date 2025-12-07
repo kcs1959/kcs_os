@@ -46,13 +46,13 @@ struct dir_entry {
 
 extern struct dir_entry root_dir[BPB_RootEntCnt];
 
-void init_fat16_disk();
+void init_fat16_disk(void);
 void read_cluster(uint16_t cluster, void *buf);
 void write_cluster(uint16_t cluster, void *buf);
 void copy_name_dynamic(char **name_field, const char *src);
 int create_file(const char *name, const uint8_t *data, uint32_t size);
 int read_file(uint16_t start_cluster, uint8_t *buf, uint32_t size);
-void fat16_list_root_dir();
-void fat16_concatenate_first_file();
+void fat16_list_root_dir(void);
+void fat16_concatenate_first_file(void);
 
 #endif

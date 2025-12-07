@@ -41,7 +41,7 @@ struct virtio_virtq *virtq_init(unsigned index) {
   return vq;
 }
 
-void virtio_blk_init() {
+void virtio_blk_init(void) {
   if (virtio_reg_read32(VIRTIO_REG_MAGIC) != 0x74726976)
     PANIC("virtio: invalid magic value");
   if (virtio_reg_read32(VIRTIO_REG_VERSION) != 1)

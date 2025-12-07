@@ -35,7 +35,7 @@ int strcmp(const char *s1, const char *s2);
 int strncmp(const char *s1, const char *s2, uint32_t n);
 int printf(const char *fmt, ...);
 void putchar(char ch);
-int rand();
+int rand(void);
 void srand(unsigned int seed);
 
 #endif

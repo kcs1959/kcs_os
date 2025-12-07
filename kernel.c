@@ -51,7 +51,7 @@ void map_page(uint32_t *table1, uint32_t vaddr, paddr_t paddr, uint32_t flags) {
   table0[vpn0] = ((paddr / PAGE_SIZE) << 10) | flags | PAGE_V;
 }
 
-__attribute__((naked)) void user_entry() {
+__attribute__((naked)) void user_entry(void) {
   __asm__ __volatile__("csrw sepc, %[sepc]\n"
                        "csrw sstatus, %[sstatus]\n"
                        "sret\n"
@@ -163,7 +163,7 @@ __attribute__((naked)) void switch_context(uint32_t *prev_sp,
       "ret\n");
 }
 
-void yield() {
+void yield(void) {
   // 実行可能なプロセスを探す
   struct process *next = idle_proc;
   for (int i = 0; i < PROCS_MAX; i++) {
@@ -216,13 +216,13 @@ struct sbiret sbi_call(long arg0, long arg1, long arg2, long arg3, long arg4,
 
 // デバッグ用
 void putchar(char ch) { sbi_call(ch, 0, 0, 0, 0, 0, 0, 1); }
-long getchar() {
+long getchar(void) {
   struct sbiret ret = sbi_call(0, 0, 0, 0, 0, 0, 0, 2);
   return ret.error;
 }
 
 // Interrupt
-__attribute__((naked)) __attribute__((aligned(4))) void kernel_entry() {
+__attribute__((naked)) __attribute__((aligned(4))) void kernel_entry(void) {
   __asm__ __volatile__("csrrw sp, sscratch, sp\n"
                        "addi sp, sp, -4 * 31\n"
                        "sw ra,  4 * 0(sp)\n"
@@ -366,12 +366,12 @@ void handle_trap(struct trap_frame *f) {
 struct process *proc_a;
 struct process *proc_b;
 
-void delay() {
+void delay(void) {
   for (int i = 0; i < 30000000; i++)
     __asm__ __volatile__("nop"); // 何もしない命令
 }
 
-void proc_a_entry() {
+void proc_a_entry(void) {
   printf("starting process A\n");
   while (1) {
     putchar('A');
@@ -380,7 +380,7 @@ void proc_a_entry() {
   }
 }
 
-void proc_b_entry() {
+void proc_b_entry(void) {
   printf("starting process B\n");
   while (1) {
     putchar('B');
@@ -390,14 +390,14 @@ void proc_b_entry() {
 }
 
 // Start
-__attribute__((section(".text.boot"))) __attribute__((naked)) void boot() {
+__attribute__((section(".text.boot"))) __attribute__((naked)) void boot(void) {
   __asm__ __volatile__("mv sp, %[stack_top]\n"
                        "j kernel_main\n"
                        :
                        : [stack_top] "r"(__stack_top));
 }
 
-void kernel_main() {
+void kernel_main(void) {
   memset(__bss, 0, (size_t)__bss_end - (size_t)__bss);
   WRITE_CSR(stvec, (uint32_t)kernel_entry);
   virtio_blk_init();
