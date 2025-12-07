@@ -1,6 +1,6 @@
 #include "user.h"
 
-void main(void) {
+int main(void) {
   while (1) {
   prompt:
     printf("> ");
@@ -22,11 +22,11 @@ void main(void) {
     if (strcmp(cmdline, "hello") == 0)
       printf("Hello world from shell!\n");
     else if (strcmp(cmdline, "exit") == 0)
-      exit();
+      exit(0);
     else if (strcmp(cmdline, "ls") == 0)
-      list_root_dir();
+      sys_list_root_dir();
     else if (strcmp(cmdline, "cat") == 0)
-      concatenate();
+      sys_concat_first_file();
     else if (strcmp(cmdline, "ohgiri") == 0) {
       int r = rand() % 3;
       if (r == 0)

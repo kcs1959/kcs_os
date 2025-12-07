@@ -1,6 +1,7 @@
-#pragma once
+#ifndef VIRTIO_H
+#define VIRTIO_H
 
-#include "../kernel.h"
+#include "../lib/common.h"
 
 #define SECTOR_SIZE 512
 #define VIRTQ_ENTRY_NUM 16
@@ -73,3 +74,5 @@ void virtio_blk_init(void);
 void virtq_kick(struct virtio_virtq *vq, int desc_index);
 bool virtq_is_busy(struct virtio_virtq *vq);
 void read_write_disk(void *buf, unsigned sector, int is_write);
+
+#endif

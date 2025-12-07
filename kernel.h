@@ -1,4 +1,6 @@
-#pragma once
+#ifndef KERNEL_H
+#define KERNEL_H
+
 #include "lib/common.h"
 
 struct sbiret {
@@ -86,4 +88,5 @@ struct process {
 #define SCAUSE_ECALL 8
 
 paddr_t alloc_pages(uint32_t n);
-void putchar(char ch);
+
+#endif
