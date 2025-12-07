@@ -10,7 +10,6 @@
 #define BPB_NumFATs 2
 #define BPB_RootEntCnt 512
 #define BPB_FATSz16 32
-#define BPB_TotSec16 32768
 
 // FAT領域
 #define FAT1_START_SECTOR BPB_RsvdSecCnt
@@ -24,6 +23,13 @@
 
 // データ領域
 #define DATA_START_SECTOR (ROOT_DIR_START_SECTOR + ROOT_DIR_SECTORS)
+
+// データ領域のセクタ数
+#define DATA_SEC (FAT_ENTRY_NUM * BPB_SecPerClus)
+
+// ボリューム全体のセクタ数 TotSec16
+#define BPB_TotSec16                                                           \
+  (BPB_RsvdSecCnt + BPB_NumFATs * BPB_FATSz16 + ROOT_DIR_SECTORS + DATA_SEC)
 
 extern uint16_t fat[FAT_ENTRY_NUM];
 #pragma pack(push, 1)
@@ -41,6 +47,35 @@ struct dir_entry {
   uint16_t last_write_date;
   uint16_t start_cluster;
   uint32_t size;
+};
+#pragma pack(pop)
+
+#pragma pack(push, 1)
+struct bpb_fat16 {
+  uint8_t jmpBoot[3];  // 0x00
+  uint8_t OEMName[8];  // 0x03
+  uint16_t BytsPerSec; // 0x0B
+  uint8_t SecPerClus;  // 0x0D
+  uint16_t RsvdSecCnt; // 0x0E
+  uint8_t NumFATs;     // 0x10
+  uint16_t RootEntCnt; // 0x11
+  uint16_t TotSec16;   // 0x13
+  uint8_t Media;       // 0x15
+  uint16_t FATSz16;    // 0x16
+  uint16_t SecPerTrk;  // 0x18
+  uint16_t NumHeads;   // 0x1A
+  uint32_t HiddSec;    // 0x1C
+  uint32_t TotSec32;   // 0x20
+
+  // FAT16 拡張BPB
+  uint8_t DrvNum;        // 0x24
+  uint8_t Reserved1;     // 0x25
+  uint8_t BootSig;       // 0x26
+  uint32_t VolID;        // 0x27
+  uint8_t VolLab[11];    // 0x2B
+  uint8_t FilSysType[8]; // 0x36
+
+  // 0x3E〜0x1FD はブートコード領域
 };
 #pragma pack(pop)
 
