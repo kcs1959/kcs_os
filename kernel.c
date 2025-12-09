@@ -1,6 +1,6 @@
 #include "kernel.h"
-#include "drivers/virtio.h"
-#include "filesystem/fat16.h"
+#include "virtio.h"
+#include "fat16.h"
 
 typedef unsigned char uint8_t;
 typedef unsigned int uint32_t;

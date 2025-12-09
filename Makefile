@@ -12,9 +12,9 @@ CFLAGS := -std=c11 -O2 -g3 -Wall -Wextra --target=riscv32-unknown-elf \
 
 all: kernel.elf
 
-shell.elf: shell.c user.c lib/common.c user.ld
+shell.elf: shell.c user.c common.c user.ld
 	$(CC) $(CFLAGS) -Wl,-Tuser.ld -Wl,-Map=shell.map -o $@ \
-		shell.c user.c lib/common.c 
+		shell.c user.c common.c 
 
 shell.bin: shell.elf
 	$(OBJCOPY) --set-section-flags .bss=alloc,contents -O binary $< $@
@@ -22,9 +22,9 @@ shell.bin: shell.elf
 shell.bin.o: shell.bin
 	$(OBJCOPY) -Ibinary -Oelf32-littleriscv $< $@
 
-kernel.elf: kernel.c drivers/virtio.c filesystem/fat16.c shell.bin.o kernel.ld
+kernel.elf: kernel.c virtio.c fat16.c shell.bin.o kernel.ld
 	$(CC) $(CFLAGS) -Wl,-Tkernel.ld -Wl,-Map=kernel.map -o $@ \
-		kernel.c drivers/virtio.c filesystem/fat16.c shell.bin.o
+		kernel.c virtio.c fat16.c shell.bin.o
 
 .PHONY: run clean
 run: kernel.elf

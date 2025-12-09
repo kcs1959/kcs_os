@@ -1,4 +1,4 @@
-#include "./common.h"
+#include "common.h"
 
 int printf(const char *fmt, ...) {
   va_list vargs;

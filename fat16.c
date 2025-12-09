@@ -1,5 +1,5 @@
-#include "./fat16.h"
-#include "../drivers/virtio.h"
+#include "fat16.h"
+#include "virtio.h"
 
 static void read_fat_from_disk(void);
 static void write_fat_to_disk(void);

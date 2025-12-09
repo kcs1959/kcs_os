@@ -1,7 +1,7 @@
 #ifndef VIRTIO_H
 #define VIRTIO_H
 
-#include "../kernel_defs.h"
+#include "kernel_defs.h"
 
 #define SECTOR_SIZE 512
 #define VIRTQ_ENTRY_NUM 16

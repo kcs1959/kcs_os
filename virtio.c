@@ -1,5 +1,5 @@
-#include "./virtio.h"
-#include "../kernel.h"
+#include "virtio.h"
+#include "kernel.h"
 
 struct virtio_virtq *blk_request_vq;
 struct virtio_blk_req *blk_req;

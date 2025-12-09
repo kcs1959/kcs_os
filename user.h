@@ -1,7 +1,7 @@
 #ifndef USER_H
 #define USER_H
 
-#include "lib/common.h"
+#include "common.h"
 
 __attribute__((noreturn)) void exit(int status);
 void putchar(char ch);

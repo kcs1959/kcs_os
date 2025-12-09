@@ -2,7 +2,7 @@
 #define COMMON_H
 // TODO: このファイルの説明を簡潔な日本語で書く
 
-#include "../common_types.h"
+#include "common_types.h"
 
 int printf(const char *fmt, ...);
 void putchar(char ch);
