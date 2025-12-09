@@ -9,6 +9,7 @@ CC      := $(LLVM_PREFIX)/clang
 OBJCOPY := $(LLVM_PREFIX)/llvm-objcopy
 CFLAGS := -std=c11 -O2 -g3 -Wall -Wextra --target=riscv32-unknown-elf \
           -fuse-ld=lld -fno-stack-protector -ffreestanding -nostdlib
+# ユーザ空間ビルド時のみ USERSPACE を立て、syscall ベースの printf を有効化
 USER_CFLAGS := $(CFLAGS) -DUSERSPACE
 
 all: kernel.elf

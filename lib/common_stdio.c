@@ -1,5 +1,7 @@
 #include "./common.h"
 
+// ユーザ空間のprintf
+// putcharはsyscall実装を使用する
 int printf(const char *fmt, ...) {
   va_list vargs;
   va_start(vargs, fmt);

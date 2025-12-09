@@ -29,10 +29,16 @@ typedef uint8_t bool;
 #define SYS_CAT_FIRST_FILE 6
 
 #ifndef USERSPACE
+// カーネル側では kprintf/kputchar を使用
 int kprintf(const char *fmt, ...);
 void kputchar(char ch);
 #define printf kprintf
 #define putchar kputchar
+#endif
+
+#ifdef USERSPACE
+int printf(const char *fmt, ...);
+void putchar(char ch);
 #endif
 
 void *memset(void *buf, int c, size_t n);
@@ -42,10 +48,5 @@ int strcmp(const char *s1, const char *s2);
 int strncmp(const char *s1, const char *s2, uint32_t n);
 int rand(void);
 void srand(unsigned int seed);
-
-#ifdef USERSPACE
-int printf(const char *fmt, ...);
-void putchar(char ch);
-#endif
 
 #endif
