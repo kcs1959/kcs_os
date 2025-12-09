@@ -9,11 +9,13 @@ CC      := $(LLVM_PREFIX)/clang
 OBJCOPY := $(LLVM_PREFIX)/llvm-objcopy
 CFLAGS := -std=c11 -O2 -g3 -Wall -Wextra --target=riscv32-unknown-elf \
           -fuse-ld=lld -fno-stack-protector -ffreestanding -nostdlib
+USER_CFLAGS := $(CFLAGS) -DUSERSPACE
 
 all: kernel.elf
 
-shell.elf: shell.c user.c lib/common.c user.ld
-	$(CC) $(CFLAGS) -Wl,-Tuser.ld -Wl,-Map=shell.map -o $@ shell.c user.c lib/common.c
+shell.elf: shell.c user.c lib/common.c lib/common_stdio.c user.ld
+	$(CC) $(USER_CFLAGS) -Wl,-Tuser.ld -Wl,-Map=shell.map -o $@ \
+		shell.c user.c lib/common.c lib/common_stdio.c
 
 shell.bin: shell.elf
 	$(OBJCOPY) --set-section-flags .bss=alloc,contents -O binary $< $@

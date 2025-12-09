@@ -28,14 +28,24 @@ typedef uint8_t bool;
 #define SYS_LIST_ROOT_DIR 5
 #define SYS_CAT_FIRST_FILE 6
 
+#ifndef USERSPACE
+int kprintf(const char *fmt, ...);
+void kputchar(char ch);
+#define printf kprintf
+#define putchar kputchar
+#endif
+
 void *memset(void *buf, int c, size_t n);
 void *memcpy(void *dst, const void *src, size_t n);
 char *strcpy(char *dst, const char *src);
 int strcmp(const char *s1, const char *s2);
 int strncmp(const char *s1, const char *s2, uint32_t n);
-int printf(const char *fmt, ...);
-void putchar(char ch);
 int rand(void);
 void srand(unsigned int seed);
+
+#ifdef USERSPACE
+int printf(const char *fmt, ...);
+void putchar(char ch);
+#endif
 
 #endif
