@@ -214,12 +214,82 @@ struct sbiret sbi_call(long arg0, long arg1, long arg2, long arg3, long arg4,
   return (struct sbiret){.error = a0, .value = a1};
 }
 
-// デバッグ用
-void putchar(char ch) { sbi_call(ch, 0, 0, 0, 0, 0, 0, 1); }
-long getchar(void) {
+// カーネルのデバッグ用のI/O
+void kputchar(char ch) { sbi_call(ch, 0, 0, 0, 0, 0, 0, 1); }
+long kgetchar(void) {
   struct sbiret ret = sbi_call(0, 0, 0, 0, 0, 0, 0, 2);
   return ret.error;
 }
+
+int kvprint(const char *fmt, va_list vargs) {
+  while (*fmt) {
+    if (*fmt == '%') {
+      fmt++;
+      switch (*fmt) {
+      case '\0':
+        kputchar('%');
+        goto end;
+      case '%':
+        kputchar('%');
+        break;
+
+      case 's': {
+        const char *s = va_arg(vargs, const char *);
+        while (*s) {
+          kputchar(*s);
+          s++;
+        }
+        break;
+      }
+      case 'd': { // Print an integer in decimal.
+        int value = va_arg(vargs, int);
+        unsigned magnitude = value;
+        if (value < 0) {
+          kputchar('-');
+          magnitude = -magnitude;
+        }
+
+        unsigned divisor = 1;
+        while (magnitude / divisor > 9)
+          divisor *= 10;
+
+        while (divisor > 0) {
+          kputchar('0' + magnitude / divisor);
+          magnitude %= divisor;
+          divisor /= 10;
+        }
+        break;
+      }
+      case 'x': { // Print an integer in hexadecimal.
+        unsigned value = va_arg(vargs, unsigned);
+        for (int i = 7; i >= 0; i--) {
+          unsigned nibble = (value >> (i * 4)) & 0xf;
+          kputchar("0123456789abcdef"[nibble]);
+        }
+        break;
+      }
+      }
+    } else {
+      kputchar(*fmt);
+    }
+    fmt++;
+  }
+
+end:
+  return 0;
+}
+
+int kprintf(const char *fmt, ...) {
+  va_list vargs;
+  va_start(vargs, fmt);
+  int ret = kvprint(fmt, vargs);
+  va_end(vargs);
+  return ret;
+}
+
+// 互換用: 共有のprintfから呼ばれる
+// void putchar(char ch) { kputchar(ch); }
+// long getchar(void) { return kgetchar(); }
 
 // Interrupt
 __attribute__((naked)) __attribute__((aligned(4))) void kernel_entry(void) {
@@ -303,11 +373,11 @@ __attribute__((naked)) __attribute__((aligned(4))) void kernel_entry(void) {
 void handle_syscall(struct trap_frame *f) {
   switch (f->a3) {
   case SYS_PUTCHAR:
-    putchar(f->a0);
+    kputchar(f->a0);
     break;
   case SYS_GETCHAR:
     while (1) {
-      long ch = getchar();
+      long ch = kgetchar();
       if (ch >= 0) {
         f->a0 = ch;
         break;
@@ -316,14 +386,14 @@ void handle_syscall(struct trap_frame *f) {
     }
     break;
   case SYS_EXIT:
-    printf("process %d exited\n", current_proc->pid);
+    kprintf("process %d exited\n", current_proc->pid);
     current_proc->state = PROC_EXITED;
     yield();
     PANIC("unreachable");
   case SYS_CREATE_FILE:
     while (1) {
       /*
-      long filename = getchar()もどき
+      long filename = kgetchar()もどき
       create_file(filename, filenameの長さ);
       yield();
       */
@@ -372,18 +442,18 @@ void delay(void) {
 }
 
 void proc_a_entry(void) {
-  printf("starting process A\n");
+  kprintf("starting process A\n");
   while (1) {
-    putchar('A');
+    kputchar('A');
     yield();
     delay();
   }
 }
 
 void proc_b_entry(void) {
-  printf("starting process B\n");
+  kprintf("starting process B\n");
   while (1) {
-    putchar('B');
+    kputchar('B');
     yield();
     delay();
   }
@@ -407,11 +477,11 @@ void kernel_main(void) {
   idle_proc->pid = 0;
   current_proc = idle_proc;
 
-  printf("\n\nWelcome to KCS OS!\n");
+  kprintf("\n\nWelcome to KCS OS!\n");
 
   char buf[SECTOR_SIZE];
   read_write_disk(buf, 0, false);
-  printf("first sector: %s\n", buf);
+  kprintf("first sector: %s\n", buf);
 
   create_file("test.txt", (uint8_t *)"hello", 5);
   create_file("test2.txt", (uint8_t *)"hello2", 6);

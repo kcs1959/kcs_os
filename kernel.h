@@ -8,6 +8,11 @@ struct sbiret {
   long value;
 };
 
+void kputchar(char ch);
+long kgetchar(void);
+int kvprint(const char *fmt, va_list vargs);
+int kprintf(const char *fmt, ...);
+
 #define PANIC(fmt, ...)                                                        \
   do {                                                                         \
     printf("PANIC: %s:%d: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__);      \
