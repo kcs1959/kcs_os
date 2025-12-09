@@ -13,9 +13,9 @@ CFLAGS := -std=c11 -O2 -g3 -Wall -Wextra --target=riscv32-unknown-elf \
 
 all: kernel.elf
 
-shell.elf: user/shell.c user/user.c user/common.c user/user.ld common_types.h
+shell.elf: user/shell.c user/usys.c user/common.c user/user.ld common_types.h
 	$(CC) $(CFLAGS) -Wl,-Tuser/user.ld -Wl,-Map=shell.map -o $@ \
-		user/shell.c user/user.c user/common.c 
+		user/shell.c user/usys.c user/common.c 
 
 shell.bin: shell.elf
 	$(OBJCOPY) --set-section-flags .bss=alloc,contents -O binary $< $@
