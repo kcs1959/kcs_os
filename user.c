@@ -1,5 +1,4 @@
 #include "user.h"
-#include "lib/common.h"
 
 extern char __stack_top[];
 
