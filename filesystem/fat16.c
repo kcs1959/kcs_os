@@ -1,9 +1,57 @@
 #include "./fat16.h"
 #include "../drivers/virtio.h"
 
-// FATボリュームの各領域を初期化
+static void read_fat_from_disk(void);
+static void write_fat_to_disk(void);
+
+static void write_bpb_to_disk(void) {
+  uint8_t buf[SECTOR_SIZE];
+  for (int i = 0; i < SECTOR_SIZE; i++)
+    buf[i] = 0;
+
+  struct bpb_fat16 *bpb = (struct bpb_fat16 *)buf;
+
+  bpb->jmpBoot[0] = 0xEB;
+  bpb->jmpBoot[1] = 0x3C;
+  bpb->jmpBoot[2] = 0x90;
+
+  memcpy(bpb->OEMName, "KCSOS   ", 8);
+
+  bpb->BytsPerSec = BPB_BytsPerSec;
+  bpb->SecPerClus = BPB_SecPerClus;
+  bpb->RsvdSecCnt = BPB_RsvdSecCnt;
+  bpb->NumFATs = BPB_NumFATs;
+  bpb->RootEntCnt = BPB_RootEntCnt;
+
+  bpb->TotSec16 = BPB_TotSec16;
+  bpb->Media = 0xF8; // ハードディスク
+  bpb->FATSz16 = BPB_FATSz16;
+  bpb->SecPerTrk = 32;
+  bpb->NumHeads = 64;
+  bpb->HiddSec = 0;  // 隠しセクタ数
+  bpb->TotSec32 = 0; // TotSec16を参照
+
+  bpb->DrvNum = 0x80;  // 主ディスク
+  bpb->Reserved1 = 0;  // 予約領域
+  bpb->BootSig = 0x29; // 拡張ブートシグネチャ
+  bpb->VolID = rand(); // ボリュームシリアル番号
+  memcpy(bpb->VolLab, "KCS_OS     ", 11);
+  memcpy(bpb->FilSysType, "FAT16   ", 8);
+
+  // 末尾シグネチャ
+  buf[510] = 0x55;
+  buf[511] = 0xAA;
+
+  // セクタ0に書き込み
+  read_write_disk(buf, 0, true);
+}
+
 void init_fat16_disk(void) {
   uint8_t buf[SECTOR_SIZE];
+
+  // ブートセクタを書き込む
+  write_bpb_to_disk();
+
   for (int i = 0; i < SECTOR_SIZE; i++)
     buf[i] = 0;
 
@@ -19,7 +67,11 @@ void init_fat16_disk(void) {
     read_write_disk(buf, s, true);
   }
 
-  // データ領域は必要に応じて初期化
+  // FAT の予約エントリ (0,1) を埋めておく
+  read_fat_from_disk();
+  fat[0] = 0xFFF8; // media + reserved bits
+  fat[1] = 0xFFFF; // reserved
+  write_fat_to_disk();
 }
 
 // RAM上のFATとルートディレクトリ
