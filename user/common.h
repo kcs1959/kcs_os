@@ -1,6 +1,6 @@
 #ifndef COMMON_H
 #define COMMON_H
-// TODO: このファイルの説明を簡潔な日本語で書く
+// ユーザ空間の入出力・標準関数の宣言をまとめたヘッダー
 
 #include "common_types.h"
 

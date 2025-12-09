@@ -1,6 +1,6 @@
 #ifndef COMMON_TYPES_H
 #define COMMON_TYPES_H
-// TODO: このファイルの説明を簡潔な日本語で書く
+// 共通の型定義とシステムコール番号をまとめたヘッダ
 
 typedef unsigned char uint8_t;
 typedef unsigned short uint16_t;

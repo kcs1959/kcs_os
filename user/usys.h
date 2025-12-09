@@ -1,5 +1,6 @@
 #ifndef USER_H
 #define USER_H
+// システムコールを扱うヘッダ
 
 #include "common.h"
 

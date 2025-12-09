@@ -1,6 +1,6 @@
 #ifndef KERNEL_H
 #define KERNEL_H
-// TODO: このファイルの説明を簡潔な日本語で書く
+// カーネルの基本定義とCSR操作・プロセス管理用構造体をまとめたヘッダ
 
 #include "kernel_defs.h"
 
