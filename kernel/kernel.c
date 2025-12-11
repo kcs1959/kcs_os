@@ -220,23 +220,29 @@ long kgetchar(void) {
   return ret.error;
 }
 
-int kvprint(const char *fmt, va_list vargs) {
+int kvprintf(const char *fmt, va_list vargs) {
+  int count = 0;
   while (*fmt) {
     if (*fmt == '%') {
       fmt++;
       switch (*fmt) {
       case '\0':
         kputchar('%');
+        count++;
         goto end;
       case '%':
         kputchar('%');
+        count++;
         break;
 
       case 's': {
         const char *s = va_arg(vargs, const char *);
+        if (!s)
+          s = "(null)";
         while (*s) {
           kputchar(*s);
           s++;
+          count++;
         }
         break;
       }
@@ -246,6 +252,7 @@ int kvprint(const char *fmt, va_list vargs) {
         if (value < 0) {
           kputchar('-');
           magnitude = -magnitude;
+          count++;
         }
 
         unsigned divisor = 1;
@@ -256,6 +263,7 @@ int kvprint(const char *fmt, va_list vargs) {
           kputchar('0' + magnitude / divisor);
           magnitude %= divisor;
           divisor /= 10;
+          count++;
         }
         break;
       }
@@ -264,24 +272,26 @@ int kvprint(const char *fmt, va_list vargs) {
         for (int i = 7; i >= 0; i--) {
           unsigned nibble = (value >> (i * 4)) & 0xf;
           kputchar("0123456789abcdef"[nibble]);
+          count++;
         }
         break;
       }
       }
     } else {
       kputchar(*fmt);
+      count++;
     }
     fmt++;
   }
 
 end:
-  return 0;
+  return count;
 }
 
 int kprintf(const char *fmt, ...) {
   va_list vargs;
   va_start(vargs, fmt);
-  int ret = kvprint(fmt, vargs);
+  int ret = kvprintf(fmt, vargs);
   va_end(vargs);
   return ret;
 }
