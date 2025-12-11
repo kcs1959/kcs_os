@@ -1,25 +1,28 @@
 #include "common.h"
 
-int printf(const char *fmt, ...) {
-  va_list vargs;
-  va_start(vargs, fmt);
-
+int vprintf(const char *fmt, va_list vargs) {
+  int count = 0;
   while (*fmt) {
     if (*fmt == '%') {
       fmt++;
       switch (*fmt) {
       case '\0':
         putchar('%');
+        count++;
         goto end;
       case '%':
         putchar('%');
+        count++;
         break;
 
       case 's': {
         const char *s = va_arg(vargs, const char *);
+        if (!s)
+          s = "(null)";
         while (*s) {
           putchar(*s);
           s++;
+          count++;
         }
         break;
       }
@@ -29,6 +32,7 @@ int printf(const char *fmt, ...) {
         if (value < 0) {
           putchar('-');
           magnitude = -magnitude;
+          count++;
         }
 
         unsigned divisor = 1;
@@ -39,6 +43,7 @@ int printf(const char *fmt, ...) {
           putchar('0' + magnitude / divisor);
           magnitude %= divisor;
           divisor /= 10;
+          count++;
         }
         break;
       }
@@ -47,18 +52,28 @@ int printf(const char *fmt, ...) {
         for (int i = 7; i >= 0; i--) {
           unsigned nibble = (value >> (i * 4)) & 0xf;
           putchar("0123456789abcdef"[nibble]);
+          count++;
         }
+        break;
       }
       }
     } else {
       putchar(*fmt);
+      count++;
     }
     fmt++;
   }
 
 end:
+  return count;
+}
+
+int printf(const char *fmt, ...) {
+  va_list vargs;
+  va_start(vargs, fmt);
+  int ret = vprintf(fmt, vargs);
   va_end(vargs);
-  return 0;
+  return ret;
 }
 
 void *memcpy(void *dst, const void *src, size_t n) {
