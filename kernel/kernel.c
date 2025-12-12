@@ -11,6 +11,11 @@ extern char __bss[], __bss_end[], __stack_top[];
 extern char __free_ram[], __free_ram_end[];
 extern char _binary_shell_bin_start[], _binary_shell_bin_size[];
 
+static int kfopen(const char *path, const char *mode);
+static int kfclose(int fd);
+static int kfgetc(int fd);
+static int kfputc(int fd, int ch);
+
 struct process procs[PROCS_MAX];
 struct process *current_proc;
 struct process *idle_proc;
@@ -235,7 +240,58 @@ int kprintf(const char *fmt, ...) {
   return ret;
 }
 
-void shutdown() {sbi_call(RESET_REASON_NONE, 0, 0, 0, 0, 0, RESET_TYPE_SHUTDOWN, SYSTEM_RESET_SBICALL); } 
+void *memcpy(void *dst, const void *src, size_t n) {
+  uint8_t *d = (uint8_t *)dst;
+  const uint8_t *s = (const uint8_t *)src;
+  while (n--) {
+    *d++ = *s++;
+  }
+  return dst;
+}
+
+void *memset(void *buf, int c, size_t n) {
+  uint8_t *p = (uint8_t *)buf;
+  while (n--)
+    *p++ = c;
+  return buf;
+}
+
+char *strcpy(char *dst, const char *src) {
+  char *d = dst;
+  while (*src) {
+    *d++ = *src++;
+  }
+  *d = '\0';
+  return dst;
+}
+
+int strcmp(const char *s1, const char *s2) {
+  while (*s1 && *s2) {
+    if (*s1 != *s2)
+      break;
+    s1++;
+    s2++;
+  }
+  return *(unsigned char *)s1 - *(unsigned char *)s2;
+}
+
+int strncmp(const char *s1, const char *s2, uint32_t n) {
+  for (uint32_t i = 0; i < n; i++) {
+    if (s1[i] != s2[i] || s1[i] == '\0' || s2[i] == '\0') {
+      return (unsigned char)s1[i] - (unsigned char)s2[i];
+    }
+  }
+  return 0;
+}
+
+static unsigned long next = 1;
+
+void srand(unsigned int seed) { next = seed; } // シード値からrandを呼び出す場合
+
+int rand(void) {
+  next = next * 1103515245 + 12345;
+  return (unsigned int)(next >> 16) & 0x7fff;
+}
 
 // Interrupt
 __attribute__((naked)) __attribute__((aligned(4))) void kernel_entry(void) {
@@ -356,6 +412,17 @@ void handle_syscall(struct trap_frame *f) {
   case SYS_SHUTDOWN:
     kprintf("shutting down...\n");
     shutdown();
+  case SYS_FOPEN:
+    f->a0 = kfopen((const char *)f->a0, (const char *)f->a1);
+    break;
+  case SYS_FCLOSE:
+    f->a0 = kfclose(f->a0);
+    break;
+  case SYS_FGETC:
+    f->a0 = kfgetc(f->a0);
+    break;
+  case SYS_FPUTC:
+    f->a0 = kfputc(f->a0, f->a1);
     break;
   default:
     PANIC("unexpected syscall a3=%x\n", f->a3);
@@ -381,6 +448,255 @@ void handle_trap(struct trap_frame *f) {
 // I/O
 
 // File System
+
+static bool mode_contains(const char *mode, char token) {
+  if (!mode)
+    return false;
+  while (*mode) {
+    if (*mode == token)
+      return true;
+    mode++;
+  }
+  return false;
+}
+
+static struct dir_entry *find_dir_entry_by_path(const char *path) {
+  for (int i = 0; i < BPB_RootEntCnt; i++) {
+    if (root_dir[i].name[0] == 0x00)
+      break;
+    if (root_dir[i].name[0] == 0xE5)
+      continue;
+
+    char name[13];
+    int p = 0;
+
+    for (int j = 0; j < 8; j++) {
+      if (root_dir[i].name[j] != ' ')
+        name[p++] = root_dir[i].name[j];
+    }
+
+    if (root_dir[i].ext[0] != ' ') {
+      name[p++] = '.';
+      for (int j = 0; j < 3; j++) {
+        if (root_dir[i].ext[j] != ' ')
+          name[p++] = root_dir[i].ext[j];
+      }
+    }
+
+    name[p] = '\0';
+
+    if (strcmp(name, path) == 0)
+      return &root_dir[i];
+  }
+
+  return NULL;
+}
+
+static uint16_t find_free_cluster(void) {
+  for (uint16_t i = 2; i < FAT_ENTRY_NUM; i++) {
+    if (fat[i] == 0x0000)
+      return i;
+  }
+  return 0;
+}
+
+static int locate_cluster_for_offset(uint16_t start_cluster, uint32_t offset,
+                                     uint16_t *cluster_out,
+                                     uint32_t *offset_in_cluster) {
+  if (!cluster_out || !offset_in_cluster)
+    return -1;
+  if (start_cluster < 2 || start_cluster >= FAT_ENTRY_NUM)
+    return -1;
+
+  uint16_t cluster = start_cluster;
+  uint32_t remaining = offset;
+
+  while (remaining >= CLUSTER_SIZE) {
+    uint16_t next = fat[cluster];
+    if (next == 0x0000 || next == 0xFFFF || next >= FAT_ENTRY_NUM)
+      return -1;
+    cluster = next;
+    remaining -= CLUSTER_SIZE;
+  }
+
+  *cluster_out = cluster;
+  *offset_in_cluster = remaining;
+  return 0;
+}
+
+static int ensure_cluster_for_offset(uint16_t start_cluster, uint32_t offset,
+                                     uint16_t *cluster_out,
+                                     uint32_t *offset_in_cluster,
+                                     bool *target_is_new) {
+  if (!cluster_out || !offset_in_cluster)
+    return -1;
+  if (start_cluster < 2 || start_cluster >= FAT_ENTRY_NUM)
+    return -1;
+
+  bool cluster_new = false;
+  if (fat[start_cluster] == 0x0000) {
+    fat[start_cluster] = 0xFFFF;
+    cluster_new = true;
+  }
+
+  uint16_t cluster = start_cluster;
+  uint32_t remaining = offset;
+
+  while (remaining >= CLUSTER_SIZE) {
+    uint16_t next = fat[cluster];
+    bool allocated = false;
+
+    if (next == 0x0000 || next == 0xFFFF || next >= FAT_ENTRY_NUM) {
+      next = find_free_cluster();
+      if (next == 0)
+        return -1;
+      fat[cluster] = next;
+      fat[next] = 0xFFFF;
+      allocated = true;
+    }
+
+    cluster = next;
+    remaining -= CLUSTER_SIZE;
+    cluster_new = allocated;
+  }
+
+  if (target_is_new)
+    *target_is_new = cluster_new;
+
+  *cluster_out = cluster;
+  *offset_in_cluster = remaining;
+  return 0;
+}
+
+#define OPEN_FILES_MAX 16
+struct open_file {
+  struct dir_entry *entry;
+  uint32_t position;
+  bool used;
+};
+
+static struct open_file open_files[OPEN_FILES_MAX];
+
+static int alloc_open_file(void) {
+  for (int i = 0; i < OPEN_FILES_MAX; i++) {
+    if (!open_files[i].used)
+      return i;
+  }
+  return -1;
+}
+
+static int kfopen(const char *path, const char *mode) {
+  if (!path || !mode)
+    return -1;
+
+  bool want_write = mode_contains(mode, 'w');
+  bool want_append = mode_contains(mode, 'a');
+  bool want_create = want_write || want_append;
+
+  read_fat_from_disk();
+  read_root_dir_from_disk();
+
+  struct dir_entry *target = find_dir_entry_by_path(path);
+
+  if (!target && want_create) {
+    if (create_file(path, NULL, 0) < 0)
+      return -1;
+
+    read_root_dir_from_disk();
+    target = find_dir_entry_by_path(path);
+  }
+
+  if (!target)
+    return -1;
+
+  if (want_write) {
+    if (write_file(target->start_cluster, NULL, 0) < 0)
+      return -1;
+    read_root_dir_from_disk();
+    target = find_dir_entry_by_path(path);
+    if (!target)
+      return -1;
+  }
+
+  int slot = alloc_open_file();
+  if (slot < 0)
+    return -1;
+
+  open_files[slot].used = true;
+  open_files[slot].entry = target;
+  open_files[slot].position = want_append ? target->size : 0;
+  return slot;
+}
+
+static int kfclose(int fd) {
+  if (fd < 0 || fd >= OPEN_FILES_MAX || !open_files[fd].used)
+    return -1;
+
+  open_files[fd].used = false;
+  open_files[fd].entry = NULL;
+  open_files[fd].position = 0;
+  return 0;
+}
+
+static int kfputc(int fd, int ch) {
+  if (fd < 0 || fd >= OPEN_FILES_MAX || !open_files[fd].used)
+    return -1;
+
+  read_fat_from_disk();
+  read_root_dir_from_disk();
+
+  struct dir_entry *entry = open_files[fd].entry;
+
+  uint16_t cluster;
+  uint32_t offset_in_cluster;
+  bool target_is_new = false;
+
+  if (ensure_cluster_for_offset(entry->start_cluster, open_files[fd].position,
+                                &cluster, &offset_in_cluster,
+                                &target_is_new) < 0)
+    return -1;
+
+  uint8_t cluster_buf[CLUSTER_SIZE];
+  if (target_is_new)
+    memset(cluster_buf, 0, sizeof(cluster_buf));
+  else
+    read_cluster(cluster, cluster_buf);
+
+  cluster_buf[offset_in_cluster] = (uint8_t)ch;
+  write_cluster(cluster, cluster_buf);
+
+  open_files[fd].position += 1;
+  if (open_files[fd].position > entry->size)
+    entry->size = open_files[fd].position;
+
+  write_fat_to_disk();
+  write_root_dir_to_disk();
+
+  return ch & 0xff;
+}
+
+static int kfgetc(int fd) {
+  if (fd < 0 || fd >= OPEN_FILES_MAX || !open_files[fd].used)
+    return EOF;
+
+  struct dir_entry *entry = open_files[fd].entry;
+  if (open_files[fd].position >= entry->size)
+    return EOF;
+
+  read_fat_from_disk();
+
+  uint16_t cluster;
+  uint32_t offset_in_cluster;
+  if (locate_cluster_for_offset(entry->start_cluster, open_files[fd].position,
+                                &cluster, &offset_in_cluster) < 0)
+    return EOF;
+
+  uint8_t cluster_buf[CLUSTER_SIZE];
+  read_cluster(cluster, cluster_buf);
+
+  open_files[fd].position += 1;
+  return cluster_buf[offset_in_cluster];
+}
 
 // process_switch_test
 struct process *proc_a;
@@ -435,6 +751,13 @@ void kernel_main(void) {
 
   create_file("test.txt", (uint8_t *)"hello", 5);
   create_file("test2.txt", (uint8_t *)"hello2", 6);
+
+  int fd = kfopen("test.txt", "a");
+  char *msg = " world!";
+  for (int i = 0; msg[i] != '\0'; i++) {
+    kfputc(fd, msg[i]);
+  }
+  kfclose(fd);
 
   create_process(_binary_shell_bin_start, (size_t)_binary_shell_bin_size);
   yield();

@@ -29,6 +29,12 @@ typedef void (*putc_fn_t)(char);
 #define SYS_CREATE_FILE 4
 #define SYS_LIST_ROOT_DIR 5
 #define SYS_CAT_FIRST_FILE 6
-#define SYS_SHUTDOWN 7
+#define SYS_FOPEN 7
+#define SYS_FCLOSE 8
+#define SYS_FGETC 9
+#define SYS_FPUTC 10
+#define SYS_SHUTDOWN 11
+
+#define EOF (-1)
 
 #endif
