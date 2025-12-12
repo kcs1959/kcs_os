@@ -1,7 +1,7 @@
 #ifndef FAT16_H
 #define FAT16_H
 
-#include "../lib/common.h"
+#include "kernel_defs.h"
 
 // ブートセクタ
 #define BPB_BytsPerSec 512

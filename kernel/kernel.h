@@ -1,7 +1,8 @@
 #ifndef KERNEL_H
 #define KERNEL_H
+// カーネルの基本定義とCSR操作・プロセス管理用構造体をまとめたヘッダ
 
-#include "lib/common.h"
+#include "kernel_defs.h"
 
 struct sbiret {
   long error;
@@ -10,7 +11,7 @@ struct sbiret {
 
 #define PANIC(fmt, ...)                                                        \
   do {                                                                         \
-    printf("PANIC: %s:%d: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__);      \
+    kprintf("PANIC: %s:%d: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__);     \
     while (1) {                                                                \
     }                                                                          \
   } while (0)
