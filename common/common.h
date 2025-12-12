@@ -8,6 +8,15 @@ int printf(const char *fmt, ...);
 int vprintf(const char *fmt, va_list ap);
 void putchar(char ch);
 
+typedef struct FILE {
+  int fd;
+} FILE;
+
+FILE *fopen(const char *path, const char *mode);
+int fclose(FILE *fp);
+int fgetc(FILE *fp);
+int fputc(FILE *fp, int ch);
+
 void *memset(void *buf, int c, size_t n);
 void *memcpy(void *dst, const void *src, size_t n);
 char *strcpy(char *dst, const char *src);
