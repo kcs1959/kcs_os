@@ -306,11 +306,6 @@ int kprintf(const char *fmt, ...) {
   return ret;
 }
 
-void shutdown() {
-  sbi_call(RESET_REASON_NONE, 0, 0, 0, 0, 0, RESET_TYPE_SHUTDOWN,
-           SYSTEM_RESET_SBICALL);
-}
-
 // Interrupt
 __attribute__((naked)) __attribute__((aligned(4))) void kernel_entry(void) {
   __asm__ __volatile__("csrrw sp, sscratch, sp\n"
