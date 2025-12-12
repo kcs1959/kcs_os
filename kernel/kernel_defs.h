@@ -1,6 +1,6 @@
 #ifndef KERNEL_DEFS_H
 #define KERNEL_DEFS_H
-// TODO: このファイルの説明を簡潔な日本語で書く
+// カーネル共通の定義と基本ランタイム宣言を提供するヘッダー
 
 #include "common_types.h"
 
