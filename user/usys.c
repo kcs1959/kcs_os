@@ -36,3 +36,12 @@ __attribute__((noreturn)) void exit(int status) {
 void sys_list_root_dir(void) { syscall(SYS_LIST_ROOT_DIR, 0, 0, 0); }
 
 void sys_concat_first_file(void) { syscall(SYS_CAT_FIRST_FILE, 0, 0, 0); }
+
+int vprintf(void (*putc)(char), const char *fmt, va_list vargs);
+int printf(const char *fmt, ...) {
+  va_list vargs;
+  va_start(vargs, fmt);
+  int ret = vprintf(putchar, fmt, vargs);
+  va_end(vargs);
+  return ret;
+}
