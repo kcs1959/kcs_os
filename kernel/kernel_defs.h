@@ -11,7 +11,6 @@
 // カーネルI/O
 void kputchar(char ch);
 long kgetchar(void);
-int kvprint(const char *fmt, va_list vargs);
 int kprintf(const char *fmt, ...);
 
 // カーネル側で使う最小限のランタイム
