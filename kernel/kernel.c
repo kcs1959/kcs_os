@@ -227,7 +227,7 @@ int vprintf(void (*putc)(char), const char *fmt, va_list vargs);
 int kprintf(const char *fmt, ...) {
   va_list vargs;
   va_start(vargs, fmt);
-  int ret = vprintf(putchar, fmt, vargs);
+  int ret = vprintf(kputchar, fmt, vargs);
   va_end(vargs);
   return ret;
 }
