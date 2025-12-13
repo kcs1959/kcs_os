@@ -99,3 +99,13 @@ int fputc(FILE *fp, int ch) {
     return -1;
   return syscall(SYS_FPUTC, fp->fd, ch, 0);
 }
+
+int vprintf(void (*putc)(char), const char *fmt, va_list vargs);
+
+int printf(const char *fmt, ...) {
+  va_list vargs;
+  va_start(vargs, fmt);
+  int ret = vprintf(putchar, fmt, vargs);
+  va_end(vargs);
+  return ret;
+}
