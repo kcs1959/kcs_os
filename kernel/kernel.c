@@ -16,12 +16,14 @@ struct process *current_proc;
 struct process *idle_proc;
 
 // Simple Memory Allocaltion
-paddr_t alloc_pages(uint32_t n) {
+paddr_t alloc_pages(uint32_t n)
+{
   static paddr_t next_paddr = (paddr_t)__free_ram;
   paddr_t paddr = next_paddr;
   next_paddr += n * PAGE_SIZE;
 
-  if (next_paddr > (paddr_t)__free_ram_end) {
+  if (next_paddr > (paddr_t)__free_ram_end)
+  {
     PANIC("out of memory!!!!!");
   }
 
@@ -30,7 +32,8 @@ paddr_t alloc_pages(uint32_t n) {
 }
 
 // Virtual Memory
-void map_page(uint32_t *table1, uint32_t vaddr, paddr_t paddr, uint32_t flags) {
+void map_page(uint32_t *table1, uint32_t vaddr, paddr_t paddr, uint32_t flags)
+{
   if (!is_aligned(vaddr, PAGE_SIZE))
     PANIC("unaligned vaddr %x", vaddr);
 
@@ -38,7 +41,8 @@ void map_page(uint32_t *table1, uint32_t vaddr, paddr_t paddr, uint32_t flags) {
     PANIC("unaligned paddr %x", paddr);
 
   uint32_t vpn1 = (vaddr >> 22) & 0x3ff;
-  if ((table1[vpn1] & PAGE_V) == 0) {
+  if ((table1[vpn1] & PAGE_V) == 0)
+  {
     // 1段目のページテーブル作成
     uint32_t pt_paddr = alloc_pages(1);
     table1[vpn1] = ((pt_paddr / PAGE_SIZE) << 10) | PAGE_V;
@@ -50,7 +54,8 @@ void map_page(uint32_t *table1, uint32_t vaddr, paddr_t paddr, uint32_t flags) {
   table0[vpn0] = ((paddr / PAGE_SIZE) << 10) | flags | PAGE_V;
 }
 
-__attribute__((naked)) void user_entry(void) {
+__attribute__((naked)) void user_entry(void)
+{
   __asm__ __volatile__("csrw sepc, %[sepc]\n"
                        "csrw sstatus, %[sstatus]\n"
                        "sret\n"
@@ -59,11 +64,14 @@ __attribute__((naked)) void user_entry(void) {
 }
 
 // Processes
-struct process *create_process(const void *image, size_t image_size) {
+struct process *create_process(const void *image, size_t image_size)
+{
   struct process *proc = NULL;
   int i;
-  for (i = 0; i < PROCS_MAX; i++) {
-    if (procs[i].state == PROC_UNUSED) {
+  for (i = 0; i < PROCS_MAX; i++)
+  {
+    if (procs[i].state == PROC_UNUSED)
+    {
       proc = &procs[i];
       break;
     }
@@ -98,7 +106,8 @@ struct process *create_process(const void *image, size_t image_size) {
   map_page(page_table, VIRTIO_BLK_PADDR, VIRTIO_BLK_PADDR, PAGE_R | PAGE_W);
 
   // ユーザーのページをマッピングする
-  for (uint32_t off = 0; off < image_size; off += PAGE_SIZE) {
+  for (uint32_t off = 0; off < image_size; off += PAGE_SIZE)
+  {
     paddr_t page = alloc_pages(1);
 
     // コピーするデータがページサイズより小さい場合を考慮
@@ -122,7 +131,8 @@ struct process *create_process(const void *image, size_t image_size) {
 }
 
 __attribute__((naked)) void switch_context(uint32_t *prev_sp,
-                                           uint32_t *next_sp) {
+                                           uint32_t *next_sp)
+{
   __asm__ __volatile__(
       // 実行中プロセスのスタックへレジスタを保存
       "addi sp, sp, -13 * 4\n"
@@ -162,12 +172,15 @@ __attribute__((naked)) void switch_context(uint32_t *prev_sp,
       "ret\n");
 }
 
-void yield(void) {
+void yield(void)
+{
   // 実行可能なプロセスを探す
   struct process *next = idle_proc;
-  for (int i = 0; i < PROCS_MAX; i++) {
+  for (int i = 0; i < PROCS_MAX; i++)
+  {
     struct process *proc = &procs[(current_proc->pid + i) % PROCS_MAX];
-    if (proc->state == PROC_RUNNABLE && proc->pid > 0) {
+    if (proc->state == PROC_RUNNABLE && proc->pid > 0)
+    {
       next = proc;
       break;
     }
@@ -195,7 +208,8 @@ void yield(void) {
 
 // sbi_call
 struct sbiret sbi_call(long arg0, long arg1, long arg2, long arg3, long arg4,
-                       long arg5, long fid, long eid) {
+                       long arg5, long fid, long eid)
+{
   register long a0 __asm__("a0") = arg0;
   register long a1 __asm__("a1") = arg1;
   register long a2 __asm__("a2") = arg2;
@@ -218,17 +232,27 @@ void kputchar(char ch) { sbi_call(ch, 0, 0, 0, 0, 0, 0, 1); }
 
 void putchar(char ch) { kputchar(ch); }
 
-long kgetchar(void) {
+long kgetchar(void)
+{
   struct sbiret ret = sbi_call(0, 0, 0, 0, 0, 0, 0, 2);
   return ret.error;
 }
 
-int kvprintf(const char *fmt, va_list vargs) {
+void shutdown()
+{
+  sbi_call(RESET_REASON_NONE, 0, 0, 0, 0, 0, RESET_TYPE_SHUTDOWN, SYSTEM_RESET_SBICALL);
+}
+
+int kvprintf(const char *fmt, va_list vargs)
+{
   int count = 0;
-  while (*fmt) {
-    if (*fmt == '%') {
+  while (*fmt)
+  {
+    if (*fmt == '%')
+    {
       fmt++;
-      switch (*fmt) {
+      switch (*fmt)
+      {
       case '\0':
         kputchar('%');
         count++;
@@ -238,21 +262,25 @@ int kvprintf(const char *fmt, va_list vargs) {
         count++;
         break;
 
-      case 's': {
+      case 's':
+      {
         const char *s = va_arg(vargs, const char *);
         if (!s)
           s = "(null)";
-        while (*s) {
+        while (*s)
+        {
           kputchar(*s);
           s++;
           count++;
         }
         break;
       }
-      case 'd': { // Print an integer in decimal.
+      case 'd':
+      { // Print an integer in decimal.
         int value = va_arg(vargs, int);
         unsigned magnitude = value;
-        if (value < 0) {
+        if (value < 0)
+        {
           kputchar('-');
           magnitude = -magnitude;
           count++;
@@ -262,7 +290,8 @@ int kvprintf(const char *fmt, va_list vargs) {
         while (magnitude / divisor > 9)
           divisor *= 10;
 
-        while (divisor > 0) {
+        while (divisor > 0)
+        {
           kputchar('0' + magnitude / divisor);
           magnitude %= divisor;
           divisor /= 10;
@@ -270,9 +299,11 @@ int kvprintf(const char *fmt, va_list vargs) {
         }
         break;
       }
-      case 'x': { // Print an integer in hexadecimal.
+      case 'x':
+      { // Print an integer in hexadecimal.
         unsigned value = va_arg(vargs, unsigned);
-        for (int i = 7; i >= 0; i--) {
+        for (int i = 7; i >= 0; i--)
+        {
           unsigned nibble = (value >> (i * 4)) & 0xf;
           kputchar("0123456789abcdef"[nibble]);
           count++;
@@ -280,7 +311,9 @@ int kvprintf(const char *fmt, va_list vargs) {
         break;
       }
       }
-    } else {
+    }
+    else
+    {
       kputchar(*fmt);
       count++;
     }
@@ -291,7 +324,8 @@ end:
   return count;
 }
 
-int kprintf(const char *fmt, ...) {
+int kprintf(const char *fmt, ...)
+{
   va_list vargs;
   va_start(vargs, fmt);
   int ret = kvprintf(fmt, vargs);
@@ -300,7 +334,8 @@ int kprintf(const char *fmt, ...) {
 }
 
 // Interrupt
-__attribute__((naked)) __attribute__((aligned(4))) void kernel_entry(void) {
+__attribute__((naked)) __attribute__((aligned(4))) void kernel_entry(void)
+{
   __asm__ __volatile__("csrrw sp, sscratch, sp\n"
                        "addi sp, sp, -4 * 31\n"
                        "sw ra,  4 * 0(sp)\n"
@@ -378,15 +413,19 @@ __attribute__((naked)) __attribute__((aligned(4))) void kernel_entry(void) {
 }
 
 // sbi legacy extension
-void handle_syscall(struct trap_frame *f) {
-  switch (f->a3) {
+void handle_syscall(struct trap_frame *f)
+{
+  switch (f->a3)
+  {
   case SYS_PUTCHAR:
     kputchar(f->a0);
     break;
   case SYS_GETCHAR:
-    while (1) {
+    while (1)
+    {
       long ch = kgetchar();
-      if (ch >= 0) {
+      if (ch >= 0)
+      {
         f->a0 = ch;
         break;
       }
@@ -399,7 +438,8 @@ void handle_syscall(struct trap_frame *f) {
     yield();
     PANIC("unreachable");
   case SYS_CREATE_FILE:
-    while (1) {
+    while (1)
+    {
       /*
       long filename = kgetchar()もどき
       create_file(filename, filenameの長さ);
@@ -420,15 +460,19 @@ void handle_syscall(struct trap_frame *f) {
   }
 }
 
-void handle_trap(struct trap_frame *f) {
+void handle_trap(struct trap_frame *f)
+{
   uint32_t scause = READ_CSR(scause);
   uint32_t stval = READ_CSR(stval);
   uint32_t user_pc = READ_CSR(sepc);
 
-  if (scause == SCAUSE_ECALL) {
+  if (scause == SCAUSE_ECALL)
+  {
     handle_syscall(f);
     user_pc += 4;
-  } else {
+  }
+  else
+  {
     PANIC("unexpected trap scause=%x, stval=%x, sepc=%x\n", scause, stval,
           user_pc);
   }
@@ -444,23 +488,28 @@ void handle_trap(struct trap_frame *f) {
 struct process *proc_a;
 struct process *proc_b;
 
-void delay(void) {
+void delay(void)
+{
   for (int i = 0; i < 30000000; i++)
     __asm__ __volatile__("nop"); // 何もしない命令
 }
 
-void proc_a_entry(void) {
+void proc_a_entry(void)
+{
   kprintf("starting process A\n");
-  while (1) {
+  while (1)
+  {
     kputchar('A');
     yield();
     delay();
   }
 }
 
-void proc_b_entry(void) {
+void proc_b_entry(void)
+{
   kprintf("starting process B\n");
-  while (1) {
+  while (1)
+  {
     kputchar('B');
     yield();
     delay();
@@ -468,14 +517,16 @@ void proc_b_entry(void) {
 }
 
 // Start
-__attribute__((section(".text.boot"))) __attribute__((naked)) void boot(void) {
+__attribute__((section(".text.boot"))) __attribute__((naked)) void boot(void)
+{
   __asm__ __volatile__("mv sp, %[stack_top]\n"
                        "j kernel_main\n"
                        :
                        : [stack_top] "r"(__stack_top));
 }
 
-void kernel_main(void) {
+void kernel_main(void)
+{
   memset(__bss, 0, (size_t)__bss_end - (size_t)__bss);
   WRITE_CSR(stvec, (uint32_t)kernel_entry);
   virtio_blk_init();
@@ -496,9 +547,11 @@ void kernel_main(void) {
 
   create_process(_binary_shell_bin_start, (size_t)_binary_shell_bin_size);
   yield();
+  shutdown();
   PANIC("shell discontinued");
 
-  for (;;) {
+  for (;;)
+  {
     __asm__ __volatile__("wfi");
   }
 }

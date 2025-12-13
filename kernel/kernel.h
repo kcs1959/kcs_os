@@ -4,19 +4,23 @@
 
 #include "kernel_defs.h"
 
-struct sbiret {
+struct sbiret
+{
   long error;
   long value;
 };
 
-#define PANIC(fmt, ...)                                                        \
-  do {                                                                         \
-    kprintf("PANIC: %s:%d: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__);     \
-    while (1) {                                                                \
-    }                                                                          \
+#define PANIC(fmt, ...)                                                    \
+  do                                                                       \
+  {                                                                        \
+    kprintf("PANIC: %s:%d: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__); \
+    while (1)                                                              \
+    {                                                                      \
+    }                                                                      \
   } while (0)
 
-struct trap_frame {
+struct trap_frame
+{
   uint32_t ra;
   uint32_t gp;
   uint32_t tp;
@@ -50,17 +54,18 @@ struct trap_frame {
   uint32_t sp;
 } __attribute__((packed));
 
-#define READ_CSR(reg)                                                          \
-  ({                                                                           \
-    unsigned long __tmp;                                                       \
-    __asm__ __volatile__("csrr %0, " #reg : "=r"(__tmp));                      \
-    __tmp;                                                                     \
+#define READ_CSR(reg)                                     \
+  ({                                                      \
+    unsigned long __tmp;                                  \
+    __asm__ __volatile__("csrr %0, " #reg : "=r"(__tmp)); \
+    __tmp;                                                \
   })
 
-#define WRITE_CSR(reg, value)                                                  \
-  do {                                                                         \
-    uint32_t __tmp = (value);                                                  \
-    __asm__ __volatile__("csrw " #reg ", %0" ::"r"(__tmp));                    \
+#define WRITE_CSR(reg, value)                               \
+  do                                                        \
+  {                                                         \
+    uint32_t __tmp = (value);                               \
+    __asm__ __volatile__("csrw " #reg ", %0" ::"r"(__tmp)); \
   } while (0)
 
 #define PROCS_MAX 8
@@ -68,7 +73,8 @@ struct trap_frame {
 #define PROC_RUNNABLE 1
 #define PROC_EXITED 2
 
-struct process {
+struct process
+{
   int pid;
   int state;
   vaddr_t sp;
@@ -87,6 +93,9 @@ struct process {
 
 #define SSTATUS_SPIE (1 << 5)
 #define SCAUSE_ECALL 8
+#define SYSTEM_RESET_SBICALL 0x53525354
+#define RESET_TYPE_SHUTDOWN 0
+#define RESET_REASON_NONE 0
 
 paddr_t alloc_pages(uint32_t n);
 
