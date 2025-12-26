@@ -1,9 +1,6 @@
 #include "fat16.h"
 #include "virtio.h"
 
-static void read_fat_from_disk(void);
-static void write_fat_to_disk(void);
-
 static void write_bpb_to_disk(void) {
   uint8_t buf[SECTOR_SIZE];
   for (int i = 0; i < SECTOR_SIZE; i++)
@@ -98,14 +95,14 @@ void write_cluster(uint16_t cluster, void *buf) {
 }
 
 // ルートディレクトリの読み書き
-static void read_root_dir_from_disk(void) {
+void read_root_dir_from_disk(void) {
   for (int i = 0; i < ROOT_DIR_SECTORS; i++) {
     read_write_disk(&root_dir[i * (BPB_BytsPerSec / 32)],
                     ROOT_DIR_START_SECTOR + i, 0);
   }
 }
 
-static void write_root_dir_to_disk(void) {
+void write_root_dir_to_disk(void) {
   for (int i = 0; i < ROOT_DIR_SECTORS; i++) {
     read_write_disk(&root_dir[i * (BPB_BytsPerSec / 32)],
                     ROOT_DIR_START_SECTOR + i, 1);
@@ -113,13 +110,13 @@ static void write_root_dir_to_disk(void) {
 }
 
 // FAT領域の読み書き
-static void read_fat_from_disk(void) {
+void read_fat_from_disk(void) {
   for (int i = 0; i < BPB_FATSz16; i++) {
     read_write_disk(&fat[i * (BPB_BytsPerSec / 2)], FAT1_START_SECTOR + i, 0);
   }
 }
 
-static void write_fat_to_disk(void) {
+void write_fat_to_disk(void) {
   // FAT1 書き戻し
   for (int i = 0; i < BPB_FATSz16; i++) {
     read_write_disk(&fat[i * (BPB_BytsPerSec / 2)], FAT1_START_SECTOR + i, 1);
@@ -280,23 +277,34 @@ void fat16_list_root_dir(void) {
 }
 
 // ファイル読み込み
-int read_file(uint16_t start_cluster, uint8_t *buf, uint32_t size) {
-  read_fat_from_disk();
+static uint16_t alloc_free_cluster(void) {
+  for (uint16_t i = 2; i < FAT_ENTRY_NUM; i++) {
+    if (fat[i] == 0x0000)
+      return i;
+  }
+  return 0;
+}
 
-  if (start_cluster < 2 || start_cluster >= FAT_ENTRY_NUM)
+int read_file(uint16_t start_cluster, uint8_t *buf, uint32_t size) {
+  if (size == 0)
+    return 0;
+
+  if (!buf || start_cluster < 2 || start_cluster >= FAT_ENTRY_NUM)
     return -1;
+
+  read_fat_from_disk();
 
   uint32_t remaining = size;
   uint16_t cluster = start_cluster;
-  uint8_t cluster_buf[BPB_BytsPerSec * BPB_SecPerClus];
+  uint8_t cluster_buf[CLUSTER_SIZE];
 
-  while (cluster != 0xFFFF && remaining > 0) {
+  while (remaining > 0) {
+    if (cluster == 0x0000 || cluster == 0xFFFF || cluster >= FAT_ENTRY_NUM)
+      return -1;
+
     read_cluster(cluster, cluster_buf);
 
-    uint32_t to_copy = remaining;
-    if (to_copy > BPB_BytsPerSec * BPB_SecPerClus)
-      to_copy = BPB_BytsPerSec * BPB_SecPerClus;
-
+    uint32_t to_copy = remaining > CLUSTER_SIZE ? CLUSTER_SIZE : remaining;
     memcpy(buf, cluster_buf, to_copy);
     buf += to_copy;
     remaining -= to_copy;
@@ -304,6 +312,103 @@ int read_file(uint16_t start_cluster, uint8_t *buf, uint32_t size) {
     cluster = fat[cluster];
   }
 
+  return 0;
+}
+
+// ファイル書き込み
+int write_file(uint16_t start_cluster, const uint8_t *buf, uint32_t size) {
+  if (start_cluster < 2 || start_cluster >= FAT_ENTRY_NUM)
+    return -1;
+
+  read_fat_from_disk();
+  read_root_dir_from_disk();
+
+  uint8_t cluster_buf[CLUSTER_SIZE];
+
+  // サイズ0への書き込みはファイル長だけを更新し、余剰クラスタを解放する
+  if (size == 0) {
+    uint16_t next = fat[start_cluster];
+    fat[start_cluster] = 0xFFFF;
+    while (next != 0xFFFF && next != 0x0000) {
+      uint16_t tmp = fat[next];
+      fat[next] = 0x0000;
+      next = tmp;
+    }
+
+    memset(cluster_buf, 0, sizeof(cluster_buf));
+    write_cluster(start_cluster, cluster_buf);
+
+    for (int i = 0; i < BPB_RootEntCnt; i++) {
+      if (root_dir[i].name[0] == 0x00)
+        break;
+      if (root_dir[i].name[0] == 0xE5)
+        continue;
+      if (root_dir[i].start_cluster == start_cluster) {
+        root_dir[i].size = 0;
+        break;
+      }
+    }
+
+    write_fat_to_disk();
+    write_root_dir_to_disk();
+    return 0;
+  }
+
+  uint32_t remaining = size;
+  uint16_t cur = start_cluster;
+
+  while (remaining > 0) {
+    if (cur == 0x0000 || cur >= FAT_ENTRY_NUM)
+      return -1;
+
+    uint32_t to_write = remaining > CLUSTER_SIZE ? CLUSTER_SIZE : remaining;
+    if (buf) {
+      memcpy(cluster_buf, buf, to_write);
+      buf += to_write;
+    } else {
+      memset(cluster_buf, 0, to_write);
+    }
+    if (to_write < CLUSTER_SIZE)
+      memset(cluster_buf + to_write, 0, CLUSTER_SIZE - to_write);
+
+    write_cluster(cur, cluster_buf);
+    remaining -= to_write;
+
+    if (remaining == 0)
+      break;
+
+    uint16_t next = fat[cur];
+    if (next == 0x0000 || next == 0xFFFF) {
+      next = alloc_free_cluster();
+      if (next == 0)
+        return -1;
+      fat[cur] = next;
+      fat[next] = 0xFFFF;
+    }
+    cur = next;
+  }
+
+  uint16_t next = fat[cur];
+  fat[cur] = 0xFFFF;
+  while (next != 0xFFFF && next != 0x0000) {
+    uint16_t tmp = fat[next];
+    fat[next] = 0x0000;
+    next = tmp;
+  }
+
+  for (int i = 0; i < BPB_RootEntCnt; i++) {
+    if (root_dir[i].name[0] == 0x00)
+      break;
+    if (root_dir[i].name[0] == 0xE5)
+      continue;
+    if (root_dir[i].start_cluster == start_cluster) {
+      root_dir[i].size = size;
+      break;
+    }
+  }
+
+  write_fat_to_disk();
+  write_root_dir_to_disk();
   return 0;
 }
 

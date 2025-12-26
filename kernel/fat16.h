@@ -11,6 +11,9 @@
 #define BPB_RootEntCnt 512
 #define BPB_FATSz16 32
 
+// クラスタサイズ（バイト）
+#define CLUSTER_SIZE (BPB_SecPerClus * BPB_BytsPerSec)
+
 // FAT領域
 #define FAT1_START_SECTOR BPB_RsvdSecCnt
 #define FAT2_START_SECTOR (FAT1_START_SECTOR + BPB_FATSz16)
@@ -87,7 +90,12 @@ void write_cluster(uint16_t cluster, void *buf);
 void copy_name_dynamic(char **name_field, const char *src);
 int create_file(const char *name, const uint8_t *data, uint32_t size);
 int read_file(uint16_t start_cluster, uint8_t *buf, uint32_t size);
+int write_file(uint16_t start_cluster, const uint8_t *buf, uint32_t size);
 void fat16_list_root_dir(void);
 void fat16_concatenate_first_file(void);
+void read_fat_from_disk(void);
+void write_fat_to_disk(void);
+void read_root_dir_from_disk(void);
+void write_root_dir_to_disk(void);
 
 #endif
