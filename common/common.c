@@ -1,6 +1,8 @@
 #include "common.h"
 
-int vprintf(putc_fn_t putc, const char *fmt, va_list vargs) {
+void __common_putc(char c);
+
+int vprintf(putc_fn_t __common_putc, const char *fmt, va_list vargs) {
   int count = 0;
 
   while (*fmt) {
@@ -8,12 +10,12 @@ int vprintf(putc_fn_t putc, const char *fmt, va_list vargs) {
       fmt++;
       switch (*fmt) {
       case '\0':
-        putc('%');
+        __common_putc('%');
         count++;
         return count;
 
       case '%':
-        putc('%');
+        __common_putc('%');
         count++;
         break;
 
@@ -22,7 +24,7 @@ int vprintf(putc_fn_t putc, const char *fmt, va_list vargs) {
         if (!s)
           s = "(null)";
         while (*s) {
-          putc(*s++);
+          __common_putc(*s++);
           count++;
         }
         break;
@@ -33,7 +35,7 @@ int vprintf(putc_fn_t putc, const char *fmt, va_list vargs) {
         unsigned magnitude = value;
 
         if (value < 0) {
-          putc('-');
+          __common_putc('-');
           magnitude = -magnitude;
           count++;
         }
@@ -43,7 +45,7 @@ int vprintf(putc_fn_t putc, const char *fmt, va_list vargs) {
           divisor *= 10;
 
         while (divisor) {
-          putc('0' + magnitude / divisor);
+          __common_putc('0' + magnitude / divisor);
           magnitude %= divisor;
           divisor /= 10;
           count++;
@@ -55,14 +57,14 @@ int vprintf(putc_fn_t putc, const char *fmt, va_list vargs) {
         unsigned value = va_arg(vargs, unsigned);
         for (int i = 7; i >= 0; i--) {
           unsigned nibble = (value >> (i * 4)) & 0xf;
-          putc("0123456789abcdef"[nibble]);
+          __common_putc("0123456789abcdef"[nibble]);
           count++;
         }
         break;
       }
       }
     } else {
-      putc(*fmt);
+      __common_putc(*fmt);
       count++;
     }
     fmt++;
