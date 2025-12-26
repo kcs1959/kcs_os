@@ -36,3 +36,5 @@ __attribute__((noreturn)) void exit(int status) {
 void sys_list_root_dir(void) { syscall(SYS_LIST_ROOT_DIR, 0, 0, 0); }
 
 void sys_concat_first_file(void) { syscall(SYS_CAT_FIRST_FILE, 0, 0, 0); }
+
+void sys_shutdown(void) { syscall(SYS_SHUTDOWN, 0, 0, 0); }
