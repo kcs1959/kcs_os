@@ -217,6 +217,7 @@ void shutdown(void) { sbi_call(0, 0, 0, 0, 0, 0, 0, 8); }
 
 // カーネルのデバッグ用のI/O
 void kputchar(char ch) { sbi_call(ch, 0, 0, 0, 0, 0, 0, 1); }
+void __common_putc(char ch) __attribute__((alias("kputchar")));
 
 void putchar(char ch) { kputchar(ch); }
 
@@ -225,78 +226,11 @@ long kgetchar(void) {
   return ret.error;
 }
 
-int kvprintf(const char *fmt, va_list vargs) {
-  int count = 0;
-  while (*fmt) {
-    if (*fmt == '%') {
-      fmt++;
-      switch (*fmt) {
-      case '\0':
-        kputchar('%');
-        count++;
-        goto end;
-      case '%':
-        kputchar('%');
-        count++;
-        break;
-
-      case 's': {
-        const char *s = va_arg(vargs, const char *);
-        if (!s)
-          s = "(null)";
-        while (*s) {
-          kputchar(*s);
-          s++;
-          count++;
-        }
-        break;
-      }
-      case 'd': { // Print an integer in decimal.
-        int value = va_arg(vargs, int);
-        unsigned magnitude = value;
-        if (value < 0) {
-          kputchar('-');
-          magnitude = -magnitude;
-          count++;
-        }
-
-        unsigned divisor = 1;
-        while (magnitude / divisor > 9)
-          divisor *= 10;
-
-        while (divisor > 0) {
-          kputchar('0' + magnitude / divisor);
-          magnitude %= divisor;
-          divisor /= 10;
-          count++;
-        }
-        break;
-      }
-      case 'x': { // Print an integer in hexadecimal.
-        unsigned value = va_arg(vargs, unsigned);
-        for (int i = 7; i >= 0; i--) {
-          unsigned nibble = (value >> (i * 4)) & 0xf;
-          kputchar("0123456789abcdef"[nibble]);
-          count++;
-        }
-        break;
-      }
-      }
-    } else {
-      kputchar(*fmt);
-      count++;
-    }
-    fmt++;
-  }
-
-end:
-  return count;
-}
-
+int vprintf(void (*putc)(char), const char *fmt, va_list vargs);
 int kprintf(const char *fmt, ...) {
   va_list vargs;
   va_start(vargs, fmt);
-  int ret = kvprintf(fmt, vargs);
+  int ret = vprintf(kputchar, fmt, vargs);
   va_end(vargs);
   return ret;
 }

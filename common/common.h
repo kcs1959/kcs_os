@@ -5,7 +5,7 @@
 #include "common_types.h"
 
 int printf(const char *fmt, ...);
-int vprintf(const char *fmt, va_list ap);
+int vprintf(putc_fn_t putc, const char *fmt, va_list vargs);
 void putchar(char ch);
 
 void *memset(void *buf, int c, size_t n);
