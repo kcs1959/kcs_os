@@ -217,6 +217,7 @@ void shutdown(void) { sbi_call(0, 0, 0, 0, 0, 0, 0, 8); }
 
 // カーネルのデバッグ用のI/O
 void kputchar(char ch) { sbi_call(ch, 0, 0, 0, 0, 0, 0, 1); }
+void __common_putc(char ch) __attribute__((alias("kputchar")));
 
 void putchar(char ch) { kputchar(ch); }
 
