@@ -13,4 +13,9 @@ void sys_list_root_dir(void);
 void sys_concat_first_file(void);
 void sys_shutdown(void);
 
+FILE *fopen(const char *path, const char *mode);
+int fclose(FILE *fp);
+int fgetc(FILE *fp);
+int fputc(FILE *fp, int ch);
+
 #endif
