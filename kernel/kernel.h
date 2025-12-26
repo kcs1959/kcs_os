@@ -88,6 +88,11 @@ struct process {
 #define SSTATUS_SPIE (1 << 5)
 #define SCAUSE_ECALL 8
 
+#define SYSTEM_RESET_SBICALL 0x53525354
+#define RESET_TYPE_SHUTDOWN 0
+#define RESET_REASON_NONE 0
+
+
 paddr_t alloc_pages(uint32_t n);
 
 #endif
