@@ -14,5 +14,9 @@ void sys_concat_first_file(void);
 int printf(const char *fmt, ...);
 void sys_shutdown(void);
 
+FILE *fopen(const char *path, const char *mode);
+int fclose(FILE *fp);
+int fgetc(FILE *fp);
+int fputc(FILE *fp, int ch);
 
 #endif
