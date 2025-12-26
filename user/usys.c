@@ -38,3 +38,53 @@ void sys_list_root_dir(void) { syscall(SYS_LIST_ROOT_DIR, 0, 0, 0); }
 void sys_concat_first_file(void) { syscall(SYS_CAT_FIRST_FILE, 0, 0, 0); }
 
 void sys_shutdown(void) { syscall(SYS_SHUTDOWN, 0, 0, 0); }
+
+#define USER_OPEN_FILES 8
+static FILE file_table[USER_OPEN_FILES];
+static bool file_table_initialized;
+
+static void init_file_table(void) {
+  if (file_table_initialized)
+    return;
+  for (int i = 0; i < USER_OPEN_FILES; i++)
+    file_table[i].fd = -1;
+  file_table_initialized = true;
+}
+
+FILE *fopen(const char *path, const char *mode) {
+  init_file_table();
+  int fd = syscall(SYS_FOPEN, (int)path, (int)mode, 0);
+  if (fd < 0)
+    return NULL;
+
+  for (int i = 0; i < USER_OPEN_FILES; i++) {
+    if (file_table[i].fd < 0) {
+      file_table[i].fd = fd;
+      return &file_table[i];
+    }
+  }
+
+  syscall(SYS_FCLOSE, fd, 0, 0);
+  return NULL;
+}
+
+int fclose(FILE *fp) {
+  if (!fp || fp->fd < 0)
+    return -1;
+
+  int ret = syscall(SYS_FCLOSE, fp->fd, 0, 0);
+  fp->fd = -1;
+  return ret;
+}
+
+int fgetc(FILE *fp) {
+  if (!fp || fp->fd < 0)
+    return EOF;
+  return syscall(SYS_FGETC, fp->fd, 0, 0);
+}
+
+int fputc(FILE *fp, int ch) {
+  if (!fp || fp->fd < 0)
+    return -1;
+  return syscall(SYS_FPUTC, fp->fd, ch, 0);
+}
