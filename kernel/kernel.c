@@ -1,6 +1,6 @@
 #include "kernel.h"
-#include "virtio.h"
 #include "fat16.h"
+#include "virtio.h"
 
 typedef unsigned char uint8_t;
 typedef unsigned int uint32_t;
@@ -213,6 +213,8 @@ struct sbiret sbi_call(long arg0, long arg1, long arg2, long arg3, long arg4,
   return (struct sbiret){.error = a0, .value = a1};
 }
 
+void shutdown(void) { sbi_call(0, 0, 0, 0, 0, 0, 0, 8); }
+
 // カーネルのデバッグ用のI/O
 void kputchar(char ch) { sbi_call(ch, 0, 0, 0, 0, 0, 0, 1); }
 
@@ -416,6 +418,10 @@ void handle_syscall(struct trap_frame *f) {
   case SYS_CAT_FIRST_FILE:
     fat16_concatenate_first_file();
     yield();
+    break;
+  case SYS_SHUTDOWN:
+    kprintf("shutting down...\n");
+    shutdown();
     break;
   default:
     PANIC("unexpected syscall a3=%x\n", f->a3);
