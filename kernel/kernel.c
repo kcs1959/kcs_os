@@ -441,6 +441,9 @@ void handle_syscall(struct trap_frame *f) {
     break;
   case SYS_FPUTC:
     f->a0 = kfputc(f->a0, f->a1);
+  case SYS_SHUTDOWN:
+    kprintf("shutting down...\n");
+    shutdown();
     break;
   default:
     PANIC("unexpected syscall a3=%x\n", f->a3);
