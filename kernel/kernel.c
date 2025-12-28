@@ -359,9 +359,14 @@ void handle_syscall(struct trap_frame *f) {
   case SYS_SHUTDOWN:
     kprintf("shutting down...\n");
     shutdown();
-  case SYS_FOPEN:
-    f->a0 = kfopen((const char *)f->a0, (const char *)f->a1);
     break;
+  case SYS_FOPEN: {
+    uint32_t prev_sstatus = READ_CSR(sstatus);
+    WRITE_CSR(sstatus, prev_sstatus | SSTATUS_SUM);
+    f->a0 = kfopen((const char *)f->a0, (const char *)f->a1);
+    WRITE_CSR(sstatus, prev_sstatus);
+    break;
+  }
   case SYS_FCLOSE:
     f->a0 = kfclose(f->a0);
     break;
