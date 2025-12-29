@@ -7,9 +7,15 @@
 __attribute__((noreturn)) void exit(int status);
 void putchar(char ch);
 int getchar(void);
+int syscall(int sysno, int arg0, int arg1, int arg2);
 int create_file(const char *name, const uint8_t *data, uint32_t size);
 void sys_list_root_dir(void);
 void sys_concat_first_file(void);
 void sys_shutdown(void);
+
+FILE *fopen(const char *path, const char *mode);
+int fclose(FILE *fp);
+int fgetc(FILE *fp);
+int fputc(FILE *fp, int ch);
 
 #endif

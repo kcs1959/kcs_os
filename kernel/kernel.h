@@ -86,6 +86,7 @@ struct process {
 #define USER_BASE 0x1000000
 
 #define SSTATUS_SPIE (1 << 5)
+#define SSTATUS_SUM (1 << 18)
 #define SCAUSE_ECALL 8
 
 #define SYSTEM_RESET_SBICALL 0x53525354

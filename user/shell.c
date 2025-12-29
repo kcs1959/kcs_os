@@ -41,9 +41,31 @@ int main(void) {
       sys_shutdown();
     else if (strcmp(cmdline, "ls") == 0)
       sys_list_root_dir();
-    else if (strcmp(cmdline, "cat") == 0)
-      sys_concat_first_file();
-    else if (strcmp(cmdline, "ohgiri") == 0) {
+    else if (strncmp(cmdline, "cat", 3) == 0) {
+      int j = 3;
+      while (cmdline[j] == ' ')
+        j++;
+      char filename[10];
+      int k = 0;
+      while (cmdline[j] != ' ' && cmdline[j] != '\0') {
+        filename[k++] = cmdline[j++];
+      }
+      filename[k] = '\0';
+      FILE *fp = fopen(filename, "r");
+      if (!fp) {
+        printf("\x1b[31mFile not found: %s\n\x1b[39m", filename);
+        continue;
+      }
+      int ch, last = '\0';
+      while ((ch = fgetc(fp)) != EOF) {
+        putchar((char)ch);
+        last = ch;
+      }
+      if (last != '\n') {
+        printf("\xE2\x8F\x8E\n");
+      }
+      fclose(fp);
+    } else if (strcmp(cmdline, "ohgiri") == 0) {
       int r = rand() % 3;
       if (r == 0)
         printf(
