@@ -39,15 +39,6 @@ void sys_list_root_dir(void) { syscall(SYS_LIST_ROOT_DIR, 0, 0, 0); }
 
 void sys_concat_first_file(void) { syscall(SYS_CAT_FIRST_FILE, 0, 0, 0); }
 
-int vprintf(void (*putc)(char), const char *fmt, va_list vargs);
-int printf(const char *fmt, ...) {
-  va_list vargs;
-  va_start(vargs, fmt);
-  int ret = vprintf(putchar, fmt, vargs);
-  va_end(vargs);
-  return ret;
-}
-
 void sys_shutdown(void) { syscall(SYS_SHUTDOWN, 0, 0, 0); }
 
 #define USER_OPEN_FILES 8
@@ -98,14 +89,4 @@ int fputc(FILE *fp, int ch) {
   if (!fp || fp->fd < 0)
     return -1;
   return syscall(SYS_FPUTC, fp->fd, ch, 0);
-}
-
-int vprintf(void (*putc)(char), const char *fmt, va_list vargs);
-
-int printf(const char *fmt, ...) {
-  va_list vargs;
-  va_start(vargs, fmt);
-  int ret = vprintf(putchar, fmt, vargs);
-  va_end(vargs);
-  return ret;
 }

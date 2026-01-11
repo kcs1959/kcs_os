@@ -224,20 +224,9 @@ void shutdown(void) { sbi_call(0, 0, 0, 0, 0, 0, 0, 8); }
 void kputchar(char ch) { sbi_call(ch, 0, 0, 0, 0, 0, 0, 1); }
 void __common_putc(char ch) __attribute__((alias("kputchar")));
 
-void putchar(char ch) { kputchar(ch); }
-
 long kgetchar(void) {
   struct sbiret ret = sbi_call(0, 0, 0, 0, 0, 0, 0, 2);
   return ret.error;
-}
-
-int vprintf(void (*putc)(char), const char *fmt, va_list vargs);
-int kprintf(const char *fmt, ...) {
-  va_list vargs;
-  va_start(vargs, fmt);
-  int ret = vprintf(kputchar, fmt, vargs);
-  va_end(vargs);
-  return ret;
 }
 
 // Interrupt
@@ -335,7 +324,7 @@ void handle_syscall(struct trap_frame *f) {
     }
     break;
   case SYS_EXIT:
-    kprintf("process %d exited\n", current_proc->pid);
+    printf("process %d exited\n", current_proc->pid);
     current_proc->state = PROC_EXITED;
     yield();
     PANIC("unreachable");
@@ -357,7 +346,7 @@ void handle_syscall(struct trap_frame *f) {
     yield();
     break;
   case SYS_SHUTDOWN:
-    kprintf("shutting down...\n");
+    printf("shutting down...\n");
     shutdown();
     break;
   case SYS_FOPEN: {
@@ -660,7 +649,7 @@ void delay(void) {
 }
 
 void proc_a_entry(void) {
-  kprintf("starting process A\n");
+  printf("starting process A\n");
   while (1) {
     kputchar('A');
     yield();
@@ -669,7 +658,7 @@ void proc_a_entry(void) {
 }
 
 void proc_b_entry(void) {
-  kprintf("starting process B\n");
+  printf("starting process B\n");
   while (1) {
     kputchar('B');
     yield();
@@ -695,12 +684,11 @@ void kernel_main(void) {
   idle_proc->pid = 0;
   current_proc = idle_proc;
 
-  kprintf("\n\nWelcome to KCS OS!\n");
+  printf("\n\nWelcome to KCS OS!\n");
 
   char buf[SECTOR_SIZE];
   read_write_disk(buf, 0, false);
-  kprintf("first sector: %s\n", buf);
-
+  printf("first sector: %s\n", buf);
   create_file("test.txt", (uint8_t *)"hello", 5);
   create_file("test2.txt", (uint8_t *)"hello2", 6);
 

@@ -142,7 +142,7 @@ int create_file(const char *name, const uint8_t *data, uint32_t size) {
     }
   }
   if (entry_index < 0) {
-    kprintf("[FAT16] ERROR: Root directory is full. Cannot create new file.\n");
+    printf("[FAT16] ERROR: Root directory is full. Cannot create new file.\n");
     return -1;
   }
 
@@ -155,7 +155,7 @@ int create_file(const char *name, const uint8_t *data, uint32_t size) {
     }
   }
   if (free_cluster < 0) {
-    kprintf("[FAT16] ERROR: no free FAT cluster.\n");
+    printf("[FAT16] ERROR: no free FAT cluster.\n");
     return -1;
   }
 
@@ -211,7 +211,7 @@ int create_file(const char *name, const uint8_t *data, uint32_t size) {
         }
       }
       if (next_cluster == 0) {
-        kprintf("[FAT16] ERROR: not enough clusters.\n");
+        printf("[FAT16] ERROR: not enough clusters.\n");
         return -1;
       }
       fat[cluster] = next_cluster;
@@ -226,8 +226,8 @@ int create_file(const char *name, const uint8_t *data, uint32_t size) {
   write_fat_to_disk();
   write_root_dir_to_disk();
 
-  kprintf("[FAT16] File created: %s at entry %d, cluster %d\n", name,
-          entry_index, free_cluster);
+  printf("[FAT16] File created: %s at entry %d, cluster %d\n", name,
+         entry_index, free_cluster);
   return 0;
 }
 
@@ -235,7 +235,7 @@ void fat16_list_root_dir(void) {
   // 1. ディスクから最新の root_dir を読み込む
   read_root_dir_from_disk();
 
-  kprintf("=== Root Directory ===\n");
+  printf("=== Root Directory ===\n");
 
   for (int i = 0; i < BPB_RootEntCnt; i++) {
     // 未使用エントリ → ここから先は全部空
@@ -269,10 +269,10 @@ void fat16_list_root_dir(void) {
     name[p] = '\0';
 
     // 3. 表示
-    kprintf("%s  size=", name);
-    kprintf("%d", (int)root_dir[i].size);
-    kprintf("  cluster=");
-    kprintf("%d\n", (int)root_dir[i].start_cluster);
+    printf("%s  size=", name);
+    printf("%d", (int)root_dir[i].size);
+    printf("  cluster=");
+    printf("%d\n", (int)root_dir[i].start_cluster);
   }
 }
 
@@ -429,13 +429,13 @@ void fat16_concatenate_first_file(void) {
   }
 
   if (!target) {
-    kprintf("[cat] no file.\n");
+    printf("[cat] no file.\n");
     return;
   }
 
   // サイズ0なら空ファイル
   if (target->size == 0) {
-    kprintf("[cat] (empty file)\n");
+    printf("[cat] (empty file)\n");
     return;
   }
 
@@ -445,14 +445,14 @@ void fat16_concatenate_first_file(void) {
 
   // 4. read_file() でデータ領域を読む
   if (read_file(target->start_cluster, buf, size) < 0) {
-    kprintf("[cat] read error.\n");
+    printf("[cat] read error.\n");
     return;
   }
 
   // 5. ファイル内容をそのまま表示
-  kprintf("===== cat: file content =====\n");
+  printf("===== cat: file content =====\n");
   for (uint32_t i = 0; i < size; i++) {
     kputchar(buf[i]);
   }
-  kprintf("\n===== end =====\n");
+  printf("\n===== end =====\n");
 }

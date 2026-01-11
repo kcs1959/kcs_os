@@ -10,7 +10,6 @@ typedef uint32_t size_t;
 typedef uint32_t paddr_t;
 typedef uint32_t vaddr_t;
 typedef uint8_t bool;
-typedef void (*putc_fn_t)(char);
 
 #define true 1
 #define false 0

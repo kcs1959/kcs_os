@@ -1,8 +1,8 @@
 #include "usys.h"
 
-void __common_putc(char c);
+extern void __common_putc(char c);
 
-int vprintf(putc_fn_t __common_putc, const char *fmt, va_list vargs) {
+int vprintf(const char *fmt, va_list vargs) {
   int count = 0;
 
   while (*fmt) {
@@ -71,6 +71,14 @@ int vprintf(putc_fn_t __common_putc, const char *fmt, va_list vargs) {
   }
 
   return count;
+}
+
+int printf(const char *fmt, ...) {
+  va_list vargs;
+  va_start(vargs, fmt);
+  int ret = vprintf(fmt, vargs);
+  va_end(vargs);
+  return ret;
 }
 
 void *memcpy(void *dst, const void *src, size_t n) {

@@ -5,7 +5,7 @@
 #include "common_types.h"
 
 int printf(const char *fmt, ...);
-int vprintf(putc_fn_t putc, const char *fmt, va_list vargs);
+int vprintf(const char *fmt, va_list vargs);
 void putchar(char ch);
 
 typedef struct FILE {
