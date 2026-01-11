@@ -222,88 +222,11 @@ void shutdown(void) { sbi_call(0, 0, 0, 0, 0, 0, 0, 8); }
 
 // カーネルのデバッグ用のI/O
 void kputchar(char ch) { sbi_call(ch, 0, 0, 0, 0, 0, 0, 1); }
-
-void putchar(char ch) { kputchar(ch); }
+void __common_putc(char ch) __attribute__((alias("kputchar")));
 
 long kgetchar(void) {
   struct sbiret ret = sbi_call(0, 0, 0, 0, 0, 0, 0, 2);
   return ret.error;
-}
-
-int kvprintf(const char *fmt, va_list vargs) {
-  int count = 0;
-  while (*fmt) {
-    if (*fmt == '%') {
-      fmt++;
-      switch (*fmt) {
-      case '\0':
-        kputchar('%');
-        count++;
-        goto end;
-      case '%':
-        kputchar('%');
-        count++;
-        break;
-
-      case 's': {
-        const char *s = va_arg(vargs, const char *);
-        if (!s)
-          s = "(null)";
-        while (*s) {
-          kputchar(*s);
-          s++;
-          count++;
-        }
-        break;
-      }
-      case 'd': { // Print an integer in decimal.
-        int value = va_arg(vargs, int);
-        unsigned magnitude = value;
-        if (value < 0) {
-          kputchar('-');
-          magnitude = -magnitude;
-          count++;
-        }
-
-        unsigned divisor = 1;
-        while (magnitude / divisor > 9)
-          divisor *= 10;
-
-        while (divisor > 0) {
-          kputchar('0' + magnitude / divisor);
-          magnitude %= divisor;
-          divisor /= 10;
-          count++;
-        }
-        break;
-      }
-      case 'x': { // Print an integer in hexadecimal.
-        unsigned value = va_arg(vargs, unsigned);
-        for (int i = 7; i >= 0; i--) {
-          unsigned nibble = (value >> (i * 4)) & 0xf;
-          kputchar("0123456789abcdef"[nibble]);
-          count++;
-        }
-        break;
-      }
-      }
-    } else {
-      kputchar(*fmt);
-      count++;
-    }
-    fmt++;
-  }
-
-end:
-  return count;
-}
-
-int kprintf(const char *fmt, ...) {
-  va_list vargs;
-  va_start(vargs, fmt);
-  int ret = kvprintf(fmt, vargs);
-  va_end(vargs);
-  return ret;
 }
 
 // Interrupt
@@ -401,7 +324,7 @@ void handle_syscall(struct trap_frame *f) {
     }
     break;
   case SYS_EXIT:
-    kprintf("process %d exited\n", current_proc->pid);
+    printf("process %d exited\n", current_proc->pid);
     current_proc->state = PROC_EXITED;
     yield();
     PANIC("unreachable");
@@ -423,7 +346,7 @@ void handle_syscall(struct trap_frame *f) {
     yield();
     break;
   case SYS_SHUTDOWN:
-    kprintf("shutting down...\n");
+    printf("shutting down...\n");
     shutdown();
     break;
   case SYS_FOPEN: {
@@ -726,7 +649,7 @@ void delay(void) {
 }
 
 void proc_a_entry(void) {
-  kprintf("starting process A\n");
+  printf("starting process A\n");
   while (1) {
     kputchar('A');
     yield();
@@ -735,7 +658,7 @@ void proc_a_entry(void) {
 }
 
 void proc_b_entry(void) {
-  kprintf("starting process B\n");
+  printf("starting process B\n");
   while (1) {
     kputchar('B');
     yield();
@@ -761,12 +684,11 @@ void kernel_main(void) {
   idle_proc->pid = 0;
   current_proc = idle_proc;
 
-  kprintf("\n\nWelcome to KCS OS!\n");
+  printf("\n\nWelcome to KCS OS!\n");
 
   char buf[SECTOR_SIZE];
   read_write_disk(buf, 0, false);
-  kprintf("first sector: %s\n", buf);
-
+  printf("first sector: %s\n", buf);
   create_file("test.txt", (uint8_t *)"hello", 5);
   create_file("test2.txt", (uint8_t *)"hello2", 6);
 

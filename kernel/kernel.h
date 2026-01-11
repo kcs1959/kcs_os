@@ -11,7 +11,7 @@ struct sbiret {
 
 #define PANIC(fmt, ...)                                                        \
   do {                                                                         \
-    kprintf("PANIC: %s:%d: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__);     \
+    printf("PANIC: %s:%d: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__);      \
     while (1) {                                                                \
     }                                                                          \
   } while (0)
@@ -92,7 +92,6 @@ struct process {
 #define SYSTEM_RESET_SBICALL 0x53525354
 #define RESET_TYPE_SHUTDOWN 0
 #define RESET_REASON_NONE 0
-
 
 paddr_t alloc_pages(uint32_t n);
 
