@@ -18,6 +18,5 @@ FILE *fopen(const char *path, const char *mode);
 int fclose(FILE *fp);
 int fgetc(FILE *fp);
 int fputc(FILE *fp, int ch);
-int printf(const char *fmt, ...);
 
 #endif
